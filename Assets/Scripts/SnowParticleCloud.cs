@@ -62,12 +62,6 @@ public class SnowParticleCloud
 		m_material.SetBuffer("_Particles", m_particleBuffer);
 	}
 
-	~SnowParticleCloud()
-	{
-		m_particleBuffer.Dispose();
-	}
-
-
 	public void render(Material _material)
 	{
 		m_material.SetPass(0);
@@ -91,5 +85,6 @@ public class SnowParticleCloud
 	public void DisposeBuffers()
 	{
 		m_particleBuffer.Dispose();
+		m_particleDefBuffer.Dispose();
 	}
 }
