@@ -1,13 +1,10 @@
 ﻿// Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel UpdateParticlePositions
 #pragma kernel InitialiseGridMass
-#pragma kernel InitialiseVelocities
 #pragma kernel UpdateVelocities
 #pragma kernel ExplicitGridVelocities
-#pragma kernel ExplicitVelocities
 #pragma kernel CalculateVolumes
 #pragma kernel CollisionGrid
-#pragma kernel CollisionParticles
 #pragma kernel ResetGrid
 #pragma kernel EqualizeGridVelocities
 #pragma kernel InitialiseGridMassAndVelocities
@@ -146,12 +143,40 @@ float4 checkForAndHandleCollisions(int numColliders, float4 position, float4 vel
 	return velocity;
 }
 
+void CollisionParticleWithGrid(int index)
+{
+
+	float3 newPos = _Particles[index].gridPosition.xyz + (_Particles[index].velocity.xyz / _GridCellSize ) * _DeltaTime;
+
+	if(newPos.x < 1 || newPos.x > _GridCells.x - 2)
+	{
+		_Particles[index].velocity.x = 0 * _Particles[index].velocity.x;
+		_Particles[index].velocity.y *= STICKY;
+		_Particles[index].velocity.z *= STICKY;
+	}
+
+	if(newPos.y < 1 || newPos.y > _GridCells.y - 2)
+	{
+		_Particles[index].velocity.y = 0 * _Particles[index].velocity.y;
+		_Particles[index].velocity.x *= STICKY;
+		_Particles[index].velocity.z *= STICKY;
+	}
+	if(newPos.z < 1 || newPos.z > _GridCells.z - 2)
+	{
+		_Particles[index].velocity.z = 0 * _Particles[index].velocity.z;
+		_Particles[index].velocity.x *= STICKY;
+		_Particles[index].velocity.y *= STICKY;
+	}
+}
+
 
 [numthreads(NUM_THREADS, 1, 1)]
 void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
 {
 
 	_Particles[id.x].velocity = checkForAndHandleCollisions(_NumColliders, _Particles[id.x].position, _Particles[id.x].velocity);
+
+	CollisionParticleWithGrid(id.x);
 
 	_Particles[id.x].position += _Particles[id.x].velocity * _DeltaTime;
 
@@ -161,6 +186,7 @@ void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
 	_Particles[id.x].def_elastic = _Particles[id.x].velocityGradient * _Particles[id.x].def_elastic;
 }
 
+//todo: try to find a way to use y and z threads to create more threads and avoid the nested for loop
 [numthreads(NUM_THREADS, 1, 1)]
 void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 {
@@ -374,7 +400,6 @@ void EqualizeGridVelocities(uint3 id : SV_DispatchThreadID)
 		if(density > _MaxCellDensity && length(_Grid[gridIdx].velocity_new) > velocityLength)
 		{
 			//_Grid[gridIdx].velocity = normalize(_Grid[gridIdx].velocity) * velocityLength;
-			//_Grid[gridIdx].velocity = float4(0,0,0,0);
 		}
 	}
 }
@@ -407,32 +432,5 @@ void CollisionGrid(uint3 id : SV_DispatchThreadID)
 		_Grid[gridIdx].velocity.z = 0;
 		_Grid[gridIdx].velocity.x *= STICKY;
 		_Grid[gridIdx].velocity.y *= STICKY;
-	}
-}
-
-
-[numthreads(NUM_THREADS, 1, 1)]
-void CollisionParticles(uint3 id : SV_DispatchThreadID)
-{
-
-	float3 newPos = _Particles[id.x].gridPosition.xyz + (_Particles[id.x].velocity.xyz / _GridCellSize ) * _DeltaTime;
-
-	if(newPos.x < 1 || newPos.x > _GridCells.x - 2)
-	{
-		_Particles[id.x].velocity.x = 0 * _Particles[id.x].velocity.x;
-		_Particles[id.x].velocity.y *= STICKY;
-		_Particles[id.x].velocity.z *= STICKY;
-	}
-	if(newPos.y < 1 || newPos.y > _GridCells.y - 2)
-	{
-		_Particles[id.x].velocity.y = 0 * _Particles[id.x].velocity.y;
-		_Particles[id.x].velocity.x *= STICKY;
-		_Particles[id.x].velocity.z *= STICKY;
-	}
-	if(newPos.z < 1 || newPos.z > _GridCells.z - 2)
-	{
-		_Particles[id.x].velocity.z = 0 * _Particles[id.x].velocity.z;
-		_Particles[id.x].velocity.x *= STICKY;
-		_Particles[id.x].velocity.y *= STICKY;
 	}
 }

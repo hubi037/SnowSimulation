@@ -70,9 +70,6 @@ public class SnowGrid
 		m_computeShader.SetBuffer(_computeShader.FindKernel("CollisionGrid"), "_Particles", m_particleCloud.getParticleBuffer());
 		m_computeShader.SetBuffer(_computeShader.FindKernel("CollisionGrid"), "_Grid", m_gridBuffer);
 
-		m_computeShader.SetBuffer(_computeShader.FindKernel("CollisionParticles"), "_Particles", m_particleCloud.getParticleBuffer());
-		m_computeShader.SetBuffer(_computeShader.FindKernel("CollisionParticles"), "_Grid", m_gridBuffer);
-
 		m_computeShader.SetBuffer(_computeShader.FindKernel("ResetGrid"), "_Particles", m_particleCloud.getParticleBuffer());
 		m_computeShader.SetBuffer(_computeShader.FindKernel("ResetGrid"), "_Grid", m_gridBuffer);
 
@@ -134,7 +131,6 @@ public class SnowGrid
 
 		m_computeShader.Dispatch(kernel, m_particleCloud.getParticleBuffer().count / Constants.NUMTHREADS, 1, 1);
 
-		particleCollisions();
 	}
 
 	public void gridCollisions()
@@ -142,13 +138,6 @@ public class SnowGrid
 		int kernel = checkKernel("CollisionGrid");
 
 		m_computeShader.Dispatch(kernel, (int)m_cells.x / 8, (int)m_cells.y / 8, (int)m_cells.z / 8);
-	}
-
-	public void particleCollisions()
-	{
-		int kernel = checkKernel("CollisionParticles");
-
-		m_computeShader.Dispatch(kernel, m_particleCloud.getParticleBuffer().count / Constants.NUMTHREADS, 1, 1);
 	}
 
 	public void resetGrid()
