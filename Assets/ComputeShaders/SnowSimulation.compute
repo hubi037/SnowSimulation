@@ -1,0 +1,438 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel UpdateParticlePositions
+#pragma kernel InitialiseGridMass
+#pragma kernel InitialiseVelocities
+#pragma kernel UpdateVelocities
+#pragma kernel ExplicitGridVelocities
+#pragma kernel ExplicitVelocities
+#pragma kernel CalculateVolumes
+#pragma kernel CollisionGrid
+#pragma kernel CollisionParticles
+#pragma kernel ResetGrid
+#pragma kernel EqualizeGridVelocities
+#pragma kernel InitialiseGridMassAndVelocities
+
+#include "Assets/ComputeShaders/Snow.cginc"
+
+
+#define NUM_THREADS 1000
+#define STICKY 0.6
+#define FLIP_PERCENT 0.95
+#define HARDENING 5
+#define EPSILON 1e-4
+
+struct SnowParticle
+{
+		float4 position;
+		float4 velocity;
+		float4 gridPosition;
+		float3x3 def_plastic;
+		float3x3 def_elastic;
+		float3x3 velocityGradient;
+
+		float volume;
+		float mass;
+		float density;
+		float lambda;
+		float mu;
+		float xi;
+		float criticalCompressionRatio;
+		float criticalStretchRatio;
+};
+
+//put into extra struct because adding more matrices to above struct somehow messes up reading the correct values
+struct DeformationMaterial
+{
+	float4x4 svd_v;
+	float4x4 svd_w;
+	float4 svd_e;
+};
+
+struct GridCell
+{
+	float4 velocity;
+	float4 velocity_new;
+	float4 force;
+	float mass;
+	float active;
+	float density;
+	float test3;
+};
+
+struct SphereCollider
+{
+	float4 position;
+	float4 velocity;
+	float radius;
+	float coeffFriction;
+};
+
+RWStructuredBuffer<SnowParticle> _Particles;
+RWStructuredBuffer<GridCell> _Grid;
+RWStructuredBuffer<DeformationMaterial> _DefMaterials;
+RWStructuredBuffer<SphereCollider> _SphereColliders;
+
+float4 _GridOrigin;
+float4 _GridDimensions;
+float4 _GridCells;
+float4 _Gravity;
+
+float _NumColliders;
+float _GridCellSize;
+float _DeltaTime;
+float _CellVolume;
+float _MaxCellDensity;
+
+
+
+float3x3 energyDerivative(int index)
+{
+	float3x3 elastic = (float3x3) _Particles[index].def_elastic;
+	float3x3 plastic = (float3x3) _Particles[index].def_plastic;
+	float3x3 svd_v = (float3x3) _DefMaterials[index].svd_v;
+	float3x3 svd_w = (float3x3) _DefMaterials[index].svd_w;
+
+	float harden = exp(HARDENING * (1 - determinant(plastic)));
+	float Je = product(_DefMaterials[index].svd_e);
+
+	float3x3 temp = 2 * _Particles[index].mu * (elastic - svd_w * transpose(svd_v)) * transpose(elastic);
+
+	temp = diag_sum(temp, _Particles[index].lambda * Je * (Je-1));
+
+	return _Particles[index].volume * harden * temp;
+}
+
+bool isColliding(SphereCollider collider, float3 position)
+{
+	return (length(position - collider.position) <= collider.radius);
+}
+
+float3 colliderNormalSphere(SphereCollider collider, float3 position)
+{
+	return normalize(position - collider.position);
+}
+
+float4 checkForAndHandleCollisions(int numColliders, float4 position, float4 velocity)
+{
+	for (int i = 0; i < numColliders; ++i) 
+	{
+		SphereCollider collider = _SphereColliders[i];
+
+		if (isColliding(collider, position))
+		{
+			float3 vRel = velocity - collider.velocity;
+			float3 normal;
+			normal = colliderNormalSphere(collider, position);
+			float vn = dot(vRel, normal);
+			if (vn < 0) 
+			{ //Bodies are not separating and a collision must be applied
+				float3 vt = vRel - normal*vn;
+				float magVt = length(vt);
+				if (magVt <= -collider.coeffFriction * vn) 
+				{ // tangential velocity not enough to overcome force of friction
+
+					vRel = float3(0, 0, 0);
+				}
+				else
+				{
+					//printf("overcame %f\n",collider.coeffFriction);
+					vRel = (1 + collider.coeffFriction * vn / magVt) * vt;
+				}
+			}
+			velocity = float4(vRel + collider.velocity, 0);
+		}
+	}
+
+	return velocity;
+}
+
+
+[numthreads(NUM_THREADS, 1, 1)]
+void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
+{
+
+	_Particles[id.x].velocity = checkForAndHandleCollisions(_NumColliders, _Particles[id.x].position, _Particles[id.x].velocity);
+
+	_Particles[id.x].position += _Particles[id.x].velocity * _DeltaTime;
+
+	_Particles[id.x].velocityGradient *= _DeltaTime;
+
+	_Particles[id.x].velocityGradient = diag_sum(_Particles[id.x].velocityGradient, 1);
+	_Particles[id.x].def_elastic = _Particles[id.x].velocityGradient * _Particles[id.x].def_elastic;
+}
+
+[numthreads(NUM_THREADS, 1, 1)]
+void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
+{
+	_Particles[id.x].gridPosition = (_Particles[id.x].position - _GridOrigin) / _GridCellSize;
+
+	_Particles[id.x].velocityGradient = float3x3(0,0,0,
+												 0,0,0,
+												 0,0,0);
+
+	float ox = _Particles[id.x].gridPosition.x;
+	float oy = _Particles[id.x].gridPosition.y;
+	float oz = _Particles[id.x].gridPosition.z;
+
+	int gridIdx = ox + _GridCells.x * (oy + _GridCells.y * oz);
+
+	for (int idx=0, x=ox-1, x_end=x+3; x<=x_end; x++)
+	{
+		float x_pos = ox-x;
+		float wx = bspline(x_pos);
+		float dx = bsplineSlope(x_pos);
+
+		for (int y=oy-1, y_end=y+3; y<=y_end; y++)
+		{
+
+			float y_pos = oy-y;
+			float wy = bspline(y_pos);
+			float dy = bsplineSlope(y_pos);
+
+			for (int z=oz-1, z_end=z+3; z<=z_end; z++, idx++)
+			{
+				
+				float z_pos = oz-z;
+				float wz = bspline(z_pos);
+				float dz = bsplineSlope(z_pos);
+				
+				float weight = wx*wy*wz;
+				//p.weights[idx] = weight;
+					
+				int gridIdx = x + _GridCells.x * (y + _GridCells.y * z);
+				if(gridIdx >= 0 && gridIdx < _GridCells.x * _GridCells.y * _GridCells.z)
+				{
+
+					float3 weightGradient = float3(dx*wy*wz, dy*wx*wz, dz*wx*wy);
+					float3x3 energy = energyDerivative(id.x);
+
+					_Grid[gridIdx].mass += weight * _Particles[id.x].mass;
+					_Grid[gridIdx].velocity += _Particles[id.x].velocity * weight * _Particles[id.x].mass;
+					_Grid[gridIdx].force += float4(mul(weightGradient, energy), 0);
+				}
+			}
+		}
+	}
+}
+
+[numthreads(8,8,8)]
+void ExplicitGridVelocities(uint3 id : SV_DispatchThreadID)
+{
+	int gridIdx = id.x + _GridCells.x * (id.y + _GridCells.y * id.z);
+	
+	if(_Grid[gridIdx].mass > 0)
+	{
+		float scale = 1.f / _Grid[gridIdx].mass;
+		_Grid[gridIdx].velocity *= scale;
+		_Grid[gridIdx].velocity_new = _Grid[gridIdx].velocity;
+
+		_Grid[gridIdx].force += _Grid[gridIdx].mass * _Gravity;
+
+		_Grid[gridIdx].velocity += _DeltaTime * scale * _Grid[gridIdx].force;
+
+		_Grid[gridIdx].velocity_new = _Grid[gridIdx].velocity - _Grid[gridIdx].velocity_new;
+	}
+
+}
+
+//maybe there is a more efficient way to do this
+[numthreads(8,8,8)]
+void ResetGrid(uint3 id : SV_DispatchThreadID)
+{
+	int gridIdx = id.x + _GridCells.x * (id.y + _GridCells.y * id.z);
+	
+	_Grid[gridIdx].mass = 0;
+	_Grid[gridIdx].active = 0;
+	_Grid[gridIdx].velocity_new = float4(0,0,0,0);
+	_Grid[gridIdx].velocity = float4(0,0,0,0);
+	_Grid[gridIdx].force = float4(0,0,0,0);
+}
+
+[numthreads(NUM_THREADS, 1, 1)]
+void UpdateVelocities(uint3 id : SV_DispatchThreadID)
+{
+
+	float ox = _Particles[id.x].gridPosition.x;
+	float oy = _Particles[id.x].gridPosition.y;
+	float oz = _Particles[id.x].gridPosition.z;
+
+	float4 pic = float4(0,0,0,0);
+	float4 flip = float4(0,0,0,0);
+
+	_Particles[id.x].density = 0;
+
+	for (int idx=0, x=ox-1, x_end=x+3; x<=x_end; x++)
+	{
+		float x_pos = ox-x;
+		float wx = bspline(x_pos);
+		float dx = bsplineSlope(x_pos);
+
+		for (int y=oy-1, y_end=y+3; y<=y_end; y++)
+		{
+
+			float y_pos = oy-y;
+			float wy = bspline(y_pos);
+			float dy = bsplineSlope(y_pos);
+
+			for (int z=oz-1, z_end=z+3; z<=z_end; z++, idx++)
+			{
+				
+				float z_pos = oz-z;
+				float wz = bspline(z_pos);
+				float dz = bsplineSlope(z_pos);
+				
+				float weight = wx*wy*wz;
+					
+				if (weight > EPSILON)
+				{
+					int gridIdx = x + _GridCells.x * (y + _GridCells.y * z);
+
+					if(gridIdx >= 0 && gridIdx < _GridCells.x * _GridCells.y * _GridCells.z)
+					{
+						float3 weightGradient = float3(dx*wy*wz, dy*wx*wz, dz*wx*wy);
+						_Particles[id.x].velocityGradient += outerProduct(_Grid[gridIdx].velocity.xyz, weightGradient.xyz);
+
+						pic += _Grid[gridIdx].velocity * weight;
+						flip += _Grid[gridIdx].velocity_new * weight;
+
+						_Particles[id.x].density += _Grid[gridIdx].mass * weight;
+					}
+				}
+			}
+		}
+	}
+
+
+	_Particles[id.x].velocity = (flip + _Particles[id.x].velocity) * FLIP_PERCENT + pic*(1-FLIP_PERCENT);
+	_Particles[id.x].density /= _CellVolume;
+}
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CalculateVolumes(uint3 id : SV_DispatchThreadID)
+{
+
+	_Particles[id.x].density = 0;
+
+	float ox = _Particles[id.x].gridPosition.x;
+	float oy = _Particles[id.x].gridPosition.y;
+	float oz = _Particles[id.x].gridPosition.z;
+
+	for (int idx=0, x=ox-1, x_end=x+3; x<=x_end; x++)
+	{
+		float x_pos = ox-x;
+		float wx = bspline(x_pos);
+		float dx = bsplineSlope(x_pos);
+
+		for (int y=oy-1, y_end=y+3; y<=y_end; y++)
+		{
+
+			float y_pos = oy-y;
+			float wy = bspline(y_pos);
+			float dy = bsplineSlope(y_pos);
+
+			for (int z=oz-1, z_end=z+3; z<=z_end; z++, idx++)
+			{
+				
+				float z_pos = oz-z;
+				float wz = bspline(z_pos);
+				float dz = bsplineSlope(z_pos);
+				
+				float weight = wx*wy*wz;
+					
+				if (weight > 0.001)
+				{
+					int gridIdx = x + _GridCells.x * (y + _GridCells.y * z);
+					_Particles[id.x].density += _Grid[gridIdx].mass * weight;
+				}
+			}
+		}
+	}
+
+	_Particles[id.x].density /= _CellVolume;
+	_Particles[id.x].volume = _Particles[id.x].mass / _Particles[id.x].density;
+}
+
+[numthreads(8,8,8)]
+void EqualizeGridVelocities(uint3 id : SV_DispatchThreadID)
+{
+
+	int gridIdx = id.x + _GridCells.x * (id.y + _GridCells.y * id.z);
+
+
+	float3 newPos = id + normalize(_Grid[gridIdx].velocity_new.xyz);
+
+	int newIdx = newPos.x + _GridCells.x * (newPos.y + _GridCells.y * newPos.z);
+
+	if(newIdx <= 0 || newIdx > _GridCells.x * _GridCells.y * _GridCells.z)
+		return;
+	
+	if(newIdx != gridIdx)
+	{
+		float density = _Grid[newIdx].mass / (_GridCellSize * _GridCellSize * _GridCellSize);
+		
+		float velocityLength = length(_Grid[newIdx].velocity_new);
+		if(density > _MaxCellDensity && length(_Grid[gridIdx].velocity_new) > velocityLength)
+		{
+			//_Grid[gridIdx].velocity = normalize(_Grid[gridIdx].velocity) * velocityLength;
+			//_Grid[gridIdx].velocity = float4(0,0,0,0);
+		}
+	}
+}
+
+
+[numthreads(8,8,8)]
+void CollisionGrid(uint3 id : SV_DispatchThreadID)
+{
+
+	int gridIdx = id.x + _GridCells.x * (id.y + _GridCells.y * id.z);
+
+	float3 newPos = id + _Grid[gridIdx].velocity.xyz * (_DeltaTime / _GridCellSize);
+
+	if(newPos.x < 1 || newPos.x > _GridCells.x - 1)
+	{
+		_Grid[gridIdx].velocity.x = 0;
+		_Grid[gridIdx].velocity.y *= STICKY;
+		_Grid[gridIdx].velocity.z *= STICKY;
+	}
+	if(newPos.y < 1 || newPos.y > _GridCells.y - 1)
+	{
+
+		_Grid[gridIdx].velocity.y = 0;
+		_Grid[gridIdx].velocity.x *= STICKY;
+		_Grid[gridIdx].velocity.z *= STICKY;
+	}
+	if(newPos.z < 1 || newPos.z > _GridCells.z - 1)
+	{
+
+		_Grid[gridIdx].velocity.z = 0;
+		_Grid[gridIdx].velocity.x *= STICKY;
+		_Grid[gridIdx].velocity.y *= STICKY;
+	}
+}
+
+
+[numthreads(NUM_THREADS, 1, 1)]
+void CollisionParticles(uint3 id : SV_DispatchThreadID)
+{
+
+	float3 newPos = _Particles[id.x].gridPosition.xyz + (_Particles[id.x].velocity.xyz / _GridCellSize ) * _DeltaTime;
+
+	if(newPos.x < 1 || newPos.x > _GridCells.x - 2)
+	{
+		_Particles[id.x].velocity.x = 0 * _Particles[id.x].velocity.x;
+		_Particles[id.x].velocity.y *= STICKY;
+		_Particles[id.x].velocity.z *= STICKY;
+	}
+	if(newPos.y < 1 || newPos.y > _GridCells.y - 2)
+	{
+		_Particles[id.x].velocity.y = 0 * _Particles[id.x].velocity.y;
+		_Particles[id.x].velocity.x *= STICKY;
+		_Particles[id.x].velocity.z *= STICKY;
+	}
+	if(newPos.z < 1 || newPos.z > _GridCells.z - 2)
+	{
+		_Particles[id.x].velocity.z = 0 * _Particles[id.x].velocity.z;
+		_Particles[id.x].velocity.x *= STICKY;
+		_Particles[id.x].velocity.y *= STICKY;
+	}
+}
