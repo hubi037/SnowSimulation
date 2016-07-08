@@ -25,9 +25,9 @@ Shader "Custom/ParticleShaderNew"
 
 			struct SnowParticle
 			{
-				float4 position;
-				float4 velocity;
-				float4 gridPosition;
+				float3 position;
+				float3 velocity;
+				float3 gridPosition;
 				float3x3 def_plastic;
 				float3x3 def_elastic;
 				float3x3 velocityGradient;

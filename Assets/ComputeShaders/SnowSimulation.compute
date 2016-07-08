@@ -20,9 +20,9 @@
 
 struct SnowParticle
 {
-		float4 position;
-		float4 velocity;
-		float4 gridPosition;
+		float3 position;
+		float3 velocity;
+		float3 gridPosition;
 		float3x3 def_plastic;
 		float3x3 def_elastic;
 		float3x3 velocityGradient;
@@ -47,19 +47,18 @@ struct DeformationMaterial
 
 struct GridCell
 {
-	float4 velocity;
-	float4 velocity_new;
-	float4 force;
+	float3 velocity;
+	float3 velocity_new;
+	float3 force;
 	float mass;
 	float active;
 	float density;
-	float test3;
 };
 
 struct SphereCollider
 {
-	float4 position;
-	float4 velocity;
+	float3 position;
+	float3 velocity;
 	float radius;
 	float coeffFriction;
 };
@@ -109,7 +108,7 @@ float3 colliderNormalSphere(SphereCollider collider, float3 position)
 	return normalize(position - collider.position);
 }
 
-float4 checkForAndHandleCollisions(int numColliders, float4 position, float4 velocity)
+float3 checkForAndHandleCollisions(int numColliders, float3 position, float3 velocity)
 {
 	for (int i = 0; i < numColliders; ++i) 
 	{
@@ -136,7 +135,7 @@ float4 checkForAndHandleCollisions(int numColliders, float4 position, float4 vel
 					vRel = (1 + collider.coeffFriction * vn / magVt) * vt;
 				}
 			}
-			velocity = float4(vRel + collider.velocity, 0);
+			velocity = vRel + collider.velocity;
 		}
 	}
 
@@ -146,15 +145,14 @@ float4 checkForAndHandleCollisions(int numColliders, float4 position, float4 vel
 void CollisionParticleWithGrid(int index)
 {
 
+	//check if particle would leave grid 
 	float3 newPos = _Particles[index].gridPosition.xyz + (_Particles[index].velocity.xyz / _GridCellSize ) * _DeltaTime;
-
 	if(newPos.x < 1 || newPos.x > _GridCells.x - 2)
 	{
 		_Particles[index].velocity.x = 0 * _Particles[index].velocity.x;
 		_Particles[index].velocity.y *= STICKY;
 		_Particles[index].velocity.z *= STICKY;
 	}
-
 	if(newPos.y < 1 || newPos.y > _GridCells.y - 2)
 	{
 		_Particles[index].velocity.y = 0 * _Particles[index].velocity.y;
@@ -167,6 +165,19 @@ void CollisionParticleWithGrid(int index)
 		_Particles[index].velocity.x *= STICKY;
 		_Particles[index].velocity.y *= STICKY;
 	}
+
+	newPos = _Particles[index].gridPosition.xyz; // + normalize(_Particles[index].velocity);
+	int newIdx = newPos.x + _GridCells.x * (newPos.y + _GridCells.y * newPos.z);
+
+	//mass appears to be 0 here
+	float density = _Grid[newIdx].mass / (_GridCellSize * _GridCellSize * _GridCellSize);
+		
+	float velocityLength = length(_Grid[newIdx].velocity_new);
+	//if(density > _MaxCellDensity)
+	{
+		//_Particles[index].velocity = float3(density * 100000,0,0); //normalize(_Grid[gridIdx].velocity) * velocityLength;
+	}
+
 }
 
 
@@ -234,7 +245,7 @@ void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 
 					_Grid[gridIdx].mass += weight * _Particles[id.x].mass;
 					_Grid[gridIdx].velocity += _Particles[id.x].velocity * weight * _Particles[id.x].mass;
-					_Grid[gridIdx].force += float4(mul(weightGradient, energy), 0);
+					_Grid[gridIdx].force += mul(weightGradient, energy);
 				}
 			}
 		}
@@ -282,8 +293,8 @@ void UpdateVelocities(uint3 id : SV_DispatchThreadID)
 	float oy = _Particles[id.x].gridPosition.y;
 	float oz = _Particles[id.x].gridPosition.z;
 
-	float4 pic = float4(0,0,0,0);
-	float4 flip = float4(0,0,0,0);
+	float3 pic = float3(0,0,0);
+	float3 flip = float3(0,0,0);
 
 	_Particles[id.x].density = 0;
 
@@ -399,7 +410,7 @@ void EqualizeGridVelocities(uint3 id : SV_DispatchThreadID)
 		float velocityLength = length(_Grid[newIdx].velocity_new);
 		if(density > _MaxCellDensity && length(_Grid[gridIdx].velocity_new) > velocityLength)
 		{
-			//_Grid[gridIdx].velocity = normalize(_Grid[gridIdx].velocity) * velocityLength;
+			_Grid[gridIdx].velocity = normalize(_Grid[gridIdx].velocity) * velocityLength;
 		}
 	}
 }

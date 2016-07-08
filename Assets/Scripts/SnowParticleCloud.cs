@@ -34,7 +34,7 @@ public class SnowParticleCloud
 		for(int i = 0; i < _particleAmount; i++)
 		{
 			Vector3 random = Random.insideUnitSphere;
-			Vector4 particlePosition = new Vector4(2 + random.x, 2.5f + random.y, 2 + random.z, 0); 
+			Vector3 particlePosition = new Vector3(2 + random.x * 0.5f, 2.5f + random.y * 0.5f, 2 + random.z * 0.5f); 
 
 			SnowParticle newParticle = new SnowParticle();
 			newParticle.position = particlePosition;

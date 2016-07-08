@@ -19,9 +19,9 @@ public struct Matrix3x3
 
 public struct SnowParticle
 {
-	public Vector4 position;
-	public Vector4 velocity;
-	public Vector4 gridPosition;
+	public Vector3 position;
+	public Vector3 velocity;
+	public Vector3 gridPosition;
 	public Matrix3x3 def_plastic;
 	public Matrix3x3 def_elastic;
 	public Matrix3x3 velocityGradient;
@@ -34,6 +34,5 @@ public struct SnowParticle
 	public float xi;
 	public float criticalCompressionRatio;
 	public float criticalStretchRatio;
-
 
 }

@@ -7,13 +7,12 @@ public class SnowGrid
 
 	struct GridCell
 	{
-		public Vector4 velocity;
-		public Vector4 velocityChange;
-		public Vector4 force;
+		public Vector3 velocity;
+		public Vector3 velocityChange;
+		public Vector3 force;
 		public float mass;
 		public float active;
-		public float test1;
-		public float test2;
+		public float density;
 	}
 
 	private ComputeBuffer m_gridBuffer;
@@ -83,7 +82,7 @@ public class SnowGrid
 		m_computeShader.SetVector("_GridOrigin", new Vector4(m_origin.x, m_origin.y, m_origin.z, 0));
 		m_computeShader.SetFloat("_GridCellSize", m_cellSize);
 		m_computeShader.SetFloat("_CellVolume", m_cellVolume);
-		m_computeShader.SetFloat("_MaxCellDensity", 1f);
+		m_computeShader.SetFloat("_MaxCellDensity", 0.0001f);
 		m_computeShader.SetVector("_GridDimensions", new Vector4(m_dimensions.x, m_dimensions.y, m_dimensions.z, 0));
 		m_computeShader.SetVector("_GridCells", new Vector4(m_cells.x, m_cells.y, m_cells.z, 0));
 		m_computeShader.SetVector("_Gravity", new Vector4(0, -9.8f, 0, 0));

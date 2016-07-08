@@ -23,8 +23,8 @@ public class SnowManager : MonoBehaviour
 
 	struct _SphereCollider
 	{
-		public Vector4 position;
-		public Vector4 velocity;
+		public Vector3 position;
+		public Vector3 velocity;
 		public float radius;
 		public float coeffFriction;
 	}
@@ -40,7 +40,7 @@ public class SnowManager : MonoBehaviour
 		{
 			_SphereCollider collider = new _SphereCollider();
 			collider.position = coll.transform.position;
-			collider.velocity = Vector4.zero; //todo: check for rigidbody and set velocity if it has one
+			collider.velocity = Vector3.zero; //todo: check for rigidbody and set velocity if it has one
 			collider.coeffFriction = 0.1f;
 			collider.radius = coll.radius;
 			colliders.Add(collider);
@@ -86,6 +86,21 @@ public class SnowManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.P))
 			running = !running;
 
+		if(Input.GetKeyDown(KeyCode.R))
+			reset();
+
+		if (Input.GetKeyDown(KeyCode.Q) && Time.timeScale < 1.0f)
+		{
+			Time.timeScale += 0.1f;
+			Debug.Log("Set Timescale to: " +  Time.timeScale);
+		}
+
+		if (Input.GetKeyDown(KeyCode.E) && Time.timeScale > 0.0f)
+		{
+			Time.timeScale -= 0.1f;
+			Debug.Log("Set Timescale to: " + Time.timeScale);					
+		}
+
 		if(running)
 		{
 			m_grid.resetGrid();
@@ -104,5 +119,18 @@ public class SnowManager : MonoBehaviour
 		m_quadPoints.Dispose();
 		m_grid.DisposeBuffers();
 		m_particleCloud.DisposeBuffers();
+	}
+
+	void reset()
+	{
+		m_particleCloud.DisposeBuffers();
+		m_grid.DisposeBuffers();
+
+		//creates and renders our particles
+		m_particleCloud = new SnowParticleCloud(m_particleAmount, m_origin, m_cloudSize, m_computeShader, m_snowMaterial);
+		//creates our grid and performs the snow simulation on the particles and the grid
+		m_grid = new SnowGrid(Vector3.zero, new Vector3(4, 4, 4), new Vector3(64, 64, 64), m_particleCloud, m_computeShader);
+
+		running = false;
 	}
 }
