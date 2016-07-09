@@ -87,4 +87,9 @@ public class SnowParticleCloud
 		m_particleBuffer.Dispose();
 		m_particleDefBuffer.Dispose();
 	}
+
+	public void setGridBuffer(ComputeBuffer _GridBuffer)
+	{
+		m_computeShader.SetBuffer(m_computeShader.FindKernel("UpdateParticlePositions"), "_Grid", _GridBuffer);
+	}
 }

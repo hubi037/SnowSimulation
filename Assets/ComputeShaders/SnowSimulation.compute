@@ -142,42 +142,70 @@ float3 checkForAndHandleCollisions(int numColliders, float3 position, float3 vel
 	return velocity;
 }
 
+int getGridIndex(int x, int y, int z)
+{
+	return x + _GridCells.x * (y + _GridCells.y * z);
+}
+
+void CollisionGrid(float3 gridPosition, int gridIndex, float3 velocity)
+{
+	float3 newPos = gridPosition + velocity * (_DeltaTime / _GridCellSize);
+
+	if(newPos.x < 1 || newPos.y > _GridCells.y - 1)
+	{
+		_Grid[gridIndex].velocity.x = 0;
+		_Grid[gridIndex].velocity.y *= STICKY;
+		_Grid[gridIndex].velocity.z *= STICKY;
+	}
+	if(newPos.y < 1 || newPos.y > _GridCells.y - 1)
+	{
+		_Grid[gridIndex].velocity.y = 0;
+		_Grid[gridIndex].velocity.x *= STICKY;
+		_Grid[gridIndex].velocity.z *= STICKY;
+	}
+	if(newPos.z < 1 || newPos.z > _GridCells.z - 1)
+	{
+		_Grid[gridIndex].velocity.z = 0;
+		_Grid[gridIndex].velocity.x *= STICKY;
+		_Grid[gridIndex].velocity.y *= STICKY;
+	}
+}
+
 void CollisionParticleWithGrid(int index)
 {
 
 	//check if particle would leave grid 
 	float3 newPos = _Particles[index].gridPosition.xyz + (_Particles[index].velocity.xyz / _GridCellSize ) * _DeltaTime;
-	if(newPos.x < 1 || newPos.x > _GridCells.x - 2)
+
+	if(newPos.x < 1 || newPos.x > _GridCells.x - 1)
 	{
 		_Particles[index].velocity.x = 0 * _Particles[index].velocity.x;
 		_Particles[index].velocity.y *= STICKY;
 		_Particles[index].velocity.z *= STICKY;
 	}
-	if(newPos.y < 1 || newPos.y > _GridCells.y - 2)
+	if(newPos.y < 1 || newPos.y > _GridCells.y - 1)
 	{
 		_Particles[index].velocity.y = 0 * _Particles[index].velocity.y;
 		_Particles[index].velocity.x *= STICKY;
 		_Particles[index].velocity.z *= STICKY;
 	}
-	if(newPos.z < 1 || newPos.z > _GridCells.z - 2)
+	if(newPos.z < 1 || newPos.z > _GridCells.z - 1)
 	{
 		_Particles[index].velocity.z = 0 * _Particles[index].velocity.z;
 		_Particles[index].velocity.x *= STICKY;
 		_Particles[index].velocity.y *= STICKY;
 	}
 
-	newPos = _Particles[index].gridPosition.xyz; // + normalize(_Particles[index].velocity);
-	int newIdx = newPos.x + _GridCells.x * (newPos.y + _GridCells.y * newPos.z);
+	int newIdx = getGridIndex(newPos.x, newPos.y, newPos.z);
+	int gridIdx = getGridIndex(_Particles[index].gridPosition.x, _Particles[index].gridPosition.y, _Particles[index].gridPosition.z);
 
-	//mass appears to be 0 here
 	float density = _Grid[newIdx].mass / (_GridCellSize * _GridCellSize * _GridCellSize);
 		
 	float velocityLength = length(_Grid[newIdx].velocity_new);
-	//if(density > _MaxCellDensity)
+	if(density > _MaxCellDensity && gridIdx != newIdx)
 	{
-		//_Particles[index].velocity = float3(density * 100000,0,0); //normalize(_Grid[gridIdx].velocity) * velocityLength;
+		//_Particles[index].velocity = float3(0,0,0); // normalize(_Grid[gridIdx].velocity) * velocityLength;
 	}
-
 }
 
 
@@ -234,9 +262,8 @@ void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 				float dz = bsplineSlope(z_pos);
 				
 				float weight = wx*wy*wz;
-				//p.weights[idx] = weight;
 					
-				int gridIdx = x + _GridCells.x * (y + _GridCells.y * z);
+				int gridIdx = getGridIndex(x,y,z);
 				if(gridIdx >= 0 && gridIdx < _GridCells.x * _GridCells.y * _GridCells.z)
 				{
 
@@ -255,8 +282,8 @@ void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 [numthreads(8,8,8)]
 void ExplicitGridVelocities(uint3 id : SV_DispatchThreadID)
 {
-	int gridIdx = id.x + _GridCells.x * (id.y + _GridCells.y * id.z);
-	
+	int gridIdx = getGridIndex(id.x,id.y,id.z);
+
 	if(_Grid[gridIdx].mass > 0)
 	{
 		float scale = 1.f / _Grid[gridIdx].mass;
@@ -268,21 +295,22 @@ void ExplicitGridVelocities(uint3 id : SV_DispatchThreadID)
 		_Grid[gridIdx].velocity += _DeltaTime * scale * _Grid[gridIdx].force;
 
 		_Grid[gridIdx].velocity_new = _Grid[gridIdx].velocity - _Grid[gridIdx].velocity_new;
+			
+		CollisionGrid(id, gridIdx, _Grid[gridIdx].velocity);
 	}
-
 }
 
 //maybe there is a more efficient way to do this
 [numthreads(8,8,8)]
 void ResetGrid(uint3 id : SV_DispatchThreadID)
 {
-	int gridIdx = id.x + _GridCells.x * (id.y + _GridCells.y * id.z);
+	int gridIdx = getGridIndex(id.x,id.y,id.z);
 	
 	_Grid[gridIdx].mass = 0;
 	_Grid[gridIdx].active = 0;
-	_Grid[gridIdx].velocity_new = float4(0,0,0,0);
-	_Grid[gridIdx].velocity = float4(0,0,0,0);
-	_Grid[gridIdx].force = float4(0,0,0,0);
+	_Grid[gridIdx].velocity_new = float3(0,0,0);
+	_Grid[gridIdx].velocity = float3(0,0,0);
+	_Grid[gridIdx].force = float3(0,0,0);
 }
 
 [numthreads(NUM_THREADS, 1, 1)]
@@ -322,7 +350,7 @@ void UpdateVelocities(uint3 id : SV_DispatchThreadID)
 					
 				if (weight > EPSILON)
 				{
-					int gridIdx = x + _GridCells.x * (y + _GridCells.y * z);
+					int gridIdx = getGridIndex(x,y,z);
 
 					if(gridIdx >= 0 && gridIdx < _GridCells.x * _GridCells.y * _GridCells.z)
 					{
@@ -338,7 +366,6 @@ void UpdateVelocities(uint3 id : SV_DispatchThreadID)
 			}
 		}
 	}
-
 
 	_Particles[id.x].velocity = (flip + _Particles[id.x].velocity) * FLIP_PERCENT + pic*(1-FLIP_PERCENT);
 	_Particles[id.x].density /= _CellVolume;
@@ -410,38 +437,7 @@ void EqualizeGridVelocities(uint3 id : SV_DispatchThreadID)
 		float velocityLength = length(_Grid[newIdx].velocity_new);
 		if(density > _MaxCellDensity && length(_Grid[gridIdx].velocity_new) > velocityLength)
 		{
-			_Grid[gridIdx].velocity = normalize(_Grid[gridIdx].velocity) * velocityLength;
+			_Grid[gridIdx].velocity_new = float4(0,0,0,0); //normalize(_Grid[gridIdx].velocity_new) * velocityLength;
 		}
-	}
-}
-
-
-[numthreads(8,8,8)]
-void CollisionGrid(uint3 id : SV_DispatchThreadID)
-{
-
-	int gridIdx = id.x + _GridCells.x * (id.y + _GridCells.y * id.z);
-
-	float3 newPos = id + _Grid[gridIdx].velocity.xyz * (_DeltaTime / _GridCellSize);
-
-	if(newPos.x < 1 || newPos.x > _GridCells.x - 1)
-	{
-		_Grid[gridIdx].velocity.x = 0;
-		_Grid[gridIdx].velocity.y *= STICKY;
-		_Grid[gridIdx].velocity.z *= STICKY;
-	}
-	if(newPos.y < 1 || newPos.y > _GridCells.y - 1)
-	{
-
-		_Grid[gridIdx].velocity.y = 0;
-		_Grid[gridIdx].velocity.x *= STICKY;
-		_Grid[gridIdx].velocity.z *= STICKY;
-	}
-	if(newPos.z < 1 || newPos.z > _GridCells.z - 1)
-	{
-
-		_Grid[gridIdx].velocity.z = 0;
-		_Grid[gridIdx].velocity.x *= STICKY;
-		_Grid[gridIdx].velocity.y *= STICKY;
 	}
 }
