@@ -1,15 +1,13 @@
 ﻿// Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel UpdateParticlePositions
-#pragma kernel InitialiseGridMass
 #pragma kernel UpdateVelocities
 #pragma kernel ExplicitGridVelocities
 #pragma kernel CalculateVolumes
-#pragma kernel CollisionGrid
 #pragma kernel ResetGrid
 #pragma kernel EqualizeGridVelocities
 #pragma kernel InitialiseGridMassAndVelocities
 
-#include "Assets/ComputeShaders/Snow.cginc"
+#include "Assets/ComputeShaders/SnowHelpers.cginc"
 
 
 #define NUM_THREADS 1000
@@ -79,7 +77,10 @@ float _DeltaTime;
 float _CellVolume;
 float _MaxCellDensity;
 
-
+int getGridIndex(int x, int y, int z)
+{
+	return x + _GridCells.x * (y + _GridCells.y * z);
+}
 
 float3x3 energyDerivative(int index)
 {
@@ -142,10 +143,6 @@ float3 checkForAndHandleCollisions(int numColliders, float3 position, float3 vel
 	return velocity;
 }
 
-int getGridIndex(int x, int y, int z)
-{
-	return x + _GridCells.x * (y + _GridCells.y * z);
-}
 
 void CollisionGrid(float3 gridPosition, int gridIndex, float3 velocity)
 {
@@ -194,17 +191,6 @@ void CollisionParticleWithGrid(int index)
 		_Particles[index].velocity.z = 0 * _Particles[index].velocity.z;
 		_Particles[index].velocity.x *= STICKY;
 		_Particles[index].velocity.y *= STICKY;
-	}
-
-	int newIdx = getGridIndex(newPos.x, newPos.y, newPos.z);
-	int gridIdx = getGridIndex(_Particles[index].gridPosition.x, _Particles[index].gridPosition.y, _Particles[index].gridPosition.z);
-
-	float density = _Grid[newIdx].mass / (_GridCellSize * _GridCellSize * _GridCellSize);
-		
-	float velocityLength = length(_Grid[newIdx].velocity_new);
-	if(density > _MaxCellDensity && gridIdx != newIdx)
-	{
-		//_Particles[index].velocity = float3(0,0,0); // normalize(_Grid[gridIdx].velocity) * velocityLength;
 	}
 }
 
@@ -293,6 +279,9 @@ void ExplicitGridVelocities(uint3 id : SV_DispatchThreadID)
 		_Grid[gridIdx].force += _Grid[gridIdx].mass * _Gravity;
 
 		_Grid[gridIdx].velocity += _DeltaTime * scale * _Grid[gridIdx].force;
+
+		float3 nodePosition = _GridOrigin + id * _GridCellSize;
+		_Grid[gridIdx].velocity = checkForAndHandleCollisions(_NumColliders, nodePosition, _Grid[gridIdx].velocity);
 
 		_Grid[gridIdx].velocity_new = _Grid[gridIdx].velocity - _Grid[gridIdx].velocity_new;
 			

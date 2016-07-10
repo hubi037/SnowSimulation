@@ -50,4 +50,5 @@ float3x3 diag_sum(float3x3 input, const float c)
 
 	return input;
 }
+
 #endif

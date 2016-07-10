@@ -5,7 +5,7 @@
 #pragma kernel DoSphereCollision
 
 
-#include "Assets\Snow.cginc"
+#include "Assets/ComputeShaders/SnowHelpers.cginc"
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
 
@@ -30,9 +30,6 @@ float _DeltaTime;
 float _Gravity;
 float _CellSize;
 float4 _OriginIndex;
-
-SnowParticle p;
-
 
 
 
