@@ -211,6 +211,8 @@ void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
 	_Particles[id.x].def_elastic = _Particles[id.x].velocityGradient * _Particles[id.x].def_elastic;
 }
 
+
+
 //todo: try to find a way to use y and z threads to create more threads and avoid the nested for loop
 [numthreads(NUM_THREADS, 1, 1)]
 void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
@@ -264,6 +266,7 @@ void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 		}
 	}
 }
+
 
 [numthreads(8,8,8)]
 void ExplicitGridVelocities(uint3 id : SV_DispatchThreadID)
