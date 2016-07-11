@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+
 public class SnowParticleCloud
 {
 
@@ -11,6 +13,18 @@ public class SnowParticleCloud
 
 	private ComputeShader m_computeShader;
 	private Material m_material;
+
+	private float POISSONS_RATIO = 0.2f;
+	private float E = 1.4e5f;
+
+	// CRITICAL COMPRESSION
+	private float MIN_THETA_C = 1.9e-2f;
+	private float MAX_THETA_C = 2.5e-2f;
+
+	// CRITICAL STRETCH
+	private float MIN_THETA_S = 5e-3f;
+	private float MAX_THETA_S = 7.5e-3f;
+
 
 	struct DeformationMaterial
 	{
@@ -34,11 +48,22 @@ public class SnowParticleCloud
 		for(int i = 0; i < _particleAmount; i++)
 		{
 			Vector3 random = Random.insideUnitSphere;
-			Vector3 particlePosition = new Vector3(2 + random.x * 0.5f, 2.5f + random.y * 0.5f, 2 + random.z * 0.5f); 
+			Vector3 particlePosition = new Vector3(2 + random.x, 2f + random.y, 2 + random.z); 
 
 			SnowParticle newParticle = new SnowParticle();
 			newParticle.position = particlePosition;
 			newParticle.mass = particle_mass;
+			newParticle.xi = 10;
+			newParticle.lambda = (E * POISSONS_RATIO) / ((1 + POISSONS_RATIO) * (1 - 2 * POISSONS_RATIO));
+			newParticle.mu = E / (2 * (1 + POISSONS_RATIO));
+			newParticle.criticalCompressionRatio = 1f - MAX_THETA_C;
+			newParticle.criticalStretchRatio = 1f + MAX_THETA_S;
+			newParticle.def_elastic = new Matrix3x3();
+			newParticle.def_elastic.m00 = 1.0f;
+			newParticle.def_elastic.m11 = 1.0f;
+			newParticle.def_elastic.m22 = 1.0f;
+			newParticle.def_plastic = newParticle.def_elastic;
+
 			m_particles.Add(newParticle);
 
 			DeformationMaterial newDeformation = new DeformationMaterial();

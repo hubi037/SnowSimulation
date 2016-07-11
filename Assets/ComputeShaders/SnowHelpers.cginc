@@ -6,6 +6,7 @@
 #define GAMMA 5.828427124 // FOUR_GAMMA_SQUARED = sqrt(8)+3;
 #define CSTAR 0.923879532 // cos(pi/8)
 #define SSTAR 0.3826834323 // sin(p/8)
+#define EPSILON 1e-6
 
 struct quat
 {
@@ -109,7 +110,7 @@ float3x3  MatfromQuat( quat q )
 }
 
 
-void jacobiConjugation( int x, int y, int z, out float3x3 S, out quat qV )
+void jacobiConjugation( int x, int y, int z, inout float3x3 S, inout quat qV )
 {
 	float ch = 2.f * (S[0][0]-S[1][1]);
 	float ch2 = ch*ch;
@@ -142,7 +143,7 @@ void jacobiConjugation( int x, int y, int z, out float3x3 S, out quat qV )
               s3, s2, s0 );
 
     float tmp[3] = { sh*qV.values[0], sh*qV.values[1], sh*qV.values[2] };
-    sh *= qV.values[4];
+    sh *= qV.values[3];
     // original
     qV.values[0] *= ch;
 	qV.values[1] *= ch;
@@ -157,7 +158,7 @@ void jacobiConjugation( int x, int y, int z, out float3x3 S, out quat qV )
 }
 
 
-void jacobiEigenanalysis( out float3x3 S, out quat qV )
+void jacobiEigenanalysis( inout float3x3 S, inout quat qV )
 {
     qV.values[0] = 1.0f;
 
@@ -183,14 +184,14 @@ float3 getMatrixColumn(float3x3 mat, int index)
 	return float3(mat[0][index], mat[1][index], mat[2][index]);
 }
 
-void condSwap(bool c, out float x, out float y, int negative)
+void condSwap(bool c, inout float x, inout float y, int negative)
 {
     float _x_ = x * negative;  
     x = c ? y : x;
 	y = c ? _x_ : y; 
 }
 
-void condSwap(bool c, out float3 x, out float3 y, int negative)
+void condSwap(bool c, inout float3 x, inout float3 y, int negative)
 {
     float3 _x_ = x * negative;  
     x = c ? y : x;
@@ -200,12 +201,12 @@ void condSwap(bool c, out float3 x, out float3 y, int negative)
 float3x3 buildMatrixFromColumn(float3 col1, float3 col2, float3 col3)
 {
 	float3x3 mat = float3x3(col1, col2, col3);
-	mat = transpose(mat);
+	mat = transpose(mat); //transpose because hlsl builds matrices from rows
 
 	return mat;
 }
 
-void sortSingularValues(float3x3 B, float3x3 V)
+void sortSingularValues(inout float3x3 B, inout float3x3 V)
 {
 
 	float3 b1 = getMatrixColumn(B,0); float3 v1 = getMatrixColumn(V,0);
@@ -236,7 +237,7 @@ void sortSingularValues(float3x3 B, float3x3 V)
 	
 }
 
-void QRGivensQuaternion( float a1, float a2, out float ch, out float sh )
+void QRGivensQuaternion( float a1, float a2, inout float ch, inout float sh )
 {
     // a1 = pivot point on diagonal
     // a2 = lower triangular entry we want to annihilate
@@ -252,13 +253,16 @@ void QRGivensQuaternion( float a1, float a2, out float ch, out float sh )
     sh *= w;
 }
 
-void QRDecomposition( float3x3 B, float3x3 Q, float3x3 R )
+void QRDecomposition( float3x3 B, inout float3x3 Q, inout float3x3 R )
 {
     R = B;
 
     // QR decomposition of 3x3 matrices using Givens rotations to
     // eliminate elements B21, B31, B32
-    quat qQ; // cumulative rotation
+    quat qQ;
+	float values[4] = {0,0,0,1};
+	qQ.values = values;
+	 // cumulative rotation
     float3x3 U;
     float ch, sh, s0, s1;
 
@@ -282,49 +286,58 @@ void QRDecomposition( float3x3 B, float3x3 Q, float3x3 R )
 	qQ.values[3] = ch * qQ.values[2] - sh * qQ.values[0];
 
     // second givens rotation
-    QRGivensQuaternion( R[0], R[2], ch, sh );
+    QRGivensQuaternion( R[0][0], R[2][0], ch, sh );
 
     s0 = 1 -2 * sh * sh;
     s1 = 2 * sh * ch;
     U = float3x3(  s0, 0, s1,
                 0, 1,  0,
-              -s1, 0, s0 );
+				-s1, 0, s0 );
 
-    R = mat3::multiplyAtB( U, R );
+    //R = mat3::multiplyAtB( U, R );
+	R = transpose(U) * R;
 
     // update cumulative rotation
-    qQ = quat( ch*qQ.w+sh*qQ.y, ch*qQ.x+sh*qQ.z, ch*qQ.y-sh*qQ.w, ch*qQ.z-sh*qQ.x );
-	qQ.values[0] = ch*qQ.w+sh*qQ.y;
-	qQ.values[1] = ch*qQ.x+sh*qQ.z;
-	qQ.values[2] = ch*qQ.y-sh*qQ.w;
-	qQ.values[3] = ch*qQ.z-sh*qQ.x;
+    //qQ = quat( ch*qQ.w+sh*qQ.y, ch*qQ.x+sh*qQ.z, ch*qQ.y-sh*qQ.w, ch*qQ.z-sh*qQ.x );
+
+	qQ.values[0] = ch * qQ.values[3] + sh * qQ.values[1];
+	qQ.values[1] = ch * qQ.values[0] + sh * qQ.values[2];
+	qQ.values[2] = ch * qQ.values[1] - sh * qQ.values[3];
+	qQ.values[3] = ch * qQ.values[2] - sh * qQ.values[0];
 
     // third Givens rotation
-    QRGivensQuaternion( R[4], R[5], ch, sh );
+    QRGivensQuaternion( R[1][1], R[2][1], ch, sh );
 
-    s0 = 1-2*sh*sh;
-    s1 = 2*sh*ch;
-    U = mat3( 1,   0,  0,
+    s0 = 1 - 2 * sh * sh;
+    s1 = 2 * sh * ch;
+    U = float3x3( 1,   0,  0,
               0,  s0, s1,
               0, -s1, s0 );
 
-    R = mat3::multiplyAtB( U, R );
+    R = transpose(U) * R;
 
     // update cumulative rotation
-    qQ = quat( ch*qQ.w-sh*qQ.x, sh*qQ.w+ch*qQ.x, ch*qQ.y+sh*qQ.z, ch*qQ.z-sh*qQ.y );
+    //qQ = quat( ch*qQ.w-sh*qQ.x, sh*qQ.w+ch*qQ.x, ch*qQ.y+sh*qQ.z, ch*qQ.z-sh*qQ.y );
+
+	qQ.values[0] = ch * qQ.values[3] + sh * qQ.values[1];
+	qQ.values[1] = ch * qQ.values[0] + sh * qQ.values[2];
+	qQ.values[2] = ch * qQ.values[1] - sh * qQ.values[3];
+	qQ.values[3] = ch * qQ.values[2] - sh * qQ.values[0];
 
     // qQ now contains final rotation for Q
-    Q = mat3::fromQuat(qQ);
+    Q = MatfromQuat(qQ);
 }
 
 
-void computeSVD( float3x3 A, out float3x3 W, out float3x3 S, out float3x3 V )
+void computeSVD( float3x3 A, inout float3x3 W, inout float3x3 S, inout float3x3 V )
 {
     // normal equations matrix
     float3x3 ATA = transpose(A) * A;
 
 /// 2. Symmetric Eigenanlysis
     quat qV;
+	float values[4] = {0,0,0,1};
+	qV.values = values;
 
 	
     jacobiEigenanalysis( ATA, qV );
@@ -337,7 +350,7 @@ void computeSVD( float3x3 A, out float3x3 W, out float3x3 S, out float3x3 V )
     sortSingularValues( B, V );
 
 /// 4. QR decomposition
-    //QRDecomposition( B, W, S );
+    QRDecomposition( B, W, S );
 }
 
 #endif

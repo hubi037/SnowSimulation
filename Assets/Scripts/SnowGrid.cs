@@ -113,8 +113,6 @@ public class SnowGrid
 		int kernel = checkKernel("ExplicitGridVelocities");
 
 		m_computeShader.Dispatch(kernel, (int)m_cells.x / 8, (int)m_cells.y / 8, (int)m_cells.z / 8);
-
-		//gridCollisions();
 	}
 
 	public void equalizeGridVelocities()
@@ -122,8 +120,6 @@ public class SnowGrid
 		int kernel = checkKernel("EqualizeGridVelocities");
 
 		m_computeShader.Dispatch(kernel, (int)m_cells.x / 8, (int)m_cells.y / 8, (int)m_cells.z / 8);
-
-		//gridCollisions();
 	}
 
 	public void updateVelocities()

@@ -14,7 +14,7 @@
 #define STICKY 0.6
 #define FLIP_PERCENT 0.95
 #define HARDENING 5
-#define EPSILON 1e-4
+
 
 struct SnowParticle
 {
@@ -99,6 +99,33 @@ float3x3 energyDerivative(int index)
 	return _Particles[index].volume * harden * temp;
 }
 
+float3x3 computeSigma( int index)
+{
+
+
+    float3x3 Fp = _Particles[index].def_plastic; //for the sake of making the code look like the math
+    float3x3 Fe = _Particles[index].def_elastic;
+
+    float Jpp = determinant(Fp);
+    float Jep = determinant(Fe);
+
+    float3x3 Re;
+
+    float3x3 W, S, V;
+    computeSVD( Fe, W, S, V );
+	Re = W * transpose(V);
+
+    float muFp = _Particles[index].mu * exp(_Particles[index].xi * ( 1 - Jpp));
+    float lambdaFp = _Particles[index].lambda * exp(_Particles[index].xi * (1 - Jpp));
+
+	float value = lambdaFp * (Jep - 1) * Jep;
+	float3x3 mat = float3x3(value,0,0,
+							0,value,0,
+							0,0,value);
+
+	return ( 2 * muFp * (Fe-Re) * transpose(Fe) + mat) * -_Particles[index].volume;
+}
+
 bool isColliding(SphereCollider collider, float3 position)
 {
 	return (length(position - collider.position) <= collider.radius);
@@ -176,39 +203,59 @@ void CollisionParticleWithGrid(int index)
 
 	if(newPos.x < 1 || newPos.x > _GridCells.x - 1)
 	{
-		_Particles[index].velocity.x = 0 * _Particles[index].velocity.x;
+		_Particles[index].velocity.x = 0;
 		_Particles[index].velocity.y *= STICKY;
 		_Particles[index].velocity.z *= STICKY;
 	}
 	if(newPos.y < 1 || newPos.y > _GridCells.y - 1)
 	{
-		_Particles[index].velocity.y = 0 * _Particles[index].velocity.y;
+		_Particles[index].velocity.y = 0;
 		_Particles[index].velocity.x *= STICKY;
 		_Particles[index].velocity.z *= STICKY;
 	}
 	if(newPos.z < 1 || newPos.z > _GridCells.z - 1)
 	{
-		_Particles[index].velocity.z = 0 * _Particles[index].velocity.z;
+		_Particles[index].velocity.z = 0;
 		_Particles[index].velocity.x *= STICKY;
 		_Particles[index].velocity.y *= STICKY;
 	}
 }
 
 
+
 [numthreads(NUM_THREADS, 1, 1)]
 void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
 {
+
+
+	_Particles[id.x].velocityGradient *= _DeltaTime;
+
+	_Particles[id.x].velocityGradient = diag_sum(_Particles[id.x].velocityGradient, 1);
+	_Particles[id.x].def_elastic = _Particles[id.x].velocityGradient * _Particles[id.x].def_elastic;
+
+
+	float3x3 W, S, Sinv, V;
+
+	computeSVD( _Particles[id.x].def_elastic, W, S, V );
+	
+	// FAST COMPUTATION:
+	S = float3x3( clamp( S[0][0], _Particles[id.x].criticalCompressionRatio, _Particles[id.x].criticalStretchRatio ), 0.f, 0.f,
+				0.f, clamp( S[1][1], _Particles[id.x].criticalCompressionRatio, _Particles[id.x].criticalStretchRatio ), 0.f,
+				0.f, 0.f, clamp( S[2][2], _Particles[id.x].criticalCompressionRatio, _Particles[id.x].criticalStretchRatio ) );
+
+
+	Sinv = float3x3( 1.f/S[0][0], 0.f, 0.f,
+					0.f, 1.f/S[1][1], 0.f,
+					0.f, 0.f, 1.f/S[2][2] );
+
+	_Particles[id.x].def_plastic = V * Sinv * transpose(W) * _Particles[id.x].def_elastic * _Particles[id.x].def_plastic;
+	_Particles[id.x].def_elastic = W * S * transpose(V); //mat3::multiplyADBt( W, S, V );
 
 	_Particles[id.x].velocity = checkForAndHandleCollisions(_NumColliders, _Particles[id.x].position, _Particles[id.x].velocity);
 
 	CollisionParticleWithGrid(id.x);
 
 	_Particles[id.x].position += _Particles[id.x].velocity * _DeltaTime;
-
-	_Particles[id.x].velocityGradient *= _DeltaTime;
-
-	_Particles[id.x].velocityGradient = diag_sum(_Particles[id.x].velocityGradient, 1);
-	_Particles[id.x].def_elastic = _Particles[id.x].velocityGradient * _Particles[id.x].def_elastic;
 }
 
 
@@ -228,6 +275,9 @@ void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 	float oz = _Particles[id.x].gridPosition.z;
 
 	int gridIdx = ox + _GridCells.x * (oy + _GridCells.y * oz);
+
+	if(gridIdx < 0 || gridIdx >= _GridCells.x * _GridCells.y * _GridCells.z)
+		return;
 
 	for (int idx=0, x=ox-1, x_end=x+3; x<=x_end; x++)
 	{
@@ -256,11 +306,11 @@ void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 				{
 
 					float3 weightGradient = float3(dx*wy*wz, dy*wx*wz, dz*wx*wy);
-					float3x3 energy = energyDerivative(id.x);
+					float3x3 sigma = computeSigma(id.x);
 
 					_Grid[gridIdx].mass += weight * _Particles[id.x].mass;
 					_Grid[gridIdx].velocity += _Particles[id.x].velocity * weight * _Particles[id.x].mass;
-					_Grid[gridIdx].force += mul(weightGradient, energy);
+					_Grid[gridIdx].force += mul(weightGradient, sigma);
 				}
 			}
 		}
@@ -272,6 +322,8 @@ void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 void ExplicitGridVelocities(uint3 id : SV_DispatchThreadID)
 {
 	int gridIdx = getGridIndex(id.x,id.y,id.z);
+
+
 
 	if(_Grid[gridIdx].mass > 0)
 	{
@@ -305,6 +357,8 @@ void ResetGrid(uint3 id : SV_DispatchThreadID)
 	_Grid[gridIdx].force = float3(0,0,0);
 }
 
+
+//particle velocity from grid velocities, flip and pic component
 [numthreads(NUM_THREADS, 1, 1)]
 void UpdateVelocities(uint3 id : SV_DispatchThreadID)
 {
@@ -344,7 +398,7 @@ void UpdateVelocities(uint3 id : SV_DispatchThreadID)
 				{
 					int gridIdx = getGridIndex(x,y,z);
 
-					if(gridIdx >= 0 && gridIdx < _GridCells.x * _GridCells.y * _GridCells.z)
+					if(gridIdx >= 0 && gridIdx <= _GridCells.x * _GridCells.y * _GridCells.z)
 					{
 						float3 weightGradient = float3(dx*wy*wz, dy*wx*wz, dz*wx*wy);
 						_Particles[id.x].velocityGradient += outerProduct(_Grid[gridIdx].velocity.xyz, weightGradient.xyz);
@@ -395,7 +449,7 @@ void CalculateVolumes(uint3 id : SV_DispatchThreadID)
 				
 				float weight = wx*wy*wz;
 					
-				if (weight > 0.001)
+				if (weight > EPSILON)
 				{
 					int gridIdx = x + _GridCells.x * (y + _GridCells.y * z);
 					_Particles[id.x].density += _Grid[gridIdx].mass * weight;
