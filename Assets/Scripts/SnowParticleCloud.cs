@@ -58,11 +58,6 @@ public class SnowParticleCloud
 			newParticle.mu = E / (2 * (1 + POISSONS_RATIO));
 			newParticle.criticalCompressionRatio = 1f - MAX_THETA_C;
 			newParticle.criticalStretchRatio = 1f + MAX_THETA_S;
-			newParticle.def_elastic = new Matrix3x3();
-			newParticle.def_elastic.m00 = 1.0f;
-			newParticle.def_elastic.m11 = 1.0f;
-			newParticle.def_elastic.m22 = 1.0f;
-			newParticle.def_plastic = newParticle.def_elastic;
 
 			m_particles.Add(newParticle);
 

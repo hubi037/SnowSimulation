@@ -159,7 +159,7 @@ float3 checkForAndHandleCollisions(int numColliders, float3 position, float3 vel
 				}
 				else
 				{
-					//printf("overcame %f\n",collider.coeffFriction);
+					//overcamecollider.coeffFriction
 					vRel = (1 + collider.coeffFriction * vn / magVt) * vt;
 				}
 			}
@@ -249,12 +249,13 @@ void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
 					0.f, 0.f, 1.f/S[2][2] );
 
 	_Particles[id.x].def_plastic = V * Sinv * transpose(W) * _Particles[id.x].def_elastic * _Particles[id.x].def_plastic;
-	_Particles[id.x].def_elastic = W * S * transpose(V); //mat3::multiplyADBt( W, S, V );
+	_Particles[id.x].def_elastic = W * S * transpose(V);
 
 	_Particles[id.x].velocity = checkForAndHandleCollisions(_NumColliders, _Particles[id.x].position, _Particles[id.x].velocity);
 
 	CollisionParticleWithGrid(id.x);
 
+	//finally update the particle position
 	_Particles[id.x].position += _Particles[id.x].velocity * _DeltaTime;
 }
 
@@ -264,7 +265,7 @@ void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
 [numthreads(NUM_THREADS, 1, 1)]
 void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 {
-	_Particles[id.x].gridPosition = (_Particles[id.x].position - _GridOrigin) / _GridCellSize;
+	_Particles[id.x].gridPosition = (_Particles[id.x].position - _GridOrigin.xyz) / _GridCellSize;
 
 	_Particles[id.x].velocityGradient = float3x3(0,0,0,
 												 0,0,0,
@@ -279,6 +280,7 @@ void InitialiseGridMassAndVelocities(uint3 id : SV_DispatchThreadID)
 	if(gridIdx < 0 || gridIdx >= _GridCells.x * _GridCells.y * _GridCells.z)
 		return;
 
+	//consider a 4x4x4 grid around the particle for rasterizing mass and velocities
 	for (int idx=0, x=ox-1, x_end=x+3; x<=x_end; x++)
 	{
 		float x_pos = ox-x;
@@ -323,19 +325,17 @@ void ExplicitGridVelocities(uint3 id : SV_DispatchThreadID)
 {
 	int gridIdx = getGridIndex(id.x,id.y,id.z);
 
-
-
 	if(_Grid[gridIdx].mass > 0)
 	{
 		float scale = 1.f / _Grid[gridIdx].mass;
 		_Grid[gridIdx].velocity *= scale;
 		_Grid[gridIdx].velocity_new = _Grid[gridIdx].velocity;
 
-		_Grid[gridIdx].force += _Grid[gridIdx].mass * _Gravity;
+		_Grid[gridIdx].force += _Grid[gridIdx].mass * _Gravity.xyz;
 
 		_Grid[gridIdx].velocity += _DeltaTime * scale * _Grid[gridIdx].force;
 
-		float3 nodePosition = _GridOrigin + id * _GridCellSize;
+		float3 nodePosition = _GridOrigin.xyz + id * _GridCellSize;
 		_Grid[gridIdx].velocity = checkForAndHandleCollisions(_NumColliders, nodePosition, _Grid[gridIdx].velocity);
 
 		_Grid[gridIdx].velocity_new = _Grid[gridIdx].velocity - _Grid[gridIdx].velocity_new;
@@ -460,6 +460,12 @@ void CalculateVolumes(uint3 id : SV_DispatchThreadID)
 
 	_Particles[id.x].density /= _CellVolume;
 	_Particles[id.x].volume = _Particles[id.x].mass / _Particles[id.x].density;
+
+	_Particles[id.x].def_elastic = float3x3(1,0,0,
+											0,1,0,
+											0,0,1);
+
+	_Particles[id.x].def_plastic = _Particles[id.x].def_elastic;
 }
 
 [numthreads(8,8,8)]
@@ -483,7 +489,7 @@ void EqualizeGridVelocities(uint3 id : SV_DispatchThreadID)
 		float velocityLength = length(_Grid[newIdx].velocity_new);
 		if(density > _MaxCellDensity && length(_Grid[gridIdx].velocity_new) > velocityLength)
 		{
-			_Grid[gridIdx].velocity_new = float4(0,0,0,0); //normalize(_Grid[gridIdx].velocity_new) * velocityLength;
+			_Grid[gridIdx].velocity_new = float3(0,0,0); //normalize(_Grid[gridIdx].velocity_new) * velocityLength;
 		}
 	}
 }

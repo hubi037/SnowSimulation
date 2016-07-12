@@ -272,8 +272,8 @@ void QRDecomposition( float3x3 B, inout float3x3 Q, inout float3x3 R )
     s0 = 1-2*sh*sh;
     s1 = 2*sh*ch;
     U = float3x3(  s0, s1, 0,
-              -s1, s0, 0,
-                0,  0, 1 );
+				  -s1, s0, 0,
+					0,  0, 1 );
 
     R = transpose(U) * R; //mat3::multiplyAtB( U, R );
 
@@ -291,8 +291,8 @@ void QRDecomposition( float3x3 B, inout float3x3 Q, inout float3x3 R )
     s0 = 1 -2 * sh * sh;
     s1 = 2 * sh * ch;
     U = float3x3(  s0, 0, s1,
-                0, 1,  0,
-				-s1, 0, s0 );
+					0, 1,  0,
+				  -s1, 0, s0 );
 
     //R = mat3::multiplyAtB( U, R );
 	R = transpose(U) * R;
@@ -311,8 +311,8 @@ void QRDecomposition( float3x3 B, inout float3x3 Q, inout float3x3 R )
     s0 = 1 - 2 * sh * sh;
     s1 = 2 * sh * ch;
     U = float3x3( 1,   0,  0,
-              0,  s0, s1,
-              0, -s1, s0 );
+				  0,  s0, s1,
+				  0, -s1, s0 );
 
     R = transpose(U) * R;
 
