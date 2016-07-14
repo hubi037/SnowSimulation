@@ -1,154 +1,187 @@
 ﻿// Each #kernel tells which function to compile; you can have many kernels
-#pragma kernel CSMain
+#pragma kernel InitialiseGrid
+#pragma kernel UpdateVelocities
 #pragma kernel Update
 #pragma kernel UpdateCells
-#pragma kernel DoSphereCollision
 
-
-#include "Assets/ComputeShaders/SnowHelpers.cginc"
-// Create a RenderTexture with enableRandomWrite flag and set it
-// with cs.SetTexture
 
 
 struct SnowCell
 {
 	float fillGrade;
+	float newFillGrade;
 	float3 worldPosition;
 	float3 velocity;
 };
 
-RWStructuredBuffer<SnowCell> _Cells;
-RWStructuredBuffer<SnowCell> _OutputCells;
+//because hlsl doesn't allow atomic operations for floats, we simply store (atomically) all float operations done on an element in an array
+//once all float operations have been done, we can go through the array and apply them in order, thus ensuring an atomic add
+//this means we need an additional dispatch call, but (according to nvidia) dispatch calls have negligible hw overhead and small sw overhead
+struct AtomicStorage
+{
+	uint length;
+	float values[63];
+};
 
-int _BottomExists;
+struct SphereCollider
+{
+	float3 position;
+	float radius;
+	float3 velocity;
+	float padding;
+};
+
+
+RWStructuredBuffer<SnowCell> _Cells;
+RWStructuredBuffer<AtomicStorage> _AtomicStorage;
+RWStructuredBuffer<SphereCollider> _Colliders;
+
 int _Width;
 int _Height;
 int _FullWidth;
 int _FullHeight;
-int _FrameCounter;
 float _DeltaTime;
 float _Gravity;
 float _CellSize;
 float4 _OriginIndex;
+float4 _GridOrigin;
 
+/*
+bool isColliding(SphereCollider collider, float3 position)
+{
+	return (length(position - collider.worldPosition) <= collider.radius);
+}
+
+float3 colliderNormalSphere(SphereCollider collider, float3 position)
+{
+	return normalize(position - collider.worldPosition);
+}
+
+float3 DoSphereCollision (float3 position, float3 velocity)
+{
+
+	for (int i = 0; i < _NumColliders; ++i) 
+	{
+
+		SphereCollider collider = _Colliders[i];
+
+		if(isColliding(collider, position))
+		{
+			float3 vRel = velocity - collider.velocity;
+			float3 normal;
+			normal = colliderNormalSphere(collider, position);
+			float vn = dot(vRel, normal);
+			if (vn < 0) 
+			{ //Bodies are not separating and a collision must be applied
+				float3 vt = vRel - normal * vn;
+				float magVt = length(vt);
+				if (magVt <= 0.1 * vn) 
+				{ // tangential velocity not enough to overcome force of friction
+
+					vRel = float3(0, 0, 0);
+				}
+				else
+				{
+					//overcame collider.coeffFriction
+					vRel = (1 + 0.1 * vn / magVt) * vt;
+				}
+			}
+			velocity = vRel + collider.velocity;
+		}
+	}
+
+	return velocity;
+}*/
 
 
 [numthreads(8,8,8)]
-void CSMain (uint3 id : SV_DispatchThreadID)
+void InitialiseGrid (uint3 id : SV_DispatchThreadID)
 {
-	uint3 index = id + _OriginIndex.xyz;
-	uint idx = index.x + _FullWidth * (index.y + _FullHeight * index.z);
+	uint3 index = id;
+	int idx = index.x + (_FullWidth * index.y) + (_FullHeight * _FullWidth * index.z);
 
-	if(_Cells[idx].fillGrade == 0)
-	{
-		_Cells[idx].velocity = float3(0,0,0);
-		return;
-	}
 
-	_Cells[idx].velocity += float3(0,-1,0) * _Cells[idx].fillGrade * (_Gravity/(_DeltaTime * _DeltaTime));
-	_OutputCells[idx].velocity = _Cells[idx].velocity;
+	if(id.y > 16)
+		_Cells[idx].fillGrade = 0.1;
+	else 
+		_Cells[idx].fillGrade = 0;
+
+	_Cells[idx].velocity = float3(0,-1,0);
+
+	_Cells[idx].worldPosition = float3(id.x, id.y, id.z) * _CellSize;
+
+	_AtomicStorage[idx].length = 0;
 }
 
 
 [numthreads(8,8,8)]
+void UpdateVelocities (uint3 id : SV_DispatchThreadID)
+{
+	
+	int idx = id.x + (_FullWidth * id.y) + (_FullHeight * _FullWidth * id.z);
+
+	_Cells[idx].velocity += float3(0, -_Gravity, 0) * _Cells[idx].fillGrade * _DeltaTime;
+
+	
+	//_Cells[idx].velocity = DoSphereCollision(_Cells[idx].worldPosition, _Cells[idx].velocity);
+}
+
+[numthreads(8,8,8)]
 void Update (uint3 id : SV_DispatchThreadID)
 {
-	uint3 index = id + _OriginIndex.xyz;
-	uint idx = index.x + _FullWidth * (index.y + _FullHeight * index.z);
+	int idx = id.x + (_FullWidth * id.y) + (_FullHeight * _FullWidth * id.z);
 
-	float3 movementVector = _Cells[idx].velocity * _DeltaTime;
-	float3 velocityNorm = _Cells[idx].velocity;
+	if(length(_Cells[idx].velocity) == 0)
+		return;
 
-	float3 finalIndex = id + movementVector;	
+	int3 nearestIndex = id + normalize(_Cells[idx].velocity);
 
-	int3 nearestIndex = index + normalize(velocityNorm);
-	int nearest = nearestIndex.x + _FullWidth * (nearestIndex.y + _FullHeight * nearestIndex.z);
+	int nearest = nearestIndex.x + (_FullWidth * nearestIndex.y) + (_FullHeight * _FullWidth * nearestIndex.z);
+
+	if(nearest < 0 || nearest > (_FullHeight * _FullHeight * _FullHeight) - 1 || nearestIndex.y < 0)
+		return;
 
 	float fillGrade = _Cells[idx].fillGrade;
 	float nearestFillGrade = _Cells[nearest].fillGrade;
 
-	AllMemoryBarrierWithGroupSync();
-
-	if(fillGrade <= 0)
-		return;
-
-	if(nearestIndex.y < 0 || nearestIndex.y > _FullHeight -1)
-		return;
-
-	if(idx == nearest)
-		return;
-
 	if(nearestFillGrade < 0.8)
 	{
 		float capacity = 0.8 - nearestFillGrade;
-		float massChange = (sqrt(capacity)) * _DeltaTime * _Gravity;
-
+		float massChange = capacity * length(_Cells[idx].velocity) *  _DeltaTime;
+	
 		if(nearestFillGrade + massChange > 0.8)
 			massChange = 0.8 - nearestFillGrade;
 
 		if(fillGrade - massChange < 0)
 			massChange = fillGrade;
 
-		_Cells[idx].fillGrade -= massChange;
-		_Cells[nearest].fillGrade += massChange;
+		uint origIndex = 0;
 
-		_Cells[nearest].velocity += _Cells[idx].velocity *  (1 - _Cells[nearest].fillGrade);
-		_Cells[idx].velocity -= _Cells[idx].velocity *  (1 - _Cells[nearest].fillGrade);
+		InterlockedAdd(_AtomicStorage[idx].length, 1, origIndex);
+		_AtomicStorage[idx].values[origIndex] = -massChange;
+
+		InterlockedAdd(_AtomicStorage[nearest].length, 1, origIndex);
+		_AtomicStorage[nearest].values[origIndex] = massChange;
+
 	}
 }
 
-[numthreads(8,8,8)]
-void UpdateCells (uint3 id : SV_DispatchThreadID)
+[numthreads(8, 8, 8)]
+void UpdateCells(uint3 id : SV_DispatchThreadID)
 {
-	uint3 index = id + _OriginIndex.xyz;
-	uint idx = index.x + _FullWidth * (index.y + _FullHeight * index.z);
-	
-	_Cells[idx] = _OutputCells[idx];
-}
+	int idx = id.x + (_FullWidth * id.y) + (_FullHeight * _FullWidth * id.z);
 
-float4 _SphereCenter;
-float _SphereRadius;
+	int length = _AtomicStorage[idx].length;
 
-[numthreads(8,8,8)]
-void DoSphereCollision (uint3 id : SV_DispatchThreadID)
-{
-	uint3 index = id + _OriginIndex.xyz;
-	uint idx = index.x + _FullWidth * (index.y + _FullHeight * index.z);
-	
-	if(_Cells[idx].fillGrade == 0)
-		return;
-
-	float3 velocityNorm = _Cells[idx].velocity;
-	normalize(velocityNorm);
-
-	int3 nearestIndex = int3(0,0,0);
-	
-/*
-	if(abs(velocityNorm.x) > 0.5)
-		nearestIndex.x = sign(velocityNorm.x);
-	if(abs(velocityNorm.y) > 0.5)
-		nearestIndex.y = sign(velocityNorm.y);
-	if(abs(velocityNorm.z) > 0.5)
-		nearestIndex.z = sign(velocityNorm.z);*/
-
-	nearestIndex = index + normalize(velocityNorm);
-
-	if (nearestIndex.y < 0 || nearestIndex.y > _FullHeight -1)
-		return;
-
-	int nearest = index.x + _FullWidth * ((index.y-1) + _FullHeight * index.z);
-	
-	float3 cellPosition = _Cells[idx].worldPosition + float3(_CellSize, _CellSize, _CellSize)/2;
-	float3 nearestCellPosition = _Cells[nearest].worldPosition + float3(_CellSize, _CellSize, _CellSize)/2;
-	float distance = length(cellPosition - _SphereCenter.xyz);
-
-	if(distance < _SphereRadius)
+	for(int i = 0; i < length; i++)
 	{
-		_Cells[idx].velocity = float3(0,1,0); //normalize(cellPosition - _SphereCenter.xyz) * 100;
-		_OutputCells[idx].velocity = _Cells[idx].velocity;
-
-		/*
-		_OutputCells[idx].fillGrade = 0;
-		_Cells[idx].fillGrade = 0;*/
+		_Cells[idx].fillGrade += _AtomicStorage[idx].values[i];
 	}
+
+	//_Cells[idx].fillGrade = _AtomicStorage[idx].length;
+
+	if(_Cells[idx].fillGrade <= 0)
+		_Cells[idx].velocity = float3(0,0,0);
+
+	_AtomicStorage[idx].length = 0;
 }

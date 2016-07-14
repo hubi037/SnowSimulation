@@ -221,12 +221,9 @@ void CollisionParticleWithGrid(int index)
 	}
 }
 
-
-
 [numthreads(NUM_THREADS, 1, 1)]
 void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
 {
-
 
 	_Particles[id.x].velocityGradient *= _DeltaTime;
 
@@ -235,7 +232,6 @@ void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
 
 
 	float3x3 W, S, Sinv, V;
-
 	computeSVD( _Particles[id.x].def_elastic, W, S, V );
 	
 	// FAST COMPUTATION:
@@ -258,7 +254,6 @@ void UpdateParticlePositions (uint3 id : SV_DispatchThreadID)
 	//finally update the particle position
 	_Particles[id.x].position += _Particles[id.x].velocity * _DeltaTime;
 }
-
 
 
 //todo: try to find a way to use y and z threads to create more threads and avoid the nested for loop

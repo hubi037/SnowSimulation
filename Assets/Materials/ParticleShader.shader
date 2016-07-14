@@ -26,6 +26,7 @@ Shader "Custom/ParticleShader"
 			struct SnowCell
 			{
 				float		fillGrade;
+				float		newFillGrade;
 				float3		worldPosition;
 				float3		velocity;
 			};
