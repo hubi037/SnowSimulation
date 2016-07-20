@@ -34,7 +34,7 @@ public class SnowChunkManager : MonoBehaviour
 	struct SnowCell
 	{
 		public float fillGrade;
-		public float newFillGrade;
+		public bool isColliding;
 		public Vector3 worldPosition;
 		public Vector3 velocity;
 	}
@@ -42,8 +42,8 @@ public class SnowChunkManager : MonoBehaviour
 	struct _SphereCollider
 	{
 		public Vector3 position;
-		public float radius;
 		public Vector3 velocity;
+		public float radius;
 		public float padding;
 	}
 
@@ -67,6 +67,7 @@ public class SnowChunkManager : MonoBehaviour
 		m_compute.SetInt("_Height", m_snowChunkHeight);
 		m_compute.SetInt("_FullWidth", m_snowChunkWidth * m_numChunksX);
 		m_compute.SetInt("_FullHeight", m_snowChunkHeight * m_numChunksY);
+		m_compute.SetInt("_FullLength", m_snowChunkLength * m_numChunksZ);
 		m_compute.SetFloat("_CellSize", m_cellSize);
 		m_compute.SetFloat("_Gravity", 9.8f);
 		m_compute.SetVector("_GridOrigin", m_origin);
@@ -74,7 +75,7 @@ public class SnowChunkManager : MonoBehaviour
 		int fullHeight = m_snowChunkWidth * m_numChunksX;
 
 		m_completeBuffer = new ComputeBuffer(fullHeight * fullHeight * fullHeight, sizeof(float) * 8);
-		m_atomicStorage = new ComputeBuffer(m_completeBuffer.count, sizeof(uint) + sizeof(float) * 63);
+		m_atomicStorage = new ComputeBuffer(m_completeBuffer.count, sizeof(uint) * 2 + sizeof(float) * 4 * 63 + sizeof(float) * 2);
 
 
 		List<_SphereCollider> colliders = new List<_SphereCollider>();
@@ -84,16 +85,17 @@ public class SnowChunkManager : MonoBehaviour
 			_SphereCollider newCollider = new _SphereCollider();
 			newCollider.position = coll.transform.position;
 			newCollider.radius = coll.radius;
-			newCollider.velocity = Vector3.zero;
-			
+			newCollider.velocity = Vector3.zero;		
 			colliders.Add(newCollider);
 		}
 
-		m_colliders = new ComputeBuffer(m_completeBuffer.count, sizeof(float) * 8);
+		m_colliders = new ComputeBuffer(colliders.Count, System.Runtime.InteropServices.Marshal.SizeOf(typeof(_SphereCollider)));
 		m_colliders.SetData(colliders.ToArray());
 
+		Debug.Log(m_colliders.count);
+
 		Debug.Log(m_completeBuffer.count);
-		Debug.Log(sizeof(uint) + sizeof(float) * 63);
+		Debug.Log(sizeof(uint) * 2 + sizeof(float) * 4 * 63 + sizeof(float) * 2);
 
 		m_quadPoints = new ComputeBuffer(6, sizeof(float) * 3);
 		m_quadPoints.SetData(new[]
@@ -110,6 +112,8 @@ public class SnowChunkManager : MonoBehaviour
 		m_Material.SetFloat("_CellSize", m_cellSize);
 		m_Material.SetPass(0);
 
+		m_compute.SetInt("_NumColliders", m_colliders.count);
+
 		m_compute.SetBuffer(m_compute.FindKernel("Update"), "_Cells", m_completeBuffer);
 		m_compute.SetBuffer(m_compute.FindKernel("Update"), "_AtomicStorage", m_atomicStorage);
 		m_compute.SetBuffer(m_compute.FindKernel("UpdateCells"), "_Cells", m_completeBuffer);
@@ -118,9 +122,11 @@ public class SnowChunkManager : MonoBehaviour
 		m_compute.SetBuffer(m_compute.FindKernel("InitialiseGrid"), "_AtomicStorage", m_atomicStorage);
 		m_compute.SetBuffer(m_compute.FindKernel("UpdateVelocities"), "_Cells", m_completeBuffer);
 		m_compute.SetBuffer(m_compute.FindKernel("UpdateVelocities"), "_AtomicStorage", m_atomicStorage);
-		m_compute.SetBuffer(m_compute.FindKernel("UpdateVelocities"), "_SphereColliders", m_atomicStorage);
+		m_compute.SetBuffer(m_compute.FindKernel("UpdateVelocities"), "_Colliders", m_colliders);
 
 		m_compute.Dispatch(m_compute.FindKernel("InitialiseGrid"), m_snowChunkWidth * m_numChunksX / 8, m_snowChunkHeight * m_numChunksY / 8, m_snowChunkLength * m_numChunksZ / 8);
+
+		Debug.Log(Vector3.Dot(Vector3.down, new Vector3(-1,-1,0)));
 	}
 
 
@@ -134,6 +140,28 @@ public class SnowChunkManager : MonoBehaviour
 
 	void Update()
 	{
+		m_sphereColliders = new List<SphereCollider>();
+		m_sphereColliders.AddRange(GameObject.FindObjectsOfType<SphereCollider>());
+
+		List<_SphereCollider> colliders = new List<_SphereCollider>();
+
+		foreach (SphereCollider coll in m_sphereColliders)
+		{
+			_SphereCollider newCollider = new _SphereCollider();
+			newCollider.position = coll.transform.position;
+			newCollider.radius = coll.radius;
+
+			Rigidbody collRigid = coll.GetComponent<Rigidbody>();
+
+			if (collRigid)
+				newCollider.velocity = collRigid.velocity;
+			else
+				newCollider.velocity = Vector3.zero;
+
+			colliders.Add(newCollider);
+		}
+
+		m_colliders.SetData(colliders.ToArray());
 
 		if (Input.GetKeyDown(KeyCode.P))
 			running = !running;
@@ -148,6 +176,13 @@ public class SnowChunkManager : MonoBehaviour
 		{
 			Time.timeScale -= 0.1f;
 			Debug.Log("Set Timescale to: " + Time.timeScale);
+		}
+
+
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			m_compute.Dispatch(m_compute.FindKernel("InitialiseGrid"), m_snowChunkWidth * m_numChunksX / 8, m_snowChunkHeight * m_numChunksY / 8, m_snowChunkLength * m_numChunksZ / 8);
+			running = false;
 		}
 
 		if(running)
