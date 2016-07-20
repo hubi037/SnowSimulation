@@ -4,7 +4,7 @@
 #pragma kernel Update
 #pragma kernel UpdateCells
 
-#define maxFillGrade 0.9
+#define maxFillGrade 1.0
 #define compressionThreshold 1
 
 
@@ -109,24 +109,24 @@ float3 DoSphereCollision (float3 position, float3 velocity, int index)
 
 bool isInBounds(int3 index)
 {
-	if(index.y < 0)
+	if (index.y < 0)
 		return false;
-	if(index.x < 0)
+	if (index.x < 0)
 		return false;
-	if(index.z < 0)
+	if (index.z < 0)
 		return false;
-	if(index.x > _FullWidth)
+	if (index.x > _FullWidth - 1)
 		return false;
-	if(index.y > _FullHeight)
+	if (index.y > _FullHeight - 1)
 		return false;
-	if(index.z > _FullLength)
+	if (index.z > _FullLength - 1)
 		return false;
 
 	return true;
 
 }
 
-
+//move material to surrounding cells because target cell is full
 void handleCellCollision(int3 index, int idx, int oldNearest)
 {
 
@@ -146,7 +146,7 @@ void handleCellCollision(int3 index, int idx, int oldNearest)
 
 				int3 newNearest = index + int3(x, y, z);
 
-				if(newNearest.y < 0 || newNearest.x < 0 || newNearest.z < 0)
+				if (!isInBounds(newNearest))
 					continue;
 
 				int nearestIdx = newNearest.x + (_FullWidth * newNearest.y) + (_FullHeight * _FullWidth * newNearest.z);
@@ -204,7 +204,7 @@ void InitialiseGrid (uint3 id : SV_DispatchThreadID)
 	int idx = index.x + (_FullWidth * index.y) + (_FullHeight * _FullWidth * index.z);
 
 
-	if(id.y < 64 && id.y > 48 && id.x < 90 && id.z < 90 && id.x > 32 && id.z > 32)
+	if(id.y < 32 && id.y > 0 && id.x < 64 && id.z < 64 && id.x > 32 && id.z > 32)
 		_Cells[idx].fillGrade = 0.2;
 	else 
 		_Cells[idx].fillGrade = 0;
@@ -232,36 +232,6 @@ void UpdateVelocities (uint3 id : SV_DispatchThreadID)
 		_Cells[idx].velocity += float3(0, -_Gravity, 0) * (1 / _Cells[idx].fillGrade) * _DeltaTime;
 
 		_Cells[idx].velocity = DoSphereCollision(_Cells[idx].worldPosition, _Cells[idx].velocity, idx);
-
-		float3 vel = float3(0,0,0);
-
-		for(int x = -1; x < 2; x++)
-		{
-			for(int y = -1; y < 2; y++)
-			{
-				for(int z = -1; z < 2; z++)
-				{
-
-					int3 nearest = id + int3(x, y, z);
-
-					if(!isInBounds(nearest))
-						continue;
-
-					int nearestIdx = nearest.x + (_FullWidth * nearest.y) + (_FullHeight * _FullWidth * nearest.z);
-				
-					if(nearestIdx == idx)
-						continue;
-
-					vel += _Cells[nearestIdx].velocity *  _Cells[nearestIdx].fillGrade;
-				}
-			}
-		}
-
-		uint origIndex;
-
-		//InterlockedAdd(_AtomicStorage[idx].velocityLength, 1, origIndex);
-		//_AtomicStorage[idx].velocities[origIndex] = vel;
-		
 	}
 }
 
@@ -277,10 +247,7 @@ void Update (uint3 id : SV_DispatchThreadID)
 
 	int nearest = nearestIndex.x + (_FullWidth * nearestIndex.y) + (_FullHeight * _FullWidth * nearestIndex.z);
 
-	if(nearestIndex.y < 0 || nearestIndex.x < 0 || nearestIndex.z < 0)
-		return;
-
-	if(nearest < 0 || nearest > (_FullHeight * _FullHeight * _FullHeight) - 1 || nearest == idx)
+	if(!isInBounds(nearestIndex))
 		return;
 
 	float fillGrade = _Cells[idx].fillGrade;
@@ -326,6 +293,7 @@ void Update (uint3 id : SV_DispatchThreadID)
 	{
 		handleCellCollision(id, idx, nearest);
 	}
+
 }
 
 [numthreads(8, 8, 8)]
@@ -340,9 +308,9 @@ void UpdateCells(uint3 id : SV_DispatchThreadID)
 		_Cells[idx].fillGrade += _AtomicStorage[idx].values[i];
 	}
 	
-	for(int i = 0; i < _AtomicStorage[idx].velocityLength; i++)
+	for(int j = 0; j < _AtomicStorage[idx].velocityLength; j++)
 	{
-		_Cells[idx].velocity += _AtomicStorage[idx].velocities[i];
+		_Cells[idx].velocity += _AtomicStorage[idx].velocities[j];
 	}
 
 	if(_Cells[idx].fillGrade <= 0)
@@ -351,3 +319,34 @@ void UpdateCells(uint3 id : SV_DispatchThreadID)
 	_AtomicStorage[idx].length = 0;
 	_AtomicStorage[idx].velocityLength = 0;
 }
+
+
+/*
+float3 vel = float3(0, 0, 0);
+
+for (int x = -1; x < 2; x++)
+{
+	for (int y = -1; y < 2; y++)
+	{
+		for (int z = -1; z < 2; z++)
+		{
+
+			int3 nearest = id + int3(x, y, z);
+
+			if (!isInBounds(nearest))
+				continue;
+
+			int nearestIdx = nearest.x + (_FullWidth * nearest.y) + (_FullHeight * _FullWidth * nearest.z);
+
+			if (nearestIdx == idx || _Cells[nearestIdx].fillGrade == 0)
+				continue;
+
+			vel += float3(0, 0, 0); // _Cells[nearestIdx].velocity; // *  _Cells[nearestIdx].fillGrade;
+		}
+	}
+}
+
+uint origIndex;
+
+//InterlockedAdd(_AtomicStorage[idx].velocityLength, 1, origIndex);
+//_AtomicStorage[idx].velocities[origIndex] = vel;´*/
