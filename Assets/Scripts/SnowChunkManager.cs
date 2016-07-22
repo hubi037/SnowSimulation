@@ -8,14 +8,9 @@ public class SnowChunkManager : MonoBehaviour
 
 
 	public Vector3 m_origin = Vector3.zero;
-	public int m_snowChunkWidth = 10;
-	public int m_snowChunkHeight = 10;
-	public int m_snowChunkLength = 10;
-	public float m_cellSize = 0.1f;
 
-	public int m_numChunksX = 10;
-	public int m_numChunksY = 10;
-	public int m_numChunksZ = 10;
+	public float m_cellSize = 0.1f;
+	public Vector3 m_numCells; 
 
 	public float m_Gravity = 9.8f;
 	public ComputeShader m_compute;
@@ -53,7 +48,6 @@ public class SnowChunkManager : MonoBehaviour
 	private ComputeBuffer m_completeBuffer;
 	private ComputeBuffer m_atomicStorage;
 	private ComputeBuffer m_colliders;
-	private List<Vector3> m_chunkIndices = new List<Vector3>();
 
 	private bool running = false;
 
@@ -63,18 +57,14 @@ public class SnowChunkManager : MonoBehaviour
 	{
 		m_sphereColliders.AddRange(GameObject.FindObjectsOfType<SphereCollider>());
 
-		m_compute.SetInt("_Width", m_snowChunkWidth);
-		m_compute.SetInt("_Height", m_snowChunkHeight);
-		m_compute.SetInt("_FullWidth", m_snowChunkWidth * m_numChunksX);
-		m_compute.SetInt("_FullHeight", m_snowChunkHeight * m_numChunksY);
-		m_compute.SetInt("_FullLength", m_snowChunkLength * m_numChunksZ);
+		m_compute.SetInt("_FullWidth", (int)m_numCells.x);
+		m_compute.SetInt("_FullHeight", (int)m_numCells.y);
+		m_compute.SetInt("_FullLength", (int)m_numCells.z);
 		m_compute.SetFloat("_CellSize", m_cellSize);
 		m_compute.SetFloat("_Gravity", 9.8f);
 		m_compute.SetVector("_GridOrigin", m_origin);
 
-		int fullHeight = m_snowChunkWidth * m_numChunksX;
-
-		m_completeBuffer = new ComputeBuffer(fullHeight * fullHeight * fullHeight, sizeof(float) * 8);
+		m_completeBuffer = new ComputeBuffer((int)(m_numCells.x * m_numCells.y * m_numCells.z), sizeof(float) * 8);
 		m_atomicStorage = new ComputeBuffer(m_completeBuffer.count, sizeof(uint) * 2 + sizeof(float) * 4 * 63 + sizeof(float) * 2);
 
 
@@ -124,7 +114,7 @@ public class SnowChunkManager : MonoBehaviour
 		m_compute.SetBuffer(m_compute.FindKernel("UpdateVelocities"), "_AtomicStorage", m_atomicStorage);
 		m_compute.SetBuffer(m_compute.FindKernel("UpdateVelocities"), "_Colliders", m_colliders);
 
-		m_compute.Dispatch(m_compute.FindKernel("InitialiseGrid"), m_snowChunkWidth * m_numChunksX / 8, m_snowChunkHeight * m_numChunksY / 8, m_snowChunkLength * m_numChunksZ / 8);
+		m_compute.Dispatch(m_compute.FindKernel("InitialiseGrid"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
 
 		Debug.Log(Vector3.Dot(Vector3.down, new Vector3(-1,-1,0)));
 	}
@@ -181,26 +171,25 @@ public class SnowChunkManager : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.R))
 		{
-			m_compute.Dispatch(m_compute.FindKernel("InitialiseGrid"), m_snowChunkWidth * m_numChunksX / 8, m_snowChunkHeight * m_numChunksY / 8, m_snowChunkLength * m_numChunksZ / 8);
+			m_compute.Dispatch(m_compute.FindKernel("InitialiseGrid"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
 			running = false;
 		}
 
 		if(running)
 		{
 			UpdateVelocities();
-			calculateMovement(Vector3.zero);
-			UpdateCells(Vector3.zero);
+			calculateMovement();
+			UpdateCells();
 		}
 	}
 
 
-	void calculateMovement(Vector3 _originIndex)
+	void calculateMovement()
 	{
 
 		m_compute.SetFloat("_DeltaTime", Time.deltaTime);
-		m_compute.SetVector("_OriginIndex", new Vector4(_originIndex.x, _originIndex.y, _originIndex.z, 0));
 
-		m_compute.Dispatch(m_compute.FindKernel("Update"), m_snowChunkWidth * m_numChunksX / 8, m_snowChunkHeight * m_numChunksY / 8, m_snowChunkLength * m_numChunksZ / 8);
+		m_compute.Dispatch(m_compute.FindKernel("Update"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
 
 	}
 
@@ -208,17 +197,16 @@ public class SnowChunkManager : MonoBehaviour
 	{
 		m_compute.SetFloat("_DeltaTime", Time.deltaTime);
 
-		m_compute.Dispatch(m_compute.FindKernel("UpdateVelocities"), m_snowChunkWidth * m_numChunksX / 8, m_snowChunkHeight * m_numChunksY / 8, m_snowChunkLength * m_numChunksZ / 8);
+		m_compute.Dispatch(m_compute.FindKernel("UpdateVelocities"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
 
 	}
 
-	void UpdateCells(Vector3 _originIndex)
+	void UpdateCells()
 	{
 
 		m_compute.SetFloat("_DeltaTime", Time.deltaTime);
-		m_compute.SetVector("_OriginIndex", new Vector4(_originIndex.x, _originIndex.y, _originIndex.z, 0));
 
-		m_compute.Dispatch(m_compute.FindKernel("UpdateCells"), m_snowChunkWidth * m_numChunksX / 8, m_snowChunkHeight * m_numChunksY / 8, m_snowChunkLength * m_numChunksZ / 8);
+		m_compute.Dispatch(m_compute.FindKernel("UpdateCells"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
 	}
 
 

@@ -71,9 +71,9 @@ Shader "Custom/ParticleShader"
 			float4 frag (v2f i) : COLOR
 			{
 				clip(i.fillGrade.x);
-				float4 col = float4(1.0 - i.uv.x * 0.35 , 1.0f - i.uv.x * 0.25 , 1.0 , i.fillGrade.x) ;
+				float4 col = float4(1.0 - i.uv.x * 0.35 , 1.0f - i.uv.x * 0.25 , 1.0 , i.fillGrade.x/2) ;
 
-				col = float4(1,1,1, i.fillGrade.x);
+				col = float4(1,1,1, i.fillGrade.x/2);
 
 				if((i.uv.x * 2.0 - 1.0) * ( i.uv.x * 2.0-1.0) + ( i.uv.y * 2.0 - 1.0) * ( i.uv.y * 2.0 - 1.0) > 1.0f)
 					clip(-1);

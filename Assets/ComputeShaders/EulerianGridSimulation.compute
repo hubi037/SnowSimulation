@@ -5,7 +5,8 @@
 #pragma kernel UpdateCells
 
 #define maxFillGrade 1.0
-#define compressionThreshold 1
+#define compressionThreshold 0.1
+#define frictionThreshold 0.1
 
 
 //make sure all structs have a size that is a multiple of 16 bytes to ensure correct reading and writing
@@ -87,7 +88,7 @@ float3 DoSphereCollision (float3 position, float3 velocity, int index)
 				float3 vt = vRel - normal * vn;
 				float magVt = length(vt);
 				
-				if (magVt <= -0.1 * vn) 
+				if (magVt <= -frictionThreshold * vn)
 				{ // tangential velocity not enough to overcome force of friction
 
 					vRel = float3(0, 0, 0);
@@ -96,7 +97,7 @@ float3 DoSphereCollision (float3 position, float3 velocity, int index)
 				{
 					//overcame collider.coeffFriction
 					//vRel = float3(0, 0, 0); 
-					vRel = (1 + 0.1 * vn / magVt) * vt;
+					vRel = (1 + frictionThreshold * vn / magVt) * vt;
 				}
 			}
 
@@ -123,7 +124,6 @@ bool isInBounds(int3 index)
 		return false;
 
 	return true;
-
 }
 
 //move material to surrounding cells because target cell is full
@@ -151,17 +151,17 @@ void handleCellCollision(int3 index, int idx, int oldNearest)
 
 				int nearestIdx = newNearest.x + (_FullWidth * newNearest.y) + (_FullHeight * _FullWidth * newNearest.z);
 				
-				if(nearestIdx == idx || nearestIdx == oldNearest)
+				if(nearestIdx == idx || nearestIdx == oldNearest || _Cells[nearestIdx].isColliding)
 					continue;
 
 				float3 direction = _Cells[nearestIdx].worldPosition - _Cells[idx].worldPosition;
 
+				//if target cell is not in general direction of velocity we don't move material
 				if (dot(direction, _Cells[idx].velocity) <= 0)
 					continue;
 
-				if (_Cells[nearestIdx].fillGrade < maxFillGrade && !_Cells[nearestIdx].isColliding)
+				if (_Cells[nearestIdx].fillGrade < maxFillGrade)
 				{
-
 					indices[count] = nearestIdx;
 					count++;					
 				}
@@ -185,14 +185,15 @@ void handleCellCollision(int3 index, int idx, int oldNearest)
 		if(mass - massChange < 0)
 			massChange = mass;
 
-		if (length(_Cells[idx].velocity) * (1 - _Cells[curIndex].fillGrade) > compressionThreshold)
+		//if(length(_Cells[idx].velocity) > 1)
 		{
 			InterlockedAdd(_AtomicStorage[idx].length, 1, origIndex);
 			_AtomicStorage[idx].values[origIndex] = -massChange;
 
 			InterlockedAdd(_AtomicStorage[curIndex].length, 1, origIndex);
 			_AtomicStorage[curIndex].values[origIndex] = massChange;
-		}	
+		}
+
 	}
 }
 
@@ -204,7 +205,7 @@ void InitialiseGrid (uint3 id : SV_DispatchThreadID)
 	int idx = index.x + (_FullWidth * index.y) + (_FullHeight * _FullWidth * index.z);
 
 
-	if(id.y < 32 && id.y > 0 && id.x < 64 && id.z < 64 && id.x > 32 && id.z > 32)
+	if(id.y < 64 && id.y > 32 && id.x < 48 && id.z < 48 && id.x > 16 && id.z > 16)
 		_Cells[idx].fillGrade = 0.2;
 	else 
 		_Cells[idx].fillGrade = 0;
@@ -224,7 +225,19 @@ void InitialiseGrid (uint3 id : SV_DispatchThreadID)
 void UpdateVelocities (uint3 id : SV_DispatchThreadID)
 {
 	int idx = id.x + (_FullWidth * id.y) + (_FullHeight * _FullWidth * id.z);
-	_Cells[idx].isColliding = false;	
+	_Cells[idx].isColliding = false;
+
+	for (int i = 0; i < _NumColliders; ++i) 
+	{
+		
+		SphereCollider collider = _Colliders[i];
+
+		if(isColliding(collider, _Cells[idx].worldPosition))
+		{
+			_Cells[idx].isColliding = true;
+			break;
+		}		
+	}
 
 
 	if (_Cells[idx].fillGrade > 0)
@@ -232,6 +245,18 @@ void UpdateVelocities (uint3 id : SV_DispatchThreadID)
 		_Cells[idx].velocity += float3(0, -_Gravity, 0) * (1 / _Cells[idx].fillGrade) * _DeltaTime;
 
 		_Cells[idx].velocity = DoSphereCollision(_Cells[idx].worldPosition, _Cells[idx].velocity, idx);
+
+
+		int3 nearestIndex = (int3)id + normalize(_Cells[idx].velocity);
+
+		if (!isInBounds(nearestIndex))
+		{
+			_Cells[idx].velocity = float3(0, 0, 0);
+		}
+	}
+	else
+	{
+		_Cells[idx].velocity = float3(0, 0, 0);
 	}
 }
 
@@ -244,55 +269,80 @@ void Update (uint3 id : SV_DispatchThreadID)
 		return;
 
 	int3 nearestIndex = (int3)id + normalize(_Cells[idx].velocity);
-
 	int nearest = nearestIndex.x + (_FullWidth * nearestIndex.y) + (_FullHeight * _FullWidth * nearestIndex.z);
-
-	if(!isInBounds(nearestIndex))
-		return;
 
 	float fillGrade = _Cells[idx].fillGrade;
 	float nearestFillGrade = _Cells[nearest].fillGrade;
 
-	//only move material if there is room in the next cell
-	if (nearestFillGrade < maxFillGrade)
+	//adjust cells velocity if other cell is already densely packed
+	if (_Cells[nearest].fillGrade >= maxFillGrade && length(_Cells[nearest].velocity) < length(_Cells[idx].velocity))
 	{
-		float capacity = maxFillGrade - nearestFillGrade;
-		float massChange = capacity * length(_Cells[idx].velocity) *  _DeltaTime;
-	
-		if (nearestFillGrade + massChange > maxFillGrade)
-			massChange = maxFillGrade - nearestFillGrade;
-
-		if(fillGrade - massChange < 0)
-			massChange = fillGrade;
-
-		uint origIndex = 0;
-
-		//only move material if force is strong enough to compress snow
-		if (length(_Cells[idx].velocity) * (1 - nearestFillGrade) > compressionThreshold || nearestFillGrade == 0)
-		{
-			InterlockedAdd(_AtomicStorage[idx].length, 1, origIndex);
-			_AtomicStorage[idx].values[origIndex] = -massChange;
-
-			InterlockedAdd(_AtomicStorage[nearest].length, 1, origIndex);
-			_AtomicStorage[nearest].values[origIndex] = massChange;
-		}
-		else //otherwise, we move material to the surrounding cells as the snow gets pressed to the side
-		{
-			handleCellCollision(id, idx, nearest);
-		}
-		
-		
-		InterlockedAdd(_AtomicStorage[idx].velocityLength, 1, origIndex);
-		_AtomicStorage[idx].velocities[origIndex] = nearestFillGrade * _Cells[idx].velocity * -1; // (maxFillGrade - nearestFillGrade) * _Cells[idx].velocity * _DeltaTime * -1;
-
-		InterlockedAdd(_AtomicStorage[nearest].velocityLength, 1, origIndex);
-		_AtomicStorage[nearest].velocities[origIndex] = (maxFillGrade - nearestFillGrade) * _Cells[idx].velocity * _DeltaTime;
-
+		_Cells[idx].velocity = normalize(_Cells[idx].velocity) * length(_Cells[nearest].velocity);
 	}
-	else //otherwise, we move material to the surrounding cells as the snow gets pressed to the side
+
+	//mass moved depends on space in the target cell
+	float capacity = maxFillGrade - nearestFillGrade;
+	float massChange = capacity * length(_Cells[idx].velocity) *  _DeltaTime;
+	
+	
+	//if (nearestFillGrade + massChange > maxFillGrade)
+		//massChange = maxFillGrade - nearestFillGrade;
+
+	if(fillGrade - massChange < 0)
+		massChange = fillGrade;
+
+	uint origIndex = 0;
+
+	//only move material if force is strong enough to compress snow
+	if (massChange > compressionThreshold)
+	{
+		InterlockedAdd(_AtomicStorage[idx].length, 1, origIndex);
+		_AtomicStorage[idx].values[origIndex] = -massChange;
+
+		InterlockedAdd(_AtomicStorage[nearest].length, 1, origIndex);
+		_AtomicStorage[nearest].values[origIndex] = massChange;
+	}
+	else if(true) //otherwise, we move material to the surrounding cells as the snow gets pressed to the side
 	{
 		handleCellCollision(id, idx, nearest);
 	}
+	
+
+
+	float3 vel = float3(0, 0, 0);
+
+	for (int x = -1; x < 2; x++)
+	{
+		for (int y = -1; y < 2; y++)
+		{
+			for (int z = -1; z < 2; z++)
+			{
+
+				int3 nearest = id + int3(x, y, z);
+
+				if (!isInBounds(nearest))
+					continue;
+
+				int nearestIdx = nearest.x + (_FullWidth * nearest.y) + (_FullHeight * _FullWidth * nearest.z);
+
+				if (nearestIdx == idx || _Cells[nearestIdx].fillGrade == 0)
+					continue;
+
+				vel += _Cells[nearestIdx].velocity * 0.1;
+			}
+		}
+	}
+
+	//this crashes the gpu driver for some reason
+	//InterlockedAdd(_AtomicStorage[idx].velocityLength, 1, origIndex);
+	//_AtomicStorage[idx].velocities[origIndex] = vel;
+
+	
+	//InterlockedAdd(_AtomicStorage[idx].velocityLength, 1, origIndex);
+	//_AtomicStorage[idx].velocities[origIndex] = nearestFillGrade * _Cells[idx].velocity * -1; // (maxFillGrade - nearestFillGrade) * _Cells[idx].velocity * _DeltaTime * -1;
+
+	//InterlockedAdd(_AtomicStorage[nearest].velocityLength, 1, origIndex);
+	//_AtomicStorage[nearest].velocities[origIndex] = (maxFillGrade - nearestFillGrade) * _Cells[idx].velocity * _DeltaTime;
 
 }
 
@@ -308,6 +358,7 @@ void UpdateCells(uint3 id : SV_DispatchThreadID)
 		_Cells[idx].fillGrade += _AtomicStorage[idx].values[i];
 	}
 	
+
 	for(int j = 0; j < _AtomicStorage[idx].velocityLength; j++)
 	{
 		_Cells[idx].velocity += _AtomicStorage[idx].velocities[j];
@@ -319,34 +370,3 @@ void UpdateCells(uint3 id : SV_DispatchThreadID)
 	_AtomicStorage[idx].length = 0;
 	_AtomicStorage[idx].velocityLength = 0;
 }
-
-
-/*
-float3 vel = float3(0, 0, 0);
-
-for (int x = -1; x < 2; x++)
-{
-	for (int y = -1; y < 2; y++)
-	{
-		for (int z = -1; z < 2; z++)
-		{
-
-			int3 nearest = id + int3(x, y, z);
-
-			if (!isInBounds(nearest))
-				continue;
-
-			int nearestIdx = nearest.x + (_FullWidth * nearest.y) + (_FullHeight * _FullWidth * nearest.z);
-
-			if (nearestIdx == idx || _Cells[nearestIdx].fillGrade == 0)
-				continue;
-
-			vel += float3(0, 0, 0); // _Cells[nearestIdx].velocity; // *  _Cells[nearestIdx].fillGrade;
-		}
-	}
-}
-
-uint origIndex;
-
-//InterlockedAdd(_AtomicStorage[idx].velocityLength, 1, origIndex);
-//_AtomicStorage[idx].velocities[origIndex] = vel;´*/
