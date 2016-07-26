@@ -61,7 +61,7 @@ public class SnowChunkManager : MonoBehaviour
 		m_compute.SetInt("_FullHeight", (int)m_numCells.y);
 		m_compute.SetInt("_FullLength", (int)m_numCells.z);
 		m_compute.SetFloat("_CellSize", m_cellSize);
-		m_compute.SetFloat("_Gravity", 9.8f);
+		m_compute.SetFloat("_Gravity", 9800f);
 		m_compute.SetVector("_GridOrigin", m_origin);
 
 		m_completeBuffer = new ComputeBuffer((int)(m_numCells.x * m_numCells.y * m_numCells.z), sizeof(float) * 8);
@@ -114,9 +114,22 @@ public class SnowChunkManager : MonoBehaviour
 		m_compute.SetBuffer(m_compute.FindKernel("UpdateVelocities"), "_AtomicStorage", m_atomicStorage);
 		m_compute.SetBuffer(m_compute.FindKernel("UpdateVelocities"), "_Colliders", m_colliders);
 
+		m_compute.SetBuffer(m_compute.FindKernel("InitialiseSnow"), "_Cells", m_completeBuffer);
+
+		m_compute.SetBuffer(m_compute.FindKernel("ClampVelocity"), "_Cells", m_completeBuffer);
+		m_compute.SetBuffer(m_compute.FindKernel("ClampVelocity"), "_AtomicStorage", m_atomicStorage);
+
+		List<SnowSpawner> spawners = new List<SnowSpawner>();
+		spawners.AddRange(GameObject.FindObjectsOfType<SnowSpawner>());
+
 		m_compute.Dispatch(m_compute.FindKernel("InitialiseGrid"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
 
-		Debug.Log(Vector3.Dot(Vector3.down, new Vector3(-1,-1,0)));
+		Debug.Log(spawners.Count);
+
+		foreach(SnowSpawner spawn in spawners)
+		{
+			SpawnSnow(spawn.radius, spawn.transform.position, spawn.massPerCell, spawn.velocity);
+		}
 	}
 
 
@@ -172,19 +185,27 @@ public class SnowChunkManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.R))
 		{
 			m_compute.Dispatch(m_compute.FindKernel("InitialiseGrid"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
+			List<SnowSpawner> spawners = new List<SnowSpawner>();
+			spawners.AddRange(GameObject.FindObjectsOfType<SnowSpawner>());
+
+			foreach (SnowSpawner spawn in spawners)
+			{
+				SpawnSnow(spawn.radius, spawn.transform.position, spawn.massPerCell, spawn.velocity);
+			}
 			running = false;
 		}
 
 		if(running)
 		{
+			ClampVelocities();
 			UpdateVelocities();
-			calculateMovement();
+			CalculateMovement();
 			UpdateCells();
 		}
 	}
 
 
-	void calculateMovement()
+	void CalculateMovement()
 	{
 
 		m_compute.SetFloat("_DeltaTime", Time.deltaTime);
@@ -201,12 +222,28 @@ public class SnowChunkManager : MonoBehaviour
 
 	}
 
+	void ClampVelocities()
+	{
+		m_compute.SetFloat("_DeltaTime", Time.deltaTime);
+
+		m_compute.Dispatch(m_compute.FindKernel("ClampVelocity"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
+	}
+
 	void UpdateCells()
 	{
 
 		m_compute.SetFloat("_DeltaTime", Time.deltaTime);
 
 		m_compute.Dispatch(m_compute.FindKernel("UpdateCells"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
+	}
+
+	void SpawnSnow(float _radius, Vector3 _position, float _fillGrade, Vector3 _velocity)
+	{
+		m_compute.SetFloat("_Radius", _radius);
+		m_compute.SetFloat("_FillGrade", _fillGrade);
+		m_compute.SetVector("_Position", _position);
+		m_compute.SetVector("_Velocity", _velocity);
+		m_compute.Dispatch(m_compute.FindKernel("InitialiseSnow"), (int)m_numCells.x / 8, (int)m_numCells.y / 8, (int)m_numCells.z / 8);
 	}
 
 
