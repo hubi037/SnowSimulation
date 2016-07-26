@@ -419,8 +419,8 @@ void Update (uint3 id : SV_DispatchThreadID)
 	//InterlockedAdd(_AtomicStorage[nearest].velocityLength, 1, origIndex);
 	//_AtomicStorage[nearest].velocities[origIndex] = _Cells[idx].velocity * (1 - nearestFillGrade) * fillGrade * _DeltaTime;
 
-	InterlockedAdd(_AtomicStorage[idx].velocityLength, 1, origIndex);
-	_AtomicStorage[idx].velocities[origIndex] = nearestFillGrade * _Cells[idx].velocity * -1;
+	//InterlockedAdd(_AtomicStorage[idx].velocityLength, 1, origIndex);
+	//_AtomicStorage[idx].velocities[origIndex] = nearestFillGrade * _Cells[idx].velocity * -1;
 
 }
 
