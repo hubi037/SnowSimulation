@@ -7,7 +7,7 @@
 #pragma kernel ClampVelocity
 
 #define maxFillGrade 1.0
-#define compressionThreshold 1
+#define compressionThreshold 100
 #define frictionThreshold 1
 
 
@@ -413,7 +413,7 @@ void Update (uint3 id : SV_DispatchThreadID)
 	}
 	else//otherwise, we move material to the surrounding cells as the snow gets pressed to the side
 	{
-		//handleCellCollision(id, idx, nearest);
+		handleCellCollision(id, idx, nearest);
 	}
 
 	//InterlockedAdd(_AtomicStorage[nearest].velocityLength, 1, origIndex);

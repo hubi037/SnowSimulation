@@ -197,7 +197,7 @@ public class SnowChunkManager : MonoBehaviour
 
 		if(running)
 		{
-			ClampVelocities();
+			//ClampVelocities();
 			UpdateVelocities();
 			CalculateMovement();
 			UpdateCells();
