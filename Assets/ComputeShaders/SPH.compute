@@ -1,0 +1,508 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel UpdateParticles
+#pragma kernel ResetGrid
+#pragma kernel ResetParticles
+#pragma kernel AddParticlesToGrid
+#pragma kernel ComputeDensity
+#pragma kernel ComputeForce
+#pragma kernel ComputeCohesion
+#pragma kernel ComputeCompression
+#pragma kernel AddForce
+
+#define EPSILON 0;
+
+struct GridCell
+{	
+	uint length;
+	int mParticles[63];
+};
+
+
+RWStructuredBuffer<float3> mPos;
+RWStructuredBuffer<float3> mVel;
+RWStructuredBuffer<float3> mVelEval;
+RWStructuredBuffer<float3> mForce;
+RWStructuredBuffer<float> mPress;
+RWStructuredBuffer<float> mDensity;
+RWStructuredBuffer<uint> mGridCell;
+RWStructuredBuffer<uint> mGridIndex;
+RWStructuredBuffer<GridCell> mGrid;
+
+RWStructuredBuffer<float> mOutput;
+
+
+float _DeltaTime;
+float3 _Gravity;
+float _ParticleMass;
+float _GridSize;
+float3 _GridOrigin;
+float3 _GridDimensions;
+float _GridCellSize;
+
+float _BoundDamp;
+float _BoundStiffen;
+float _VelocityLimit;
+float _VelocityLimit2;
+float _AccelLimit;
+float _AccelLimit2;
+
+float _KernelRadius;
+float _PScale;
+float _PSmoothRadius;
+float4 _Force;
+
+
+float bspline(float input)
+{
+	input = abs(input);
+	float w;
+	if (input < 1)
+		w = input*input*(input / 2 - 1) + 2 / 3.0;
+	else if (input < 2)
+		w = input*(input*(-input / 6 + 1) - 2) + 4 / 3.0;
+	else return 0;
+	if (w < 0)
+		return 0;
+	return w;
+
+}
+
+int getGridIndex(int x, int y, int z)
+{
+	return x + _GridSize * (y + _GridSize * z);
+}
+
+int getGridIndex(int3 idx)
+{
+	return idx.x + _GridSize * (idx.y + _GridSize * idx.z);
+}
+
+bool isInBounds(int3 gridIdx)
+{
+
+	if(gridIdx.x < 0 || gridIdx.y < 0 || gridIdx.z < 0 || gridIdx.x > _GridSize -1 || gridIdx.y > _GridSize -1 || gridIdx.z > _GridSize -1)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+[numthreads(1,1,1)]
+void ResetGrid(uint3 id : SV_DispatchThreadID)
+{
+	int idx = getGridIndex(id);
+	mGrid[idx].length = 0;
+}
+
+[numthreads(1000,1,1)]
+void ResetParticles(uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x;
+	mVel[i] = float3(0,0,0);
+	mVelEval[i] = float3(0,0,0);
+	mForce[i] = float3(0,0,0);
+	mDensity[i] = 0;
+	mPress[i] = 0;
+}
+
+[numthreads(1000,1,1)]
+void AddParticlesToGrid(uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x;
+	float3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
+
+	int3 test = int3((int)gridIdx.x, (int)gridIdx.y, (int)gridIdx.z);
+
+	if(!isInBounds(test))
+	{
+		return;
+	}
+
+	int idx = getGridIndex(test);
+
+	uint origIndex;
+
+	InterlockedAdd(mGrid[idx].length, 1, origIndex);
+
+
+	if(origIndex > 62)
+	{
+		return;
+	}
+
+	mOutput[i] = idx;
+	mGrid[idx].mParticles[origIndex] = i;
+}
+
+//From https://github.com/erwincoumans/fluids_v3
+float contributeDensity(int i, float3 ipos,  RWStructuredBuffer<GridCell> gridBuffer, RWStructuredBuffer<float3> posBuffer)
+{
+
+	int count = gridBuffer[i].length;
+	float d2 = _PScale * _PScale;
+	float r2 = _KernelRadius/d2;
+
+	float sum = 0;
+
+	if(count > 63)
+		count = 63; 
+	
+	//check every particle in this grid Cell
+	for(int j = 0; j < count; j++)
+	{
+		
+		int idx = gridBuffer[i].mParticles[j];
+		float3 pos = posBuffer[idx];		
+
+		float3 dist = ipos - posBuffer[i];
+		float dsq = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z;
+
+	
+		// only do stuff if the particle is in the kernel radius
+		if ( dsq < r2 && dsq > 0) 
+		{ 
+			dsq = sqrt(dsq*d2);
+			float weight = bspline(_KernelRadius - dsq);
+			float c = (r2 - dsq) * d2;
+			sum += c * c * c;
+		}
+	}
+
+	return sum;
+}
+
+[numthreads(1000,1,1)]
+void ComputeDensity(uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x;
+
+	float3 pos = mPos[i];
+
+	float3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
+	
+	int j = getGridIndex((int3)gridIdx);
+
+	float density;
+	
+	for(int x = -1; x < 2; x++)
+	{
+		for(int y = -1; y < 2; y++)
+		{
+			for(int z = -1; z < 2; z++)
+			{
+				int3 neighbour = gridIdx + int3(x,y,z);
+				
+				if(neighbour.x < 0 || neighbour.y < 0 || neighbour.z < 0 || neighbour.x > _GridSize -1 || neighbour.y > _GridSize -1 || neighbour.z > _GridSize -1)
+					continue;				
+
+				int idx = getGridIndex(gridIdx + int3(x,y,z));
+				density += contributeDensity(idx, pos, mGrid, mPos);
+			}
+		}
+	}
+
+	density = density * _ParticleMass;
+
+	if(density == 0) 
+		mDensity[i] = 0.0f; 
+	else
+		mDensity[i] = density;
+
+	mPress[i] = ( density - 600 ) * 1.5;
+	//mOutput[i] = mDensity[i];
+}
+
+float3 contributeForce(int i, float3 ipos, float3 ivel, float idens, int pidx, RWStructuredBuffer<GridCell> gridBuffer, RWStructuredBuffer<float3> posBuffer)
+{
+	float3 force = float3(0,0,0);
+
+	int count = mGrid[i].length;
+	float d2 = _PScale * _PScale;
+
+	if(count > 63)
+		count = 63; 
+
+	//float vterm = simData.lapkern * 0.35;
+
+	//check every particle in this grid Cell
+	for(int j = 0; j < count; j++)
+	{
+		int idx = gridBuffer[i].mParticles[j];
+		float3 pos = posBuffer[idx];		
+
+		float3 dist = ( ipos - pos );
+		float dsq = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z;
+
+		// only do stuff if the particle is in the kernel radius
+		if ( dsq < _KernelRadius && dsq > 0) 
+		{ 
+			dsq = sqrt(dsq*d2);
+			float weight = bspline(_KernelRadius - dsq);
+			float c = ( _PSmoothRadius - dsq ); 
+			float dterm = c * idens * (mDensity[j]);
+
+			force = 0; //( mVelEval[idx] - ivel ) * dterm; // + dist * -dsq * 100;
+		}
+	}
+
+	return force;
+}
+
+[numthreads(1000,1,1)]
+void ComputeForce(uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x;
+
+	float3 pos = mPos[i];
+
+	int3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
+
+	float3 force = float3(0,0,0);
+	
+	//traverse neighbouring grid cells and calculate force from surrounding particles
+	for(int x = -1; x < 2; x++)
+	{
+		for(int y = -1; y < 2; y++)
+		{
+			for(int z = -1; z < 2; z++)
+			{
+				int3 neighbour = gridIdx + int3(x,y,z);
+
+				if(neighbour.x < 0 || neighbour.y < 0 || neighbour.z < 0 || neighbour.x > _GridSize -1 || neighbour.y > _GridSize -1 || neighbour.z > _GridSize -1)
+					continue;	
+
+				int idx = getGridIndex(neighbour);
+
+				force += contributeForce(idx, pos, mVelEval[i], mDensity[i], i, mGrid, mPos);
+			}
+		}
+	}
+	
+	//mOutput[i] = mGrid[i].length;
+	mForce[i] += force;
+	mForce[i] += _Gravity;
+}
+
+[numthreads(1000,1,1)]
+void ComputeCohesion(uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x;
+
+	float3 pos = mPos[i];
+
+	int3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
+
+	if(gridIdx.x < 0 || gridIdx.y < 0 || gridIdx.z < 0 || gridIdx.x > _GridSize -1 || gridIdx.y > _GridSize -1 || gridIdx.z > _GridSize -1)
+	{
+		return;
+	}
+
+	float3 force = float3(0,0,0);
+	
+	int idx = getGridIndex(gridIdx);
+
+	int count = mGrid[idx].length;
+	float d2 = _PScale * _PScale;
+
+	if(count > 63)
+		count = 63; 
+
+
+	//float vterm = simData.lapkern * 0.35;
+
+
+	//compute the center of all surrounding particles
+	float3 center = pos;
+	//check every particle in this grid Cell
+	for(int j = 0; j < count; j++)
+	{
+		int k = mGrid[idx].mParticles[j];
+
+		float3 dist = ( mPos[k] - pos );
+
+		float dsq = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z;
+
+		// only do stuff if the particle is in the kernel radius
+		if ( dsq < _KernelRadius && dsq > 0) 
+		{ 
+			float weight = bspline(_KernelRadius - dsq);
+			//force += mForce[k] * weight * _ParticleMass * _DeltaTime;
+
+			center += mPos[k];
+			//force += normalize(dist) * (1/dsq) * 0.00001;
+		}
+	}
+
+	//cohesion force moves the particle towards center of nearby particles, scales with density
+	float3 direction = center - pos;
+	mForce[i] += normalize(direction) * mDensity[i] * _DeltaTime;
+	mOutput[i] = isInBounds(gridIdx);
+}
+
+
+[numthreads(1000,1,1)]
+void AddForce(uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x;
+	mForce[i] += _Force.xyz;
+}
+
+
+//add gravity to force and do collision for simulation boundaries, then do advection
+[numthreads(1000,1,1)]
+void UpdateParticles (uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x;
+
+	mForce[i] += _Gravity;
+	float3 accel = mForce[i];
+	accel *= _ParticleMass;
+
+	float3 pos = mPos[i];
+	float diff;
+	float adj;
+	float3 norm;
+	float3 veval = mVelEval[i];
+	float3 vel = mVel[i];
+
+	// Acceleration Limit
+	float speed = accel.x*accel.x + accel.y*accel.y + accel.z*accel.z;
+	if ( speed > _AccelLimit2 ) 
+	{
+		accel *= _AccelLimit / sqrt(speed);
+	}
+
+	// Velocity Limit
+	speed = vel.x*vel.x + vel.y*vel.y + vel.z*vel.z;
+	if ( speed > _VelocityLimit2 ) 
+	{
+		speed = _VelocityLimit2;
+		vel *= _VelocityLimit / sqrt(speed);
+	}
+
+	float3 vnext = accel * _DeltaTime + vel;
+
+	float3 newPos = mPos[i] + vnext * _DeltaTime; 
+
+	//simulation boundaries
+	// Y-axis
+	diff = _GridOrigin.y - newPos.y;
+	if (diff > 1e-6)
+	{
+		vel.y = 0;
+		mForce[i].y = 0;
+		accel.y = 0;
+		vel.x *= 0.8;
+		vel.z *= 0.8;
+	}
+
+	diff = newPos.y - _GridDimensions.y;
+	if (diff > 1e-6) 
+	{
+		vel.y = 0;
+		mForce[i].y = 0;
+		accel.y = 0;
+		vel.x *= 0.8;
+		vel.z *= 0.8;
+	}
+
+	// X-axis
+	diff = _GridOrigin.x - newPos.x;
+	if (diff > 1e-6) 
+	{
+		vel.x = 0;
+		mForce[i].x = 0;
+		accel.x = 0;
+		vel.z *= 0.8;
+		vel.y *= 0.8;
+	}
+	diff = newPos.x - _GridDimensions.x;
+	if (diff > 1e-6) 
+	{
+		vel.x = 0;
+		mForce[i].x = 0;
+		accel.x = 0;
+		vel.z *= 0.8;
+		vel.y *= 0.8;
+	}
+
+	// Z-axis
+	diff = _GridOrigin.z - newPos.z;
+	if (diff > 1e-6) 
+	{
+		vel.z = 0;
+		accel.z = 0;
+		mForce[i].z = 0;
+		vel.x *= 0.8;
+		vel.y *= 0.8;
+	}
+	diff = newPos.z - _GridDimensions.z;
+	if (diff > 1e-6) 
+	{
+		vel.z = 0;
+		accel.z = 0;
+		mForce[i].z = 0;
+		vel.x *= 0.8;
+		vel.y *= 0.8;
+	}
+
+
+	// Leap-frog Integration
+	vnext = accel * _DeltaTime + vel;
+
+	float3 direction = vnext;
+
+	if(length(direction) > 1)
+		direction = normalize(direction);
+
+	int3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
+
+	gridIdx = int3((int)gridIdx.x, (int)gridIdx.y, (int)gridIdx.z);
+
+	int idx = getGridIndex(gridIdx);
+
+	if(!isInBounds(gridIdx))
+		return;
+
+	int3 neighbour = gridIdx + direction;
+
+	neighbour = int3((int)neighbour.x, (int)neighbour.y, (int)neighbour.z);
+
+	if(isInBounds(neighbour))
+	{
+		idx = getGridIndex(neighbour);
+
+		mOutput[i] = mGrid[idx].length;
+
+		int count = mGrid[idx].length;
+
+		if(count < 63)
+			count = 63;
+
+		mOutput[i] = count;
+
+		//if there's enough material in target cell => check average velocity and adjust particle velocity accordingly
+		if(count > 5)
+		{
+			float3 vavg = float3(0,0,0);
+
+			for(int i = 0; i < count; i++)
+			{
+				vel = mVel[mGrid[idx].mParticles[i]];
+				//if(dot(vel, vnext) > 0)
+					vavg += vel;
+			}
+
+			vavg /= count;
+		
+			if(length(mVel[i]) > length(vavg))
+				vnext = normalize(mVel[i]) * length(vavg);
+		}
+	}
+
+	mVelEval[i] = (vel + vnext) * 0.5;		// v(t+1) = [v(t-1/2) + v(t+1/2)] * 0.5			
+	mVel[i] = vnext;
+	mPos[i] += vnext * _DeltaTime;
+
+}

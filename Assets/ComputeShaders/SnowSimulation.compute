@@ -102,7 +102,6 @@ float3x3 energyDerivative(int index)
 float3x3 computeSigma( int index)
 {
 
-
     float3x3 Fp = _Particles[index].def_plastic; //for the sake of making the code look like the math
     float3x3 Fe = _Particles[index].def_elastic;
 
