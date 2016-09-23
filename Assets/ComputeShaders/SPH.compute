@@ -269,7 +269,7 @@ void ComputeForce(uint3 id : SV_DispatchThreadID)
 			{
 				int3 neighbour = gridIdx + int3(x,y,z);
 
-				if(neighbour.x < 0 || neighbour.y < 0 || neighbour.z < 0 || neighbour.x > _GridSize -1 || neighbour.y > _GridSize -1 || neighbour.z > _GridSize -1)
+				if(!isInBounds(neighbour))
 					continue;	
 
 				int idx = getGridIndex(neighbour);
@@ -293,44 +293,59 @@ void ComputeCohesion(uint3 id : SV_DispatchThreadID)
 
 	int3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
 
-	if(gridIdx.x < 0 || gridIdx.y < 0 || gridIdx.z < 0 || gridIdx.x > _GridSize -1 || gridIdx.y > _GridSize -1 || gridIdx.z > _GridSize -1)
+	if(!isInBounds(gridIdx))
 	{
 		return;
 	}
 
-	float3 force = float3(0,0,0);
+	gridIdx = int3((int)gridIdx.x, (int)gridIdx.y, (int)gridIdx.z);
 	
 	int idx = getGridIndex(gridIdx);
 
-	int count = mGrid[idx].length;
+	
 	float d2 = _PScale * _PScale;
-
-	if(count > 63)
-		count = 63; 
 
 
 	//float vterm = simData.lapkern * 0.35;
 
-
 	//compute the center of all surrounding particles
-	float3 center = pos;
-	//check every particle in this grid Cell
-	for(int j = 0; j < count; j++)
+	float3 center = float3(0,0,0);
+	for(int x = -1; x < 2; x++)
 	{
-		int k = mGrid[idx].mParticles[j];
+		for(int y = -1; y < 2; y++)
+		{
+			for(int z = -1; z < 2; z++)
+			{
 
-		float3 dist = ( mPos[k] - pos );
+				int3 neighbour = gridIdx + int3(x,y,z);
 
-		float dsq = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z;
+				if(!isInBounds(neighbour))
+					continue;	
 
-		// only do stuff if the particle is in the kernel radius
-		if ( dsq < _KernelRadius && dsq > 0) 
-		{ 
-			float weight = bspline(_KernelRadius - dsq);
-			//force += mForce[k] * weight * _ParticleMass * _DeltaTime;
+				int idx = getGridIndex(neighbour);
 
-			center += mPos[k];
-			//force += normalize(dist) * (1/dsq) * 0.00001;
+				int count = mGrid[idx].length;
+				if(count > 63)
+					count = 63; 
+
+				//check every particle in this grid Cell
+				for(int j = 0; j < count; j++)
+				{
+					int k = mGrid[idx].mParticles[j];
+
+					float3 dist = ( mPos[k] - pos );
+
+					float dsq = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z;
+
+					// only do stuff if the particle is in the kernel radius
+					if ( dsq < _KernelRadius && dsq > 0) 
+					{ 
+						float weight = bspline(_KernelRadius - dsq);
+
+						center += mPos[k];
+					}
+				}
+			}
 		}
 	}
 
@@ -495,7 +510,7 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 
 			vavg /= count;
 		
-			
+			//if velocity is larger than average velocity => slow down to match average velocity
 			if(length(mVel[i]) > length(vavg))
 				vnext = normalize(mVel[i]) * length(vavg);
 
