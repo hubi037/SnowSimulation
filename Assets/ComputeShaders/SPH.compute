@@ -370,9 +370,10 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 {
 	uint i = id.x;
 
-	mForce[i] += _Gravity;
+	//mForce[i] += _Gravity;
 	float3 accel = mForce[i];
 	accel *= _ParticleMass;
+	accel += _Gravity; 
 
 	float3 pos = mPos[i];
 	float diff;
@@ -389,12 +390,13 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 	}
 
 	// Velocity Limit
+/*
 	speed = vel.x*vel.x + vel.y*vel.y + vel.z*vel.z;
 	if ( speed > _VelocityLimit2 ) 
 	{
 		speed = _VelocityLimit2;
 		vel *= _VelocityLimit / sqrt(speed);
-	}
+	}*/
 
 	float3 vnext = accel * _DeltaTime + vel;
 
@@ -511,7 +513,7 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 			vavg /= count;
 		
 			//if velocity is larger than average velocity => slow down to match average velocity
-			if(length(mVel[i]) > length(vavg))
+			if(length(mVel[i]) > length(vavg) && dot(vel, vnext) > 0)
 				vnext = normalize(mVel[i]) * length(vavg);
 
 			//if the avg velocity of the cell is in the opposite direction, we really shouldn't be letting mass inside
@@ -523,5 +525,5 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 	mVelEval[i] = (vel + vnext) * 0.5;		// v(t+1) = [v(t-1/2) + v(t+1/2)] * 0.5			
 	mVel[i] = vnext;
 	mPos[i] += vnext * _DeltaTime;
-
+	mForce[i] = float3(0,0,0);
 }
