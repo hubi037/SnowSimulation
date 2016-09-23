@@ -203,7 +203,8 @@ public class SPH : MonoBehaviour
 
 	void OnGUI()
 	{
-		string result = GUI.TextField(new Rect(Vector2.one, new Vector2(100, 20)), m_startForce.x.ToString());
+		GUI.Label(new Rect(Vector2.one, new Vector2(100, 20)), "Start Force X-Axis");
+		string result = GUI.TextField(new Rect(new Vector2(0, 20), new Vector2(100, 20)), m_startForce.x.ToString());
 
 		m_startForce.x = Convert.ToSingle(result);
 	}

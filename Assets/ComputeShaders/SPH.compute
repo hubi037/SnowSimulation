@@ -490,14 +490,18 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 			for(int i = 0; i < count; i++)
 			{
 				vel = mVel[mGrid[idx].mParticles[i]];
-				//if(dot(vel, vnext) > 0)
-					vavg += vel;
+				vavg += vel;
 			}
 
 			vavg /= count;
 		
+			
 			if(length(mVel[i]) > length(vavg))
 				vnext = normalize(mVel[i]) * length(vavg);
+
+			//if the avg velocity of the cell is in the opposite direction, we really shouldn't be letting mass inside
+			if(dot(vel, vnext) < 0)
+				vnext = float3(0,0,0);
 		}
 	}
 
