@@ -97,15 +97,6 @@ public class SPH : MonoBehaviour
 		m_compute.SetBuffer(kernel, "mOutput", m_Output);
 		m_compute.SetBuffer(kernel, "mDensity", m_Density);
 
-		kernel = m_compute.FindKernel("ComputeCompression");
-		m_compute.SetBuffer(kernel, "mPos", m_positions);
-		m_compute.SetBuffer(kernel, "mVel", m_velocities);
-		m_compute.SetBuffer(kernel, "mForce", m_forces);
-		m_compute.SetBuffer(kernel, "mVelEval", m_velEval);
-		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
-		m_compute.SetBuffer(kernel, "mOutput", m_Output);
-		m_compute.SetBuffer(kernel, "mDensity", m_Density);
-
 		kernel = m_compute.FindKernel("AddForce");
 		m_compute.SetBuffer(kernel, "mPos", m_positions);
 		m_compute.SetBuffer(kernel, "mVel", m_velocities);

@@ -6,7 +6,6 @@
 #pragma kernel ComputeDensity
 #pragma kernel ComputeForce
 #pragma kernel ComputeCohesion
-#pragma kernel ComputeCompression
 #pragma kernel AddForce
 
 #define EPSILON 0;
