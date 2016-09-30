@@ -192,7 +192,7 @@ void ComputeDensity(uint3 id : SV_DispatchThreadID)
 			{
 				int3 neighbour = gridIdx + int3(x,y,z);
 				
-				if(neighbour.x < 0 || neighbour.y < 0 || neighbour.z < 0 || neighbour.x > _GridSize -1 || neighbour.y > _GridSize -1 || neighbour.z > _GridSize -1)
+				if(!isInBounds(neighbour))
 					continue;				
 
 				int idx = getGridIndex(gridIdx + int3(x,y,z));
@@ -290,24 +290,11 @@ void ComputeCohesion(uint3 id : SV_DispatchThreadID)
 
 	float3 pos = mPos[i];
 
-	int3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
-
-	if(!isInBounds(gridIdx))
-	{
-		return;
-	}
-
-	gridIdx = int3((int)gridIdx.x, (int)gridIdx.y, (int)gridIdx.z);
+	float3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
 	
-	int idx = getGridIndex(gridIdx);
+	int j = getGridIndex((int3)gridIdx);
 
-	
-	float d2 = _PScale * _PScale;
-
-
-	//float vterm = simData.lapkern * 0.35;
-
-	//compute the center of all surrounding particles
+	int counter = 0;
 	float3 center = float3(0,0,0);
 	for(int x = -1; x < 2; x++)
 	{
@@ -315,43 +302,30 @@ void ComputeCohesion(uint3 id : SV_DispatchThreadID)
 		{
 			for(int z = -1; z < 2; z++)
 			{
-
 				int3 neighbour = gridIdx + int3(x,y,z);
-
+				
 				if(!isInBounds(neighbour))
-					continue;	
+					continue;				
 
-				int idx = getGridIndex(neighbour);
+				int idx = getGridIndex(gridIdx + int3(x,y,z));
 
 				int count = mGrid[idx].length;
 				if(count > 63)
-					count = 63; 
+					count = 63;
 
-				//check every particle in this grid Cell
-				for(int j = 0; j < count; j++)
+				for(int i = 0; i < count; i++)
 				{
-					int k = mGrid[idx].mParticles[j];
-
-					float3 dist = ( mPos[k] - pos );
-
-					float dsq = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z;
-
-					// only do stuff if the particle is in the kernel radius
-					if ( dsq < _KernelRadius && dsq > 0) 
-					{ 
-						float weight = bspline(_KernelRadius - dsq);
-
-						center += mPos[k];
-					}
+					int k = mGrid[idx].mParticles[i];
+					center += float3(1,1,1); // using mPos[k] here creates massive performance problems
+					counter++;
 				}
 			}
 		}
 	}
 
-	//cohesion force moves the particle towards center of nearby particles, scales with density
-	float3 direction = center - pos;
-	mForce[i] += normalize(direction) * mDensity[i] * _DeltaTime;
-	mOutput[i] = isInBounds(gridIdx);
+	center /= counter;
+	//mForce[i] += (center-mPos[i]) * mDensity[i];
+	//mOutput[i] = mDensity[i];
 }
 
 
@@ -369,10 +343,10 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 {
 	uint i = id.x;
 
-	//mForce[i] += _Gravity;
+	mForce[i] += _Gravity;
 	float3 accel = mForce[i];
 	accel *= _ParticleMass;
-	accel += _Gravity; 
+	//acccel += _Gravity; 
 
 	float3 pos = mPos[i];
 	float diff;
@@ -382,11 +356,12 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 	float3 vel = mVel[i];
 
 	// Acceleration Limit
+/*
 	float speed = accel.x*accel.x + accel.y*accel.y + accel.z*accel.z;
 	if ( speed > _AccelLimit2 ) 
 	{
 		accel *= _AccelLimit / sqrt(speed);
-	}
+	}*/
 
 	// Velocity Limit
 /*
@@ -463,7 +438,6 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 		vel.y *= 0.8;
 	}
 
-
 	// Leap-frog Integration
 	vnext = accel * _DeltaTime + vel;
 
@@ -488,18 +462,13 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 	if(isInBounds(neighbour))
 	{
 		idx = getGridIndex(neighbour);
-
-		mOutput[i] = mGrid[idx].length;
-
 		int count = mGrid[idx].length;
 
-		if(count < 63)
+		if(count > 63)
 			count = 63;
 
-		mOutput[i] = count;
-
 		//if there's enough material in target cell => check average velocity and adjust particle velocity accordingly
-		if(count > 5)
+		if(count > 20)
 		{
 			float3 vavg = float3(0,0,0);
 
@@ -511,12 +480,12 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 
 			vavg /= count;
 		
-			//if velocity is larger than average velocity => slow down to match average velocity
-			if(length(mVel[i]) > length(vavg) && dot(vel, vnext) > 0)
-				vnext = normalize(mVel[i]) * length(vavg);
+			//if velocity is larger than average velocity of target cell => slow down to match average velocity
+			if(length(vnext) > length(vavg) && dot(vavg, vnext) > 0)
+				vnext = normalize(vnext) * length(vavg);
 
 			//if the avg velocity of the cell is in the opposite direction, we really shouldn't be letting mass inside
-			if(dot(vel, vnext) < 0)
+			if(dot(vavg, vnext) < 0)
 				vnext = float3(0,0,0);
 		}
 	}
@@ -524,5 +493,8 @@ void UpdateParticles (uint3 id : SV_DispatchThreadID)
 	mVelEval[i] = (vel + vnext) * 0.5;		// v(t+1) = [v(t-1/2) + v(t+1/2)] * 0.5			
 	mVel[i] = vnext;
 	mPos[i] += vnext * _DeltaTime;
-	mForce[i] = float3(0,0,0);
+	//mForce[i] = float3(0,0,0);
+
+	//if(mPos[i].y < 0)
+		//mPos[i].y = 0;
 }

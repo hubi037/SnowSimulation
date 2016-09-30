@@ -45,75 +45,32 @@ public class SPH : MonoBehaviour
 
 		m_gridCellSize = m_gridDimensions.x / m_gridCells.x;
 
-		Debug.Log(m_gridCellSize);
-		Debug.Log(sizeof(int));
-		int kernel = m_compute.FindKernel("UpdateParticles");
+		Debug.Log("Grid Cellsize: " + m_gridCellSize);
 
-		m_compute.SetBuffer(kernel, "mPos", m_positions);
-		m_compute.SetBuffer(kernel, "mVel", m_velocities);
-		m_compute.SetBuffer(kernel, "mForce", m_forces);
-		m_compute.SetBuffer(kernel, "mVelEval", m_velEval);
-		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
-		m_compute.SetBuffer(kernel, "mOutput", m_Output);
-		m_compute.SetBuffer(kernel, "mDensity", m_Density);
+
+		int kernel = m_compute.FindKernel("UpdateParticles");
+		AddBuffersToKernel(kernel);
 
 		kernel = m_compute.FindKernel("AddParticlesToGrid");
-
-		m_compute.SetBuffer(kernel, "mPos", m_positions);
-		m_compute.SetBuffer(kernel, "mVel", m_velocities);
-		m_compute.SetBuffer(kernel, "mForce", m_forces);
-		m_compute.SetBuffer(kernel, "mVelEval", m_velEval);
-		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
-		m_compute.SetBuffer(kernel, "mOutput", m_Output);
-		m_compute.SetBuffer(kernel, "mDensity", m_Density);
+		AddBuffersToKernel(kernel);
 
 		kernel = m_compute.FindKernel("ResetGrid");
-		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
+		AddBuffersToKernel(kernel);
 
 		kernel = m_compute.FindKernel("ComputeDensity");
-		m_compute.SetBuffer(kernel, "mPos", m_positions);
-		m_compute.SetBuffer(kernel, "mVel", m_velocities);
-		m_compute.SetBuffer(kernel, "mForce", m_forces);
-		m_compute.SetBuffer(kernel, "mVelEval", m_velEval);
-		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
-		m_compute.SetBuffer(kernel, "mOutput", m_Output);
-		m_compute.SetBuffer(kernel, "mDensity", m_Density);
+		AddBuffersToKernel(kernel);
 
 		kernel = m_compute.FindKernel("ComputeForce");
-		m_compute.SetBuffer(kernel, "mPos", m_positions);
-		m_compute.SetBuffer(kernel, "mVel", m_velocities);
-		m_compute.SetBuffer(kernel, "mForce", m_forces);
-		m_compute.SetBuffer(kernel, "mVelEval", m_velEval);
-		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
-		m_compute.SetBuffer(kernel, "mOutput", m_Output);
-		m_compute.SetBuffer(kernel, "mDensity", m_Density);
+		AddBuffersToKernel(kernel);
 
 		kernel = m_compute.FindKernel("ComputeCohesion");
-		m_compute.SetBuffer(kernel, "mPos", m_positions);
-		m_compute.SetBuffer(kernel, "mVel", m_velocities);
-		m_compute.SetBuffer(kernel, "mForce", m_forces);
-		m_compute.SetBuffer(kernel, "mVelEval", m_velEval);
-		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
-		m_compute.SetBuffer(kernel, "mOutput", m_Output);
-		m_compute.SetBuffer(kernel, "mDensity", m_Density);
+		AddBuffersToKernel(kernel);
 
 		kernel = m_compute.FindKernel("AddForce");
-		m_compute.SetBuffer(kernel, "mPos", m_positions);
-		m_compute.SetBuffer(kernel, "mVel", m_velocities);
-		m_compute.SetBuffer(kernel, "mForce", m_forces);
-		m_compute.SetBuffer(kernel, "mVelEval", m_velEval);
-		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
-		m_compute.SetBuffer(kernel, "mOutput", m_Output);
-		m_compute.SetBuffer(kernel, "mDensity", m_Density);
+		AddBuffersToKernel(kernel);
 
 		kernel = m_compute.FindKernel("ResetParticles");
-		m_compute.SetBuffer(kernel, "mPos", m_positions);
-		m_compute.SetBuffer(kernel, "mVel", m_velocities);
-		m_compute.SetBuffer(kernel, "mForce", m_forces);
-		m_compute.SetBuffer(kernel, "mVelEval", m_velEval);
-		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
-		m_compute.SetBuffer(kernel, "mOutput", m_Output);
-		m_compute.SetBuffer(kernel, "mDensity", m_Density);
+		AddBuffersToKernel(kernel);
 
 
 		m_compute.SetVector("_Gravity", new Vector3(0, -9.8f, 0));
@@ -162,6 +119,17 @@ public class SPH : MonoBehaviour
 
 		m_compute.SetVector("_Force", m_startForce);
 		m_compute.Dispatch(m_compute.FindKernel("AddForce"), m_particleCount / 1000, 1, 1);
+	}
+
+	void AddBuffersToKernel(int kernel)
+	{
+		m_compute.SetBuffer(kernel, "mPos", m_positions);
+		m_compute.SetBuffer(kernel, "mVel", m_velocities);
+		m_compute.SetBuffer(kernel, "mForce", m_forces);
+		m_compute.SetBuffer(kernel, "mVelEval", m_velEval);
+		m_compute.SetBuffer(kernel, "mGrid", m_Grid);
+		m_compute.SetBuffer(kernel, "mOutput", m_Output);
+		m_compute.SetBuffer(kernel, "mDensity", m_Density);
 	}
 
 	// Update is called once per frame
@@ -219,12 +187,12 @@ public class SPH : MonoBehaviour
 
 		m_Output.GetData(output);
 
-		/*
+		
 		int counter = 0;
 		for (int i = 0; i < 100; i++)
 		{
-			Debug.Log(output[i]);
-		}*/
+			//Debug.Log(output[i]);
+		}
 
 	}
 
