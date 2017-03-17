@@ -1,6 +1,13 @@
 Base path: F:/Unity5/Editor/Editor/Data
 Cmd: getPlatforms
 Cmd: compileCompute
-  api=4 insize=5802 outsize=6517 ok=1
+  api=4 insize=5832 outsize=9761 ok=1
 Cmd: compileCompute
   api=4 insize=5832 outsize=9761 ok=1
+Cmd: compileCompute
+  api=4 insize=5846 outsize=9829 ok=1
+Cmd: compileCompute
+  api=4 insize=5832 outsize=9761 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(142): signed/unsigned mismatch, unsigned assumed
+  api=4 insize=5912 outsize=9841 ok=1

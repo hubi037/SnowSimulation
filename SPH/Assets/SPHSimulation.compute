@@ -5,7 +5,6 @@
 #pragma kernel ComputeDensity
 #pragma kernel ComputeForces
 
-
 RWStructuredBuffer<float3> mPos;
 RWStructuredBuffer<float3> mVel;
 RWStructuredBuffer<float> mDensity;
@@ -24,6 +23,8 @@ float3 _Gravity;
 float3 _GridOrigin;
 float3 _GridSize;
 float3 _GridCells;
+
+int _NumNeighbours;
 
 float bspline(float input)
 {
@@ -138,15 +139,14 @@ void InsertParticles (uint3 id : SV_DispatchThreadID)
 
 	uint origIndex = 0;
 	InterlockedAdd(mGridLengths[idx], 1, origIndex);
-	if(origIndex > 32)
+	if (origIndex > _NumNeighbours)
 	{
-		mGridLengths[idx] = 32;
+		mGridLengths[idx] = _NumNeighbours;
 		return;
 	}
 
 	//mDebug[id.x] = mGridLengths[idx];
-	mGridParticles[idx * 32 + origIndex] = i;
-
+	mGridParticles[idx * _NumNeighbours + origIndex] = i;
 }
 
 [numthreads(100,1,1)]
@@ -178,7 +178,7 @@ void ComputeDensity(uint3 id : SV_DispatchThreadID)
 				for(int j = 0; j < count; j++)
 				{
 	
-					int index = mGridParticles[idx * 32 + j];
+					int index = mGridParticles[idx * _NumNeighbours + j];
 					float3 posJ = mPos[index];
 
 					float3 dist = posJ - pos;
@@ -231,7 +231,7 @@ void ComputeForces(uint3 id : SV_DispatchThreadID)
 				for(int j = 0; j < count; j++)
 				{
 	
-					int index = mGridParticles[idx * 32 + j];
+					int index = mGridParticles[idx * _NumNeighbours + j];
 					float3 pos = mPos[index];
 					float3 vel = mVel[index];
 				
@@ -273,7 +273,7 @@ void UpdatePositions (uint3 id : SV_DispatchThreadID)
 	gridIdx += normalize(mVel[id.x]);
 	int idx = GetGridIndex(gridIdx);
 
-	if(mDensity[id.x] > 600)
+	if(mDensity[id.x] > 250)
 		mVel[id.x] = float3(0,0,0);
 
 	mPos[id.x] += mVel[id.x] * _DeltaTime;

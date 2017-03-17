@@ -10,6 +10,7 @@ public class SPHManager : MonoBehaviour {
 	public Vector3 m_StartPosition = Vector3.one * 3;
 	public Vector3 m_GridSize = Vector3.one * 5;
 	public Vector3 m_GridCells = Vector3.one * 16;
+	public int m_iNumNeighbours = 32;
 
 	private float m_GridCellSize = 0;
 
@@ -77,8 +78,9 @@ public class SPHManager : MonoBehaviour {
 		m_GridCellSize = m_GridSize.x / m_GridCells.x;
 		Debug.Log(m_GridCellSize);
 		m_ComputeShader.SetFloat("_GridCellSize", m_GridCellSize);
-		m_ComputeShader.SetFloat("_KernelRadius", 0.1f);
+		m_ComputeShader.SetFloat("_KernelRadius", m_GridCellSize/2.0f);
 		m_ComputeShader.SetFloat("_ParticleMass", 1f);
+		m_ComputeShader.SetInt("_NumNeighbours", m_iNumNeighbours);
 	}
 
 	void AddBuffersToKernel(int kernel)
