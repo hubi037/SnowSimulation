@@ -1,13 +1,1706 @@
 Base path: F:/Unity5/Editor/Editor/Data
 Cmd: getPlatforms
 Cmd: compileCompute
-  api=4 insize=5832 outsize=9761 ok=1
+  error: 2 plat 4 at (0): Did not find shader kernel 'ComputeForces' to compile
+  api=4 insize=5271 outsize=0 ok=0
 Cmd: compileCompute
-  api=4 insize=5832 outsize=9761 ok=1
+  error: 2 plat 4 at (0): Did not find shader kernel 'ComputeForces' to compile
+  api=4 insize=5271 outsize=0 ok=0
 Cmd: compileCompute
-  api=4 insize=5846 outsize=9829 ok=1
+  error: 2 plat 4 at (0): Did not find shader kernel 'ComputeForces' to compile
+  api=4 insize=5273 outsize=0 ok=0
 Cmd: compileCompute
-  api=4 insize=5832 outsize=9761 ok=1
+  error: 2 plat 4 at (0): Did not find shader kernel 'ComputeForces' to compile
+  api=4 insize=5273 outsize=0 ok=0
 Cmd: compileCompute
-  error: 1 plat 4 at SPHSimulation.compute(142): signed/unsigned mismatch, unsigned assumed
-  api=4 insize=5912 outsize=9841 ok=1
+  error: 2 plat 4 at (0): Did not find shader kernel 'ComputeForces' to compile
+  api=4 insize=5275 outsize=0 ok=0
+Cmd: compileCompute
+  error: 2 plat 4 at (0): Did not find shader kernel 'ComputeForces' to compile
+  api=4 insize=5275 outsize=0 ok=0
+Cmd: compileCompute
+  api=4 insize=5277 outsize=8505 ok=1
+Cmd: compileCompute
+  api=4 insize=5698 outsize=9605 ok=1
+Cmd: compileCompute
+  error: 2 plat 4 at SPHSimulation.compute(242): undeclared identifier '_GasConstant'
+  api=4 insize=5272 outsize=0 ok=0
+Cmd: compileCompute
+  error: 2 plat 4 at SPHSimulation.compute(242): undeclared identifier '_GasConstant'
+  api=4 insize=5272 outsize=0 ok=0
+Cmd: compileCompute
+  error: 2 plat 4 at SPHSimulation.compute(243): undeclared identifier '_GasConstant'
+  api=4 insize=5274 outsize=0 ok=0
+Cmd: compileCompute
+  error: 2 plat 4 at SPHSimulation.compute(243): undeclared identifier '_GasConstant'
+  api=4 insize=5274 outsize=0 ok=0
+Cmd: compileCompute
+  api=4 insize=5295 outsize=8573 ok=1
+Cmd: compileCompute
+  api=4 insize=5239 outsize=8309 ok=1
+Cmd: compileCompute
+  api=4 insize=5762 outsize=9829 ok=1
+Cmd: compileCompute
+  api=4 insize=5741 outsize=9777 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(273): implicit truncation of vector type
+  api=4 insize=5736 outsize=9645 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(274): implicit truncation of vector type
+  api=4 insize=5770 outsize=9869 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(274): implicit truncation of vector type
+  api=4 insize=5785 outsize=9917 ok=1
+Cmd: compileCompute
+  api=4 insize=5789 outsize=9957 ok=1
+Cmd: compileCompute
+  api=4 insize=5789 outsize=9957 ok=1
+Cmd: compileCompute
+  api=4 insize=5789 outsize=9957 ok=1
+Cmd: compileCompute
+  api=4 insize=5807 outsize=9921 ok=1
+Cmd: compileCompute
+  api=4 insize=5789 outsize=9957 ok=1
+Cmd: compileCompute
+  api=4 insize=5653 outsize=9957 ok=1
+Cmd: compileCompute
+  api=4 insize=5689 outsize=10001 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(273): implicit truncation of vector type
+  api=4 insize=5682 outsize=9961 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(73): undeclared identifier 'glm::dot'
+  api=4 insize=6372 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(73): undeclared identifier 'glm::dot'
+  api=4 insize=6372 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(309): implicit truncation of vector type
+  api=4 insize=6367 outsize=9961 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(273): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(309): implicit truncation of vector type
+  api=4 insize=6387 outsize=10161 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(273): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(311): implicit truncation of vector type
+  api=4 insize=6408 outsize=10249 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(273): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(311): implicit truncation of vector type
+  api=4 insize=6433 outsize=10309 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(271): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(309): implicit truncation of vector type
+  api=4 insize=6326 outsize=10249 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(307): implicit truncation of vector type
+  api=4 insize=6306 outsize=10141 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): implicit truncation of vector type
+  api=4 insize=6315 outsize=10169 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): implicit truncation of vector type
+  api=4 insize=6329 outsize=10165 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): implicit truncation of vector type
+  api=4 insize=6333 outsize=10193 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): implicit truncation of vector type
+  api=4 insize=6329 outsize=10165 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(307): implicit truncation of vector type
+  api=4 insize=6327 outsize=10165 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(307): implicit truncation of vector type
+  api=4 insize=6324 outsize=10165 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(307): implicit truncation of vector type
+  api=4 insize=6323 outsize=10165 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(275): undeclared identifier 'gas_constant'
+  api=4 insize=6343 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(275): undeclared identifier 'gas_constant'
+  api=4 insize=6343 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(307): implicit truncation of vector type
+  api=4 insize=6344 outsize=10257 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(304): undeclared identifier 'poly6Grad'
+  api=4 insize=6332 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(304): undeclared identifier 'poly6Grad'
+  api=4 insize=6332 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(308): implicit truncation of vector type
+  api=4 insize=6338 outsize=10513 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6342 outsize=10513 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6412 outsize=10765 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(308): implicit truncation of vector type
+  api=4 insize=6408 outsize=10765 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6410 outsize=10765 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6415 outsize=10805 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6406 outsize=10805 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6336 outsize=10553 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6338 outsize=10553 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6340 outsize=8861 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6349 outsize=8861 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6346 outsize=8861 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6348 outsize=8673 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(269): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(275): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6360 outsize=8733 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6381 outsize=8693 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6385 outsize=8713 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6385 outsize=8713 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6387 outsize=8673 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6387 outsize=8673 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6387 outsize=8673 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6385 outsize=8821 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6416 outsize=9193 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6418 outsize=8821 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6392 outsize=8813 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6376 outsize=8753 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6392 outsize=8813 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6376 outsize=8753 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6377 outsize=8753 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6386 outsize=8753 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6406 outsize=8797 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(303): implicit truncation of vector type
+  error: 2 plat 4 at SPHSimulation.compute(307): syntax error: unexpected token ';'
+  api=4 insize=6366 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(303): implicit truncation of vector type
+  error: 2 plat 4 at SPHSimulation.compute(307): syntax error: unexpected token ';'
+  api=4 insize=6366 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(310): implicit truncation of vector type
+  api=4 insize=6376 outsize=10337 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6378 outsize=10337 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6401 outsize=10577 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6378 outsize=10337 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6371 outsize=8797 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6373 outsize=8725 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6371 outsize=8797 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6373 outsize=8721 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6373 outsize=7957 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6371 outsize=8797 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6373 outsize=8725 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(271): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(277): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6398 outsize=8893 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6371 outsize=8797 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6368 outsize=8797 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6373 outsize=7957 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6373 outsize=8721 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6375 outsize=7849 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6373 outsize=8725 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6371 outsize=8797 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6380 outsize=8797 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6378 outsize=10337 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6437 outsize=8661 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6445 outsize=10401 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(80): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(270): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(276): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6461 outsize=10441 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6726 outsize=10461 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6726 outsize=10461 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6738 outsize=10521 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6728 outsize=10597 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(293): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6773 outsize=10673 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6773 outsize=10593 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6750 outsize=10505 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(297): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6779 outsize=10649 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(291): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(297): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6819 outsize=10793 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(291): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(297): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6821 outsize=10717 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(291): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(297): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6744 outsize=10717 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(296): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6721 outsize=10545 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6691 outsize=10545 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6692 outsize=10545 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6700 outsize=10545 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6699 outsize=10533 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6700 outsize=10545 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6695 outsize=10573 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6700 outsize=10545 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6696 outsize=10489 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6697 outsize=10545 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6702 outsize=10561 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6710 outsize=10609 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6705 outsize=10593 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6707 outsize=10401 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6705 outsize=10593 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6703 outsize=10669 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6705 outsize=10593 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6705 outsize=10589 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6703 outsize=10665 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6705 outsize=10593 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6703 outsize=10669 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6705 outsize=10593 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6703 outsize=10669 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6703 outsize=10749 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6705 outsize=10557 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6703 outsize=10613 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6717 outsize=10681 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  api=4 insize=6703 outsize=10613 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6703 outsize=10749 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6707 outsize=10701 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(294): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6721 outsize=10705 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6723 outsize=10749 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6644 outsize=10749 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6646 outsize=10749 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6730 outsize=10653 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6730 outsize=10749 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6732 outsize=10673 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6732 outsize=10577 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(63): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(63): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(94): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(284): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(290): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(292): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=6732 outsize=10673 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(62): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(91): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(91): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(107): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(107): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(108): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(298): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(304): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(335): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7106 outsize=11225 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(62): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(91): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(91): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(107): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(107): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(108): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(298): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(304): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7108 outsize=10673 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(62): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(77): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(91): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(91): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(107): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(107): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(108): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(298): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(304): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(335): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7106 outsize=11225 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(337): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(346): undeclared identifier 'i'
+  api=4 insize=7154 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(337): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(346): undeclared identifier 'i'
+  api=4 insize=7154 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(337): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(346): undeclared identifier 'i'
+  api=4 insize=7156 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(337): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(346): undeclared identifier 'i'
+  api=4 insize=7156 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(337): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(346): undeclared identifier 'i'
+  api=4 insize=7159 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(337): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(346): undeclared identifier 'i'
+  api=4 insize=7159 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(337): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7162 outsize=11309 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7164 outsize=10705 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7168 outsize=10609 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7168 outsize=10705 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7182 outsize=10757 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7340 outsize=11029 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7342 outsize=10893 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7349 outsize=10861 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(262): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(302): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(310): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7380 outsize=10961 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(262): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(302): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(310): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  api=4 insize=7213 outsize=10857 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(262): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(302): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(310): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(339): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7211 outsize=11461 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(262): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(302): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(340): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(343): scalar, vector, or matrix expected
+  api=4 insize=7273 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(262): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(302): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(340): conversion from larger type to smaller, possible loss of data
+  error: 2 plat 4 at SPHSimulation.compute(343): scalar, vector, or matrix expected
+  api=4 insize=7273 outsize=0 ok=0
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(262): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(302): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(310): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(340): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7276 outsize=11661 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(262): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(302): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(310): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(340): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7276 outsize=10957 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(262): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(302): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(308): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(310): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(340): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7284 outsize=11649 ok=1

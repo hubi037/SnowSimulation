@@ -3,21 +3,31 @@
 #pragma kernel InsertParticles
 #pragma kernel ResetGrid
 #pragma kernel ComputeDensity
-#pragma kernel ComputeForces
+#pragma kernel ComputeForce
+#pragma kernel FindNeighbours
+
+#define M_PI 3.14159265359
 
 RWStructuredBuffer<float3> mPos;
 RWStructuredBuffer<float3> mVel;
+RWStructuredBuffer<float3> mForce;
+
 RWStructuredBuffer<float> mDensity;
+RWStructuredBuffer<float> mPressure;
 
 RWStructuredBuffer<float> mDebug;
 
 RWStructuredBuffer<int> mGridLengths;
 RWStructuredBuffer<int> mGridParticles;
+RWStructuredBuffer<int> mNeighbours;
+RWStructuredBuffer<int> mNeighbourCounts;
 
 float _DeltaTime;
 float _GridCellSize;
 float _ParticleMass;
 float _KernelRadius;
+float _RestDensity;
+float _GasConstant;
 
 float3 _Gravity;
 float3 _GridOrigin;
@@ -41,6 +51,67 @@ float bspline(float input)
 
 }
 
+
+//laplacien of the viscosity kernel
+double laplaceViscKernel(float3 vec, double h)
+{
+	double r = length(vec);
+	double result = 0;
+
+	//check for neighbourhood
+	if ((0 <= r) && (r <= h))
+	{
+		result = 45 * (h - r) / (M_PI*pow(h, 6));
+	}
+	return result;
+}
+
+//gradient of the poly6 kernel
+float3 poly6GradKernel(float3 vec, double h)
+{
+	double r = length(vec);
+	float3 result = float3(0, 0, 0);
+
+	//check for neighbourhood
+	if ((0 <= r) && (r <= h))
+	{
+		result = vec;
+		result *= 945.0 / (32.0*M_PI*pow(h, 9))*(h*h - length(vec)*length(vec))*(h*h - length(vec)*length(vec));
+	}
+	return result;
+}
+
+float3 spikyGrad(float3 vec, double h)
+{
+	float3 result = float3(0, 0, 0);
+	double r = length(vec);
+
+	//check for neighbourhood
+	if ((0 <= r) && (r <= h))
+	{
+		result = vec;
+		result *= -45.0 / (M_PI*pow(h, 6))*(h - r)*(h - r);
+	}
+	return result;
+}
+
+
+//poly6 kernel
+double poly6Kernel(float3 vec, double h)
+{
+	double result = 0;
+	double rsq = dot(vec, vec);
+	double hsq = h*h;
+
+	//check for neighbourhood
+	if (0 <= rsq && rsq <= hsq)
+	{
+		result = 315.0 / (64.0*M_PI*pow(h, 9));
+		result *= pow((hsq - rsq), 3);
+	}
+	return result;
+}
+
 int GetGridIndex(int3 idx)
 {
 	return idx.x + _GridCells.x * (idx.y + _GridCells.x * idx.z);
@@ -56,7 +127,7 @@ bool isInBounds(int3 gridIdx)
 
 	return true;
 }
-
+	
 float3 BoundaryCollision(float3 _Pos, float3 _Vel)
 {
 
@@ -124,7 +195,7 @@ void ResetGrid (uint3 id : SV_DispatchThreadID)
 	mGridLengths[idx] = 0;
 }
 
-[numthreads(100	,1,1)]
+[numthreads(1000,1,1)]
 void InsertParticles (uint3 id : SV_DispatchThreadID)
 {
 	int i = id.x;
@@ -135,146 +206,152 @@ void InsertParticles (uint3 id : SV_DispatchThreadID)
 	{
 		return;
 	}
+
 	int idx = GetGridIndex(gridIdx);
 
 	uint origIndex = 0;
 	InterlockedAdd(mGridLengths[idx], 1, origIndex);
-	if (origIndex > _NumNeighbours)
+	if (origIndex > 4)
 	{
-		mGridLengths[idx] = _NumNeighbours;
+		mGridLengths[idx] = 4;
 		return;
 	}
 
-	//mDebug[id.x] = mGridLengths[idx];
-	mGridParticles[idx * _NumNeighbours + origIndex] = i;
+	mGridParticles[idx * 4 + origIndex] = i;
+	mDebug[i] = gridIdx.z;
+
+	mForce[i] = float3(0,0,0);
 }
 
-[numthreads(100,1,1)]
+[numthreads(1000,1,1)]
+void FindNeighbours (uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x;
+
+	float3 pos = mPos[i];
+	float3 gridIdx = (pos - _GridOrigin) / _GridCellSize;
+
+	if(!isInBounds(gridIdx))
+		return;	
+
+	int count = 0;
+	//we check the cell the particle is in and every neighbouring cell
+	for(int x = -1; x < 2; x++)
+	{
+		for(int y = -1; y < 2; y++)
+		{
+			for(int z = -1; z < 2; z++)
+			{
+				int3 neighbour = gridIdx + int3(x,y,z);
+				
+				if(!isInBounds(neighbour))
+					continue;				
+
+				int idx = GetGridIndex(neighbour);
+				int cellNeighbours = mGridLengths[idx];
+
+				for(int j = 0; j < cellNeighbours; j++)
+				{
+	
+					int index = mGridParticles[(idx * 4) + j];
+					float3 posJ = mPos[index];
+
+					float3 dist = posJ - pos;
+					float dsq = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z;
+
+					if ( dsq < (_KernelRadius * _KernelRadius) && dsq >= 0 && index != i) 
+					{ 
+						mNeighbours[i + count] = index;
+						count++;
+
+						if(count == _NumNeighbours - 1)
+						{
+							mNeighbourCounts[i] = count;
+							return;
+						}
+					}	
+				}
+			}
+		}
+	}
+
+	mNeighbourCounts[i] = count;
+}
+
+
+[numthreads(1000,1,1)]
 void ComputeDensity(uint3 id : SV_DispatchThreadID)
 {
 	uint i = id.x;
 
 	float3 pos = mPos[i];
 	float3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
-
+	int idx = GetGridIndex(gridIdx);
 	float density = 0;
 	float sum = 0;
 
-	//we check the cell the particle is in and every neighbouring cell
-	for(int x = -1; x < 2; x++)
+	for(int j = 0; j < mNeighbourCounts[i]; j++)
 	{
-		for(int y = -1; y < 2; y++)
-		{
-			for(int z = -1; z < 2; z++)
-			{
-				int3 neighbour = gridIdx + int3(x,y,z);
-				
-				if(!isInBounds(neighbour))
-					continue;				
+		
+		int index = mNeighbours[i + j];
+		float3 posJ = mPos[index];
 
-				int idx = GetGridIndex(gridIdx + int3(x,y,z));
-				int count = mGridLengths[idx];
-				
-				for(int j = 0; j < count; j++)
-				{
-	
-					int index = mGridParticles[idx * _NumNeighbours + j];
-					float3 posJ = mPos[index];
+		float3 dist = pos - posJ;
 
-					float3 dist = posJ - pos;
-					float dsq = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z;
-	
-					// interpolate density from the particles in the kernel radius
-					if ( dsq < _KernelRadius && dsq > 0) 
-					{ 
-						dsq = sqrt(dsq);
-						//bspline weight by distance
-						float weight = bspline(dsq);
-						sum += weight * _ParticleMass;
-					}
-				}
-			}
-		}
+		//poly6 weight by distance
+		float weight = poly6Kernel(dist, _KernelRadius);
+		sum += weight * _ParticleMass;
+		density++;
 	}
 
 	mDensity[i] = sum;
+	mDensity[i] += poly6Kernel(float3(0,0,0), _KernelRadius);
+
+	mPressure[i] = ((_GasConstant * _RestDensity)/7) *  (pow(mDensity[i] / _RestDensity, 7) - 1);
+
 	mDebug[i] = mDensity[i];
 }
 
-[numthreads(100,1,1)]
-void ComputeForces(uint3 id : SV_DispatchThreadID)
+[numthreads(1000,1,1)]
+void ComputeForce(uint3 id : SV_DispatchThreadID)
 {
 	uint i = id.x;
 
 	float3 pos = mPos[i];
 	float3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
-	
-	int j = GetGridIndex((int3)gridIdx);
-	float3 sum = 0;
-	int sumCounter = 0;
 
-	//we check the cell the particle is in and every neighbouring cell
-	for(int x = -1; x < 2; x++)
+	float3 force = float3(0,0,0);
+	float3 visc = float3(0, 0, 0);
+
+	for(int j = 0; j < mNeighbourCounts[i]; j++)
 	{
-		for(int y = -1; y < 2; y++)
-		{
-			for(int z = -1; z < 2; z++)
-			{
-				int3 neighbour = gridIdx + int3(x,y,z);
-				
-				if(!isInBounds(neighbour))
-					continue;				
+		
+		int index = mNeighbours[i + j];
+		float3 posJ = mPos[index];
 
-				int idx = GetGridIndex(gridIdx + int3(x,y,z));
-				int count = mGridLengths[idx];
-				
-				for(int j = 0; j < count; j++)
-				{
-	
-					int index = mGridParticles[idx * _NumNeighbours + j];
-					float3 pos = mPos[index];
-					float3 vel = mVel[index];
-				
-					float3 dist = pos - mPos[i];
-					float dsq = dist.x * dist.x + dist.y * dist.y + dist.z * dist.z;
-	
-					// interpolate density from the particles in the kernel radius
-					if ( dsq < _KernelRadius && dsq > 0) 
-					{ 
-						dsq = sqrt(dsq);
-						//bspline weight by distance
-						float weight = bspline(dsq);
-						
-						//float3 velDiff = vel - mVel[i];
-						sum += vel * mDensity[index] * weight;
-						sumCounter++;
-					}
-				}
-			}
-		}
+		float3 dist = pos - posJ;
+		float3 weight = spikyGrad(dist, _KernelRadius);
+
+		float V = _ParticleMass/mDensity[i];
+ 
+		force -= (mPressure[i] / (mDensity[i] * mDensity[i]) + mPressure[index] / (mDensity[index] * mDensity[index])) * weight;
+		//mForce[i] -= (mPressure[i] + mPressure[index]) / (2.0 * mDensity[index]) * weight;
+
+		visc += 3.5f * (mVel[index] - mVel[i]) / mDensity[index] * laplaceViscKernel(dist, _KernelRadius);
 	}
 
-	//this is now the average velocity of the particles in the kernelradius weighted by their density and distance from the original particle
-	sum /= sumCounter;
-
-	float3 velDiff = sum - mVel[i];
-
-	mVel[i] += velDiff * _DeltaTime;
+	mForce[i] += visc / mDensity[i] + force;
 }
 
-[numthreads(100,1,1)]
+[numthreads(1000,1,1)]
 void UpdatePositions (uint3 id : SV_DispatchThreadID)
 {
 
-	mVel[id.x] += _Gravity * _DeltaTime;
+	//mVel[id.x] += _Gravity * _DeltaTime;
+	mVel[id.x] += mForce[id.x] * _DeltaTime;
+
 	mVel[id.x] = BoundaryCollision(mPos[id.x], mVel[id.x]);
+
 	
-	int3 gridIdx = (mPos[id.x] - _GridOrigin) / _GridCellSize;
-	gridIdx += normalize(mVel[id.x]);
-	int idx = GetGridIndex(gridIdx);
-
-	if(mDensity[id.x] > 250)
-		mVel[id.x] = float3(0,0,0);
-
 	mPos[id.x] += mVel[id.x] * _DeltaTime;
 }
