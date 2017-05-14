@@ -36,16 +36,16 @@ public class SPHManager : MonoBehaviour {
 	void Awake () 
 	{
 
-		int numParticles = 10 * 10 * 10;
+		m_ParticleCount = 32 * 32 * 32;
 
-		m_positions = new ComputeBuffer(numParticles, sizeof(float) * 3);
-		m_velocities = new ComputeBuffer(numParticles, sizeof(float) * 3);
-		m_forces = new ComputeBuffer(numParticles, sizeof(float) * 3);
+		m_positions = new ComputeBuffer(m_ParticleCount, sizeof(float) * 3);
+		m_velocities = new ComputeBuffer(m_ParticleCount, sizeof(float) * 3);
+		m_forces = new ComputeBuffer(m_ParticleCount, sizeof(float) * 3);
 
-		m_densities = new ComputeBuffer(numParticles, sizeof(float));
-		m_pressure = new ComputeBuffer(numParticles, sizeof(float));
-		m_neighbours = new ComputeBuffer(numParticles * m_iNumNeighbours, sizeof(int));
-		m_neighbourCounts = new ComputeBuffer(numParticles, sizeof(int));
+		m_densities = new ComputeBuffer(m_ParticleCount, sizeof(float));
+		m_pressure = new ComputeBuffer(m_ParticleCount, sizeof(float));
+		m_neighbours = new ComputeBuffer(m_ParticleCount * m_iNumNeighbours, sizeof(int));
+		m_neighbourCounts = new ComputeBuffer(m_ParticleCount, sizeof(int));
 
 		m_gridLengths = new ComputeBuffer((int) (m_GridCells.x * m_GridCells.y * m_GridCells.z), sizeof(int));
 
@@ -53,7 +53,7 @@ public class SPHManager : MonoBehaviour {
 		m_gridParticles = new ComputeBuffer((int)(m_GridCells.x * m_GridCells.y * m_GridCells.z) * 4, sizeof(int));
 
 
-		m_debugOutput = new ComputeBuffer(numParticles, sizeof(float));
+		m_debugOutput = new ComputeBuffer(m_ParticleCount, sizeof(float));
 		
 
 		m_ComputeShader.SetVector("_Gravity", new Vector3(0, -9.8f, 0));
@@ -97,9 +97,9 @@ public class SPHManager : MonoBehaviour {
 
 		List<Vector3> position = new List<Vector3>();
 
-		for (int x = 0; x < 10; x++)
-			for (int y = 0; y < 10; y++)
-				for (int z = 0; z < 10; z++ )
+		for (int x = 0; x < 32; x++)
+			for (int y = 0; y < 32; y++)
+				for (int z = 0; z < 32; z++ )
 				{
 					position.Add(m_StartPosition + new Vector3(x,y,z) * m_GridCellSize * 0.5f);
 				}
@@ -109,7 +109,7 @@ public class SPHManager : MonoBehaviour {
 		m_positions.SetData(position.ToArray());
 
 		List<Vector3> empty = new List<Vector3>();
-		for (int i = 0; i < numParticles; i++)
+		for (int i = 0; i < m_ParticleCount; i++)
 			empty.Add(Vector3.zero);
 
 		m_velocities.SetData(empty.ToArray());
@@ -142,11 +142,11 @@ public class SPHManager : MonoBehaviour {
 		m_ComputeShader.SetFloat("_DeltaTime", Time.deltaTime);
 
 		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("ResetGrid"), (int)m_GridCells.x / 8, (int)m_GridCells.x / 8, (int)m_GridCells.x / 8);
-		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("InsertParticles"), 1000000 / 1000, 1, 1);
-		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("FindNeighbours"), 1000000 / 1000, 1, 1);
-		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("ComputeDensity"), 1000000 / 1000, 1, 1);
-		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("ComputeForce"), 1000000 / 1000, 1, 1);
-		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("UpdatePositions"), 1000000 / 1000, 1, 1);
+		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("InsertParticles"), m_ParticleCount / 512, 1, 1);
+		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("FindNeighbours"), m_ParticleCount / 512, 1, 1);
+		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("ComputeDensity"), m_ParticleCount / 512, 1, 1);
+		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("ComputeForce"), m_ParticleCount / 512, 1, 1);
+		m_ComputeShader.Dispatch(m_ComputeShader.FindKernel("UpdatePositions"), m_ParticleCount / 512, 1, 1);
 		
 		float[] output = new float[m_ParticleCount];
 		m_debugOutput.GetData(output);
@@ -154,7 +154,7 @@ public class SPHManager : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.L))
 		{
 			float count = 0;
-			for (int i = 0; i < 1000; i++)
+			for (int i = 0; i < m_ParticleCount; i++)
 			{
 				//count += output[i];
 				Debug.Log(output[i]);
@@ -168,7 +168,7 @@ public class SPHManager : MonoBehaviour {
 	{
 		m_Material.SetPass(0);
 		m_Material.SetBuffer("_Particles", m_positions);
-
+		m_Material.SetBuffer("_Densities", m_densities);
 		Graphics.DrawProcedural(MeshTopology.Triangles, 6, m_positions.count);
 	}
 

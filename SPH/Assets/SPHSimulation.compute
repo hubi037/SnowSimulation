@@ -191,11 +191,10 @@ float3 BoundaryCollision(float3 _Pos, float3 _Vel)
 void ResetGrid (uint3 id : SV_DispatchThreadID)
 {
 	int idx = GetGridIndex(id);
-
 	mGridLengths[idx] = 0;
 }
 
-[numthreads(1000,1,1)]
+[numthreads(512,1,1)]
 void InsertParticles (uint3 id : SV_DispatchThreadID)
 {
 	int i = id.x;
@@ -211,6 +210,8 @@ void InsertParticles (uint3 id : SV_DispatchThreadID)
 
 	uint origIndex = 0;
 	InterlockedAdd(mGridLengths[idx], 1, origIndex);
+
+	//only allow 4 particles per grid cell
 	if (origIndex > 4)
 	{
 		mGridLengths[idx] = 4;
@@ -218,12 +219,9 @@ void InsertParticles (uint3 id : SV_DispatchThreadID)
 	}
 
 	mGridParticles[idx * 4 + origIndex] = i;
-	mDebug[i] = gridIdx.z;
-
-	mForce[i] = float3(0,0,0);
 }
 
-[numthreads(1000,1,1)]
+[numthreads(512,1,1)]
 void FindNeighbours (uint3 id : SV_DispatchThreadID)
 {
 	uint i = id.x;
@@ -279,7 +277,7 @@ void FindNeighbours (uint3 id : SV_DispatchThreadID)
 }
 
 
-[numthreads(1000,1,1)]
+[numthreads(512,1,1)]
 void ComputeDensity(uint3 id : SV_DispatchThreadID)
 {
 	uint i = id.x;
@@ -307,12 +305,12 @@ void ComputeDensity(uint3 id : SV_DispatchThreadID)
 	mDensity[i] = sum;
 	mDensity[i] += poly6Kernel(float3(0,0,0), _KernelRadius);
 
-	mPressure[i] = ((_GasConstant * _RestDensity)/7) *  (pow(mDensity[i] / _RestDensity, 7) - 1);
+	mDebug[i] = sum; //mDensity[i];
 
-	mDebug[i] = mDensity[i];
+	mPressure[i] = ((_GasConstant * _RestDensity)/7) *  (pow(mDensity[i] / _RestDensity, 7) - 1);
 }
 
-[numthreads(1000,1,1)]
+[numthreads(512,1,1)]
 void ComputeForce(uint3 id : SV_DispatchThreadID)
 {
 	uint i = id.x;
@@ -332,26 +330,71 @@ void ComputeForce(uint3 id : SV_DispatchThreadID)
 		float3 dist = pos - posJ;
 		float3 weight = spikyGrad(dist, _KernelRadius);
 
-		float V = _ParticleMass/mDensity[i];
- 
-		force -= (mPressure[i] / (mDensity[i] * mDensity[i]) + mPressure[index] / (mDensity[index] * mDensity[index])) * weight;
+		float weight2 = poly6Kernel(dist, _KernelRadius);
+
+		float V = _ParticleMass/mDensity[i]/2;
+
+		float3 pressureTerm = V * (mPressure[i]+mPressure[index]) * weight;
+		
+		force -= dist * pressureTerm/length(dist);
+
+		float3 rel_vel = mVel[index] - mVel[i];
+
+		visc += V * 6.5f * laplaceViscKernel(dist, _KernelRadius) * rel_vel;
+
+		//force -= (mPressure[i] / (mDensity[i] * mDensity[i]) + mPressure[index] / (mDensity[index] * mDensity[index])) * weight;
 		//mForce[i] -= (mPressure[i] + mPressure[index]) / (2.0 * mDensity[index]) * weight;
 
-		visc += 3.5f * (mVel[index] - mVel[i]) / mDensity[index] * laplaceViscKernel(dist, _KernelRadius);
+		//force += (mVel[index] - mVel[i])  * weight2;
+		
+		//visc += 3.5f * (mVel[index] - mVel[i]) / mDensity[index] * laplaceViscKernel(dist, _KernelRadius);
 	}
 
-	mForce[i] += visc / mDensity[i] + force;
+	mForce[i] += force + visc; // + visc; // + visc;
 }
 
-[numthreads(1000,1,1)]
+[numthreads(512,1,1)]
 void UpdatePositions (uint3 id : SV_DispatchThreadID)
 {
 
-	//mVel[id.x] += _Gravity * _DeltaTime;
-	mVel[id.x] += mForce[id.x] * _DeltaTime;
+	int i = id.x;
+
+	/*
+	float3 pos = mPos[i];
+	float3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
+
+	int3 targetCell = gridIdx + normalize(mVel[id.x]);
+
+	int idx = GetGridIndex(targetCell);
+
+	int cellNeighbours = mGridLengths[idx];
+
+	float3 avgVel = float3(0,0,0);
+	for(int j = 0; j < cellNeighbours; j++)
+	{
+	
+		int index = mGridParticles[(idx * 4) + j];
+		
+		avgVel += mVel[index];
+	}
+
+	avgVel *= 1/cellNeighbours;
+
+	if(length(mVel[i]) > length(avgVel) && cellNeighbours > 2)
+		mVel[i] = normalize(mVel[i]) * length(avgVel);*/
+
+
+	mVel[id.x] += mForce[id.x] * _DeltaTime/mDensity[i] + _Gravity * _DeltaTime;
+
+	//if(mDensity[id.x] > 420)
+		//mVel[id.x] = float3(0,0,0);
 
 	mVel[id.x] = BoundaryCollision(mPos[id.x], mVel[id.x]);
 
-	
+	if(length(mVel[id.x]) > 3)
+		mVel[id.x] = normalize(mVel[id.x]) * 3;
+
 	mPos[id.x] += mVel[id.x] * _DeltaTime;
+
+	mForce[id.x] = float3(0,0,0);
 }

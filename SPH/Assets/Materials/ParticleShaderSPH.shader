@@ -25,6 +25,7 @@ Shader "Custom/ParticleShaderNew"
 
 
 			StructuredBuffer<float3>  _Particles;
+			StructuredBuffer<float>  _Densities;
 			StructuredBuffer<float3>  quadPoints;
 			float _Size;
 
@@ -49,18 +50,19 @@ Shader "Custom/ParticleShaderNew"
 				o.uv = quadPoints[id];
 				o.uv += float2(1, 1);
 				o.uv *= (0.5);
-
 				return o;
 			}
 
 			sampler2D _MainTex;	
 
-			float4 frag (v2f i) : COLOR
+			float4 frag (v2f i, uint inst : SV_InstanceID) : COLOR
 			{
 				if((i.uv.x * 2.0 - 1.0) * ( i.uv.x * 2.0-1.0) + ( i.uv.y * 2.0 - 1.0) * ( i.uv.y * 2.0 - 1.0) > 1.0f)
 					clip(-1);
 
-				float4 col = float4(1,1,1, 1);
+
+				float4 col = float4(1,1,1,1);
+				col.a = 1.0f;
 				return col;
 			}
 			ENDCG 
