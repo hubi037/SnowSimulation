@@ -34,6 +34,7 @@ Shader "Custom/ParticleShaderNew"
 				float4 pos : POSITION;
 				float2 uv : TEXCOORD0;
 				float3 normal : NORMAL;
+				float4 col : COLOR;
 			};
 
 			//build quad for every snow particle
@@ -50,6 +51,9 @@ Shader "Custom/ParticleShaderNew"
 				o.uv = quadPoints[id];
 				o.uv += float2(1, 1);
 				o.uv *= (0.5);
+
+				o.col = float4(1,0,0,1);
+				o.col.r = (_Densities[inst] / 1000.0f);
 				return o;
 			}
 
@@ -61,7 +65,7 @@ Shader "Custom/ParticleShaderNew"
 					clip(-1);
 
 
-				float4 col = float4(1,1,1,1);
+				float4 col = i.col;
 				col.a = 1.0f;
 				return col;
 			}

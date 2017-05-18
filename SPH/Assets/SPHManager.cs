@@ -87,7 +87,7 @@ public class SPHManager : MonoBehaviour {
 		m_ComputeShader.SetFloat("_GridCellSize", m_GridCellSize);
 		m_ComputeShader.SetFloat("_KernelRadius", m_GridCellSize);
 		m_ComputeShader.SetFloat("_ParticleMass", 1f);
-		m_ComputeShader.SetFloat("_RestDensity", 1000f);
+		m_ComputeShader.SetFloat("_RestDensity", 500.0f);
 		m_ComputeShader.SetFloat("_GasConstant", 1f);
 		m_ComputeShader.SetInt("_NumNeighbours", m_iNumNeighbours);
 		m_ComputeShader.SetInt("_NumCellParticles", 4);

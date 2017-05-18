@@ -302,6 +302,7 @@ void ComputeDensity(uint3 id : SV_DispatchThreadID)
 		density++;
 	}
 
+
 	mDensity[i] = sum;
 	mDensity[i] += poly6Kernel(float3(0,0,0), _KernelRadius);
 
@@ -334,7 +335,8 @@ void ComputeForce(uint3 id : SV_DispatchThreadID)
 
 		float V = _ParticleMass/mDensity[i]/2;
 
-		float3 pressureTerm = V * (mPressure[i]+mPressure[index]) * weight;
+		float3 pressureTerm = V * (mPressure[i] + mPressure[index]) * weight;
+
 		
 		force -= dist * pressureTerm/length(dist);
 
@@ -342,15 +344,17 @@ void ComputeForce(uint3 id : SV_DispatchThreadID)
 
 		visc += V * 6.5f * laplaceViscKernel(dist, _KernelRadius) * rel_vel;
 
-		//force -= (mPressure[i] / (mDensity[i] * mDensity[i]) + mPressure[index] / (mDensity[index] * mDensity[index])) * weight;
-		//mForce[i] -= (mPressure[i] + mPressure[index]) / (2.0 * mDensity[index]) * weight;
+		float pterm = -0.5f * weight * ( mPressure[i] + mPressure[j] ) / length(dist);
+		float dterm = length(dist) * mDensity[i] * (mDensity[j]);
 
-		//force += (mVel[index] - mVel[i])  * weight2;
-		
-		//visc += 3.5f * (mVel[index] - mVel[i]) / mDensity[index] * laplaceViscKernel(dist, _KernelRadius);
+
+		//force += ( pterm * dist + 6.5f * laplaceViscKernel(dist, _KernelRadius) * rel_vel) * dterm;
+
+		force -= (mPressure[i] / (mDensity[i] * mDensity[i]) + mPressure[index] / (mDensity[index] * mDensity[index])) * weight;
+		visc += 3.5f * (mVel[index] - mVel[i]) / mDensity[index] * laplaceViscKernel(dist, _KernelRadius);
 	}
 
-	mForce[i] += force + visc; // + visc; // + visc;
+	mForce[i] += force + visc; // + visc;
 }
 
 [numthreads(512,1,1)]
@@ -359,35 +363,7 @@ void UpdatePositions (uint3 id : SV_DispatchThreadID)
 
 	int i = id.x;
 
-	/*
-	float3 pos = mPos[i];
-	float3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
-
-	int3 targetCell = gridIdx + normalize(mVel[id.x]);
-
-	int idx = GetGridIndex(targetCell);
-
-	int cellNeighbours = mGridLengths[idx];
-
-	float3 avgVel = float3(0,0,0);
-	for(int j = 0; j < cellNeighbours; j++)
-	{
-	
-		int index = mGridParticles[(idx * 4) + j];
-		
-		avgVel += mVel[index];
-	}
-
-	avgVel *= 1/cellNeighbours;
-
-	if(length(mVel[i]) > length(avgVel) && cellNeighbours > 2)
-		mVel[i] = normalize(mVel[i]) * length(avgVel);*/
-
-
-	mVel[id.x] += mForce[id.x] * _DeltaTime/mDensity[i] + _Gravity * _DeltaTime;
-
-	//if(mDensity[id.x] > 420)
-		//mVel[id.x] = float3(0,0,0);
+	mVel[id.x] += mForce[id.x] * _DeltaTime + _Gravity * _DeltaTime;
 
 	mVel[id.x] = BoundaryCollision(mPos[id.x], mVel[id.x]);
 
