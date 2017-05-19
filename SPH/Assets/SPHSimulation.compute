@@ -259,7 +259,7 @@ void FindNeighbours (uint3 id : SV_DispatchThreadID)
 
 					if ( dsq < (_KernelRadius * _KernelRadius) && dsq >= 0 && index != i) 
 					{ 
-						mNeighbours[i + count] = index;
+						mNeighbours[i * _NumNeighbours + count] = index;
 						count++;
 
 						if(count == _NumNeighbours - 1)
@@ -291,7 +291,7 @@ void ComputeDensity(uint3 id : SV_DispatchThreadID)
 	for(int j = 0; j < mNeighbourCounts[i]; j++)
 	{
 		
-		int index = mNeighbours[i + j];
+		int index = mNeighbours[i * _NumNeighbours + j];
 		float3 posJ = mPos[index];
 
 		float3 dist = pos - posJ;
@@ -320,12 +320,12 @@ void ComputeForce(uint3 id : SV_DispatchThreadID)
 	float3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
 
 	float3 force = float3(0,0,0);
-	float3 visc = float3(0, 0, 0);
+	float3 visc = float3(0,0,0);
 
 	for(int j = 0; j < mNeighbourCounts[i]; j++)
 	{
 		
-		int index = mNeighbours[i + j];
+		int index = mNeighbours[i * _NumNeighbours + j];
 		float3 posJ = mPos[index];
 
 		float3 dist = pos - posJ;
@@ -335,20 +335,7 @@ void ComputeForce(uint3 id : SV_DispatchThreadID)
 
 		float V = _ParticleMass/mDensity[i]/2;
 
-		float3 pressureTerm = V * (mPressure[i] + mPressure[index]) * weight;
-
-		
-		force -= dist * pressureTerm/length(dist);
-
 		float3 rel_vel = mVel[index] - mVel[i];
-
-		visc += V * 6.5f * laplaceViscKernel(dist, _KernelRadius) * rel_vel;
-
-		float pterm = -0.5f * weight * ( mPressure[i] + mPressure[j] ) / length(dist);
-		float dterm = length(dist) * mDensity[i] * (mDensity[j]);
-
-
-		//force += ( pterm * dist + 6.5f * laplaceViscKernel(dist, _KernelRadius) * rel_vel) * dterm;
 
 		force -= (mPressure[i] / (mDensity[i] * mDensity[i]) + mPressure[index] / (mDensity[index] * mDensity[index])) * weight;
 		visc += 3.5f * (mVel[index] - mVel[i]) / mDensity[index] * laplaceViscKernel(dist, _KernelRadius);

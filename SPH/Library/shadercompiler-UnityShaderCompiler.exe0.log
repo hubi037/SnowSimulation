@@ -11,79 +11,13 @@ Cmd: compileCompute
   error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
   error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
   error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(310): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHSimulation.compute(333): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(343): conversion from larger type to smaller, possible loss of data
-  api=4 insize=8348 outsize=11865 ok=1
-Cmd: compileCompute
-  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(306): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(310): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHSimulation.compute(333): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(343): conversion from larger type to smaller, possible loss of data
-  api=4 insize=7719 outsize=11865 ok=1
-Cmd: compileCompute
-  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(341): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(351): conversion from larger type to smaller, possible loss of data
-  api=4 insize=7870 outsize=11601 ok=1
-Cmd: compileCompute
-  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(341): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(352): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(354): implicit truncation of vector type
-  error: 1 plat 4 at SPHSimulation.compute(358): conversion from larger type to smaller, possible loss of data
-  api=4 insize=8122 outsize=11977 ok=1
-Cmd: compileCompute
-  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
-  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(341): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(352): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(354): implicit truncation of vector type
-  error: 1 plat 4 at SPHSimulation.compute(361): conversion from larger type to smaller, possible loss of data
-  api=4 insize=7983 outsize=12125 ok=1
-Cmd: preprocess
-  insize=1613 outsize=464 ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=1456 outsize=1182 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=1456 outsize=602 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA ok=1
+  error: 1 plat 4 at SPHSimulation.compute(307): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(311): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(334): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(345): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(347): implicit truncation of vector type
+  error: 1 plat 4 at SPHSimulation.compute(354): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7885 outsize=12505 ok=1
 Cmd: compileCompute
   error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
   error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
@@ -98,16 +32,72 @@ Cmd: compileCompute
   error: 1 plat 4 at SPHSimulation.compute(307): conversion from larger type to smaller, possible loss of data
   error: 1 plat 4 at SPHSimulation.compute(311): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
   error: 1 plat 4 at SPHSimulation.compute(334): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(345): conversion from larger type to smaller, possible loss of data
-  error: 1 plat 4 at SPHSimulation.compute(347): implicit truncation of vector type
-  error: 1 plat 4 at SPHSimulation.compute(354): conversion from larger type to smaller, possible loss of data
-  api=4 insize=7834 outsize=12389 ok=1
-Cmd: preprocess
-  insize=1660 outsize=464 ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=1503 outsize=1326 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=1503 outsize=550 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA ok=1
+  error: 1 plat 4 at SPHSimulation.compute(348): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7662 outsize=12213 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(307): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(311): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(334): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(346): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7563 outsize=12213 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(307): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(311): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(334): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(341): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7436 outsize=11941 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(307): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(311): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(334): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(341): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7440 outsize=11649 ok=1
+Cmd: compileCompute
+  error: 1 plat 4 at SPHSimulation.compute(64): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(79): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(93): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(109): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(110): 'pow': conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(260): signed/unsigned mismatch, unsigned assumed
+  error: 1 plat 4 at SPHSimulation.compute(300): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(307): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(311): pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+  error: 1 plat 4 at SPHSimulation.compute(334): conversion from larger type to smaller, possible loss of data
+  error: 1 plat 4 at SPHSimulation.compute(341): conversion from larger type to smaller, possible loss of data
+  api=4 insize=7436 outsize=11941 ok=1
 Cmd: preprocess
   insize=1675 outsize=464 ok=1
 Cmd: compileSnippet
@@ -115,14 +105,4 @@ Cmd: compileSnippet
 Cmd: compileSnippet
   api=4 type=1 insize=1518 outsize=550 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA ok=1
 Cmd: preprocess
-  insize=1675 outsize=463 ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=1518 outsize=1346 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=1518 outsize=550 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA ok=1
-Cmd: preprocess
   insize=1674 outsize=464 ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=1517 outsize=1346 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=1517 outsize=550 kw= pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA ok=1
