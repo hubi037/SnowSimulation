@@ -53,10 +53,10 @@ float bspline(float input)
 
 
 //laplacien of the viscosity kernel
-double laplaceViscKernel(float3 vec, double h)
+float laplaceViscKernel(float3 vec, float h)
 {
-	double r = length(vec);
-	double result = 0;
+	float r = length(vec);
+	float result = 0;
 
 	//check for neighbourhood
 	if ((0 <= r) && (r <= h))
@@ -67,9 +67,9 @@ double laplaceViscKernel(float3 vec, double h)
 }
 
 //gradient of the poly6 kernel
-float3 poly6GradKernel(float3 vec, double h)
+float3 poly6GradKernel(float3 vec, float h)
 {
-	double r = length(vec);
+	float r = length(vec);
 	float3 result = float3(0, 0, 0);
 
 	//check for neighbourhood
@@ -81,27 +81,27 @@ float3 poly6GradKernel(float3 vec, double h)
 	return result;
 }
 
-float3 spikyGrad(float3 vec, double h)
+float3 spikyGrad(float3 vec, float h)
 {
 	float3 result = float3(0, 0, 0);
-	double r = length(vec);
+	float r = length(vec);
 
 	//check for neighbourhood
 	if ((0 <= r) && (r <= h))
 	{
 		result = vec;
-		result *= -45.0 / (M_PI*pow(h, 6))*(h - r)*(h - r);
+		result *= 45.0 / (M_PI*pow(h, 6))*(h - r)*(h - r);
 	}
 	return result;
 }
 
 
 //poly6 kernel
-double poly6Kernel(float3 vec, double h)
+float poly6Kernel(float3 vec, float h)
 {
-	double result = 0;
-	double rsq = dot(vec, vec);
-	double hsq = h*h;
+	float result = 0;
+	float rsq = dot(vec, vec);
+	float hsq = h*h;
 
 	//check for neighbourhood
 	if (0 <= rsq && rsq <= hsq)
@@ -127,6 +127,7 @@ bool isInBounds(int3 gridIdx)
 
 	return true;
 }
+
 	
 float3 BoundaryCollision(float3 _Pos, float3 _Vel)
 {
@@ -285,7 +286,6 @@ void ComputeDensity(uint3 id : SV_DispatchThreadID)
 	float3 pos = mPos[i];
 	float3 gridIdx = (mPos[i] - _GridOrigin) / _GridCellSize;
 	int idx = GetGridIndex(gridIdx);
-	float density = 0;
 	float sum = 0;
 
 	for(int j = 0; j < mNeighbourCounts[i]; j++)
@@ -294,21 +294,19 @@ void ComputeDensity(uint3 id : SV_DispatchThreadID)
 		int index = mNeighbours[i * _NumNeighbours + j];
 		float3 posJ = mPos[index];
 
-		float3 dist = pos - posJ;
+		float3 dist = posJ - pos; // pos - posJ;
 
 		//poly6 weight by distance
 		float weight = poly6Kernel(dist, _KernelRadius);
 		sum += weight * _ParticleMass;
-		density++;
 	}
-
 
 	mDensity[i] = sum;
 	mDensity[i] += poly6Kernel(float3(0,0,0), _KernelRadius);
 
 	mDebug[i] = sum; //mDensity[i];
 
-	mPressure[i] = ((_GasConstant * _RestDensity)/7) *  (pow(mDensity[i] / _RestDensity, 7) - 1);
+	mPressure[i] = ((_GasConstant * _RestDensity)/1) *  (pow(mDensity[i] / _RestDensity, 1) - 1);
 }
 
 [numthreads(512,1,1)]
@@ -328,16 +326,15 @@ void ComputeForce(uint3 id : SV_DispatchThreadID)
 		int index = mNeighbours[i * _NumNeighbours + j];
 		float3 posJ = mPos[index];
 
-		float3 dist = pos - posJ;
+		float3 dist = posJ - pos;
 		float3 weight = spikyGrad(dist, _KernelRadius);
-
-		float weight2 = poly6Kernel(dist, _KernelRadius);
 
 		float V = _ParticleMass/mDensity[i]/2;
 
 		float3 rel_vel = mVel[index] - mVel[i];
 
-		force -= (mPressure[i] / (mDensity[i] * mDensity[i]) + mPressure[index] / (mDensity[index] * mDensity[index])) * weight;
+		force -= ((mPressure[i] + mPressure[index]) / (2 * mDensity[index] )) * weight;
+		//force -= (mPressure[i] / (mDensity[i] * mDensity[i]) + mPressure[index] / (mDensity[index] * mDensity[index])) * weight;
 		visc += 3.5f * (mVel[index] - mVel[i]) / mDensity[index] * laplaceViscKernel(dist, _KernelRadius);
 	}
 
@@ -354,8 +351,8 @@ void UpdatePositions (uint3 id : SV_DispatchThreadID)
 
 	mVel[id.x] = BoundaryCollision(mPos[id.x], mVel[id.x]);
 
-	if(length(mVel[id.x]) > 3)
-		mVel[id.x] = normalize(mVel[id.x]) * 3;
+	if(length(mVel[id.x]) > 5)
+		mVel[id.x] = normalize(mVel[id.x]) * 5;
 
 	mPos[id.x] += mVel[id.x] * _DeltaTime;
 
